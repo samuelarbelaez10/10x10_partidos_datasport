@@ -279,17 +279,18 @@ Pages.Standings = async function(container, opts) {
       </button>
     </div>
 
+    ${Utils.wrapFilters(`
     <div class="card mb-5" style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;">
       <div>
         <label class="text-gray-400 text-sm">Deporte</label>
-        <select id="st-sport" class="input-field mt-1" onchange="window._stApplyFilters()">
+        <select id="st-sport" class="input-field mt-1" onchange="window._stApplyFilters();Utils.updateFilterCount('st-filters')">
           <option value="">Todos</option>
           ${sports.map(s => `<option value="${s.name}">${Utils.sportIcon(s.name)} ${s.name}</option>`).join('')}
         </select>
       </div>
       <div>
         <label class="text-gray-400 text-sm">Género</label>
-        <select id="st-gender" class="input-field mt-1" onchange="window._stApplyFilters()">
+        <select id="st-gender" class="input-field mt-1" onchange="window._stApplyFilters();Utils.updateFilterCount('st-filters')">
           <option value="">Todos</option>
           <option>Masculino</option>
           <option>Femenino</option>
@@ -298,14 +299,14 @@ Pages.Standings = async function(container, opts) {
       </div>
       <div>
         <label class="text-gray-400 text-sm">Categoría</label>
-        <select id="st-category" class="input-field mt-1" onchange="window._stApplyFilters()">
+        <select id="st-category" class="input-field mt-1" onchange="window._stApplyFilters();Utils.updateFilterCount('st-filters')">
           <option value="">Todas</option>
           ${[...new Set(standings.map(t => t.category).filter(Boolean))].sort().map(c => `<option value="${c}">${c}</option>`).join('')}
         </select>
       </div>
       <div>
         <label class="text-gray-400 text-sm">Colegio</label>
-        <select id="st-school" class="input-field mt-1" onchange="window._stApplyFilters()">
+        <select id="st-school" class="input-field mt-1" onchange="window._stApplyFilters();Utils.updateFilterCount('st-filters')">
           <option value="">Todos</option>
           ${[...new Set(standings.map(t => t.school).filter(Boolean))].sort().map(s => `<option value="${s}">${Utils.truncate(s,28)}</option>`).join('')}
         </select>
@@ -313,9 +314,10 @@ Pages.Standings = async function(container, opts) {
       <button class="btn-ghost" onclick="
         ['st-sport','st-gender','st-category','st-school'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
         window._st.filterSport=''; window._st.filterGender=''; window._st.filterCategory=''; window._st.filterSchool='';
-        window._stRender(window._st.standings);
+        window._stRender(window._st.standings);Utils.updateFilterCount('st-filters');
       ">🔄 Limpiar</button>
     </div>
+    `, 'st-filters')}
 
     <div id="standings-content"></div>
   `;

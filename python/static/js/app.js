@@ -105,7 +105,7 @@ const App = {
 
           <!-- Hero: gradiente profundo con textura y círculos decorativos -->
           <div style="background:linear-gradient(135deg,#07153a 0%,#0e2266 38%,#1a3ea8 70%,#2256d8 100%);
-                      padding:32px 32px 28px;position:relative;overflow:hidden;">
+                      padding:24px 20px 20px;position:relative;overflow:hidden;">
 
             <!-- Textura de líneas diagonales -->
             <div style="position:absolute;inset:0;pointer-events:none;
@@ -119,22 +119,22 @@ const App = {
             <div style="position:absolute;width:60px;height:60px;border-radius:50%;
                         background:rgba(255,255,255,0.03);top:20px;right:140px;pointer-events:none;"></div>
 
-            <div style="position:relative;display:flex;align-items:flex-start;justify-content:space-between;gap:20px;">
-              <div style="display:flex;align-items:center;gap:20px;">
+            <div style="position:relative;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+              <div style="display:flex;align-items:center;gap:14px;flex:1;min-width:0;">
 
                 <!-- Ícono glassmorphism -->
-                <div style="width:76px;height:76px;border-radius:22px;flex-shrink:0;
+                <div style="width:56px;height:56px;border-radius:18px;flex-shrink:0;
                             background:rgba(255,255,255,0.11);backdrop-filter:blur(12px);
-                            display:flex;align-items:center;justify-content:center;font-size:38px;
+                            display:flex;align-items:center;justify-content:center;font-size:28px;
                             border:1px solid rgba(255,255,255,0.22);
                             box-shadow:0 8px 28px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.15);">🏆</div>
 
                 <div>
                   <p style="color:rgba(147,197,253,0.65);font-size:10px;font-weight:700;
                             letter-spacing:3.5px;text-transform:uppercase;margin:0 0 5px;">${t.edition}</p>
-                  <h3 style="color:white;font-size:30px;font-weight:900;margin:0 0 5px;letter-spacing:-0.8px;
+                  <h3 style="color:white;font-size:clamp(20px,5vw,30px);font-weight:900;margin:0 0 5px;letter-spacing:-0.8px;
                              text-shadow:0 2px 14px rgba(0,0,0,0.4);line-height:1.1;">
-                    ${t.name} <span style="color:rgba(255,255,255,0.35);font-weight:400;font-size:22px;">${t.year}</span>
+                    ${t.name} <span style="color:rgba(255,255,255,0.35);font-weight:400;font-size:clamp(16px,4vw,22px);">${t.year}</span>
                   </h3>
                   <p style="color:rgba(255,255,255,0.45);font-size:13px;margin:0;">${t.description}</p>
                 </div>
@@ -151,7 +151,7 @@ const App = {
 
           <!-- Footer -->
           <div style="background:linear-gradient(180deg,#0f1e36 0%,#0c1728 100%);
-                      padding:18px 32px;display:flex;align-items:center;justify-content:space-between;gap:16px;
+                      padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
                       border-top:1px solid rgba(255,255,255,0.06);">
             <div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center;">
               ${t.sports.map(s => `<span style="font-size:12px;background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.65);padding:4px 11px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);">${s}</span>`).join('')}
@@ -186,9 +186,14 @@ const App = {
 
     const role = this.currentUser.role;
     const roleIcon = role === 'editor' ? '✏️' : role === 'arbitro' ? '🏃' : '📖';
-    document.getElementById('user-badge').textContent = `${roleIcon} ${this.currentUser.email}`;
+    const badgeText = `${roleIcon} ${this.currentUser.email}`;
+    document.getElementById('user-badge').textContent = badgeText;
+    const mobileBadge = document.getElementById('user-badge-mobile');
+    if (mobileBadge) mobileBadge.textContent = badgeText;
     const qrBtn = document.getElementById('qr-btn');
     if (qrBtn) qrBtn.style.display = role === 'editor' ? 'inline-flex' : 'none';
+    const qrBtnMobile = document.getElementById('qr-btn-mobile');
+    if (qrBtnMobile) qrBtnMobile.style.display = role === 'editor' ? 'inline-flex' : 'none';
     this._applyTournamentTheme(t.id);
     this._buildNav();
     this._requestNotifPermission();
@@ -247,12 +252,30 @@ const App = {
           box-shadow: 0 2px 12px rgba(0,0,0,0.2) !important;
         }
         .input-field {
-          background: rgba(255,255,255,0.06) !important;
+          background-color: rgba(255,255,255,0.06) !important;
           border-color: rgba(255,255,255,0.12) !important;
+        }
+        select.input-field {
+          background-color: rgba(255,255,255,0.06) !important;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") !important;
+          background-repeat: no-repeat !important;
+          background-position: right 10px center !important;
         }
         .input-field:focus {
           border-color: #dd2b2f !important;
           box-shadow: 0 0 0 3px rgba(221,43,47,0.15) !important;
+        }
+        .mobile-filter-btn {
+          background: linear-gradient(135deg, rgba(221,43,47,0.12) 0%, rgba(221,43,47,0.06) 100%) !important;
+          color: #f87171 !important;
+          border-color: rgba(221,43,47,0.25) !important;
+          box-shadow: 0 2px 12px rgba(221,43,47,0.08) !important;
+        }
+        .mobile-filter-btn:active {
+          background: linear-gradient(135deg, rgba(221,43,47,0.2) 0%, rgba(221,43,47,0.1) 100%) !important;
+        }
+        .mobile-filter-btn .filter-count {
+          background: #dd2b2f !important;
         }
         .badge-live { background: #dd2b2f !important; }
         .stat-number { color: #dd2b2f !important; }
@@ -323,19 +346,51 @@ const App = {
 
   _buildNav() {
     const nav = document.getElementById('main-nav');
+    const mobileNav = document.getElementById('mobile-nav');
     nav.innerHTML = '';
+    if (mobileNav) mobileNav.innerHTML = '';
     const arbitroOnly  = ['calendar', 'liveScoring', 'news', 'results', 'olympicRanking', 'individualSports', 'playoffs'];
     const lectorHidden = ['teams', 'schools', 'players', 'registerTeamsPlayers', 'groups', 'generateSchedule', 'venues', 'individualSports'];
     for (const [key, page] of Object.entries(this.pages)) {
       if (this.isArbitro() && !arbitroOnly.includes(key)) continue;
       if (!this.isEditor() && !this.isArbitro() && lectorHidden.includes(key)) continue;
+      // Desktop nav
       const btn = document.createElement('button');
       btn.className = 'nav-tab';
       btn.id = `nav-${key}`;
       btn.innerHTML = `${page.icon} ${page.label}`;
       btn.onclick = () => this.navigate(key);
       nav.appendChild(btn);
+      // Mobile nav
+      if (mobileNav) {
+        const mbtn = document.createElement('button');
+        mbtn.className = 'nav-tab';
+        mbtn.id = `mnav-${key}`;
+        mbtn.innerHTML = `${page.icon} ${page.label}`;
+        mbtn.onclick = () => { this.closeMobileMenu(); this.navigate(key); };
+        mobileNav.appendChild(mbtn);
+      }
     }
+  },
+
+  toggleMobileMenu() {
+    const menu = document.getElementById('mobile-menu');
+    const hIcon = document.getElementById('hamburger-icon');
+    const cIcon = document.getElementById('close-icon');
+    if (!menu) return;
+    const isOpen = menu.style.display === 'flex';
+    menu.style.display = isOpen ? 'none' : 'flex';
+    if (hIcon) hIcon.style.display = isOpen ? '' : 'none';
+    if (cIcon) cIcon.style.display = isOpen ? 'none' : '';
+  },
+
+  closeMobileMenu() {
+    const menu = document.getElementById('mobile-menu');
+    const hIcon = document.getElementById('hamburger-icon');
+    const cIcon = document.getElementById('close-icon');
+    if (menu) menu.style.display = 'none';
+    if (hIcon) hIcon.style.display = '';
+    if (cIcon) cIcon.style.display = 'none';
   },
 
   navigate(page, options = {}) {
@@ -344,10 +399,12 @@ const App = {
     if (window._newsRefreshTimer) { clearInterval(window._newsRefreshTimer); window._newsRefreshTimer = null; }
     this.currentPage = page;
 
-    // Actualizar clases de nav
+    // Actualizar clases de nav (desktop + mobile)
     document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
     const activeBtn = document.getElementById(`nav-${page}`);
     if (activeBtn) activeBtn.classList.add('active');
+    const activeMBtn = document.getElementById(`mnav-${page}`);
+    if (activeMBtn) activeMBtn.classList.add('active');
 
     const container = document.getElementById('page-content');
     container.innerHTML = Utils.spinner();
@@ -469,7 +526,7 @@ const App = {
 
   async openSearch() {
     Utils.showModal(`
-      <div style="min-width:460px;">
+      <div style="width:100%;max-width:460px;">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
           <span style="font-size:18px;">🔍</span>
           <input type="text" id="gs-input"

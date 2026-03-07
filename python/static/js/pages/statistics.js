@@ -394,15 +394,16 @@ Pages.Statistics = async function(container, opts) {
     }
 
     // ── HTML base ─────────────────────────────────────────────────────────────
-    const ss = 'background:#1e293b;color:#e2e8f0;border:1px solid #334155;border-radius:8px;padding:7px 12px;font-size:13px;cursor:pointer;outline:none;min-width:150px;';
+    const ss = 'background-color:rgba(255,255,255,0.04);color:#e2e8f0;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:9px 30px 9px 12px;font-size:13px;cursor:pointer;outline:none;min-width:150px;transition:border-color 0.2s;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'12\' height=\'12\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%2394a3b8\' stroke-width=\'2.5\' stroke-linecap=\'round\'%3E%3Cpath d=\'M6 9l6 6 6-6\'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;';
 
     container.innerHTML = `
       <div class="mb-6">
         <h2 class="text-3xl font-black" style="color:#60a5fa;">📈 Estadísticas</h2>
       </div>
+      ${Utils.wrapFilters(`
       <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:20px;
-                  padding:14px 16px;background:#1e293b;border-radius:12px;border:1px solid #334155;">
-        <span style="color:#94a3b8;font-size:13px;font-weight:600;">🔍 Filtrar:</span>
+                  padding:14px 16px;background:rgba(255,255,255,0.03);border-radius:12px;border:1px solid rgba(255,255,255,0.06);">
+        <span style="color:#64748b;font-size:12px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;">Filtrar</span>
         <select id="flt-sport"    style="${ss}"></select>
         <select id="flt-category" style="${ss}"></select>
         <select id="flt-gender"   style="${ss}"></select>
@@ -411,11 +412,12 @@ Pages.Statistics = async function(container, opts) {
           ${allSchools.map(s => `<option value="${s}">${Utils.truncate(s,28)}</option>`).join('')}
         </select>
         <button id="flt-clear"
-          style="background:#334155;color:#94a3b8;border:none;border-radius:8px;
-                 padding:7px 14px;font-size:13px;cursor:pointer;">
+          style="background:rgba(255,255,255,0.04);color:#64748b;border:1px solid rgba(255,255,255,0.08);border-radius:8px;
+                 padding:7px 14px;font-size:13px;cursor:pointer;transition:all 0.2s;">
           ✕ Limpiar
         </button>
       </div>
+      `, 'stat-filters')}
       <div id="stat-tabs" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;"></div>
       <div id="stat-content" class="card"></div>
     `;

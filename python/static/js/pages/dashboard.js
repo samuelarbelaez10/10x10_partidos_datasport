@@ -39,7 +39,7 @@ Pages.Dashboard = async function(container, opts) {
       </div>
 
       <!-- Stats rápidas -->
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px;" class="ds-stats">
         <div class="card text-center" style="border-top:3px solid #3b82f6;">
           <div class="stat-number">${matches.length}</div>
           <div class="text-gray-400 mt-1 text-sm">Total Partidos</div>
@@ -66,13 +66,13 @@ Pages.Dashboard = async function(container, opts) {
           <span style="animation:pulse 1.2s infinite;">🔴</span> En Vivo Ahora
           <span style="font-size:12px;font-weight:600;background:#dc2626;color:white;padding:2px 8px;border-radius:10px;">${liveMatches.length} partido${liveMatches.length > 1 ? 's' : ''}</span>
         </h3>
-        <div style="display:grid;gap:12px;${liveMatches.length > 1 ? 'grid-template-columns:1fr 1fr;' : ''}">
+        <div style="display:grid;gap:12px;${liveMatches.length > 1 ? 'grid-template-columns:repeat(auto-fit,minmax(260px,1fr));' : ''}">
           ${liveMatches.map(m => _liveCard(m)).join('')}
         </div>
       </div>` : ''}
 
       <!-- Grid principal -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;">
 
         <!-- Hoy -->
         <div class="card">

@@ -169,42 +169,44 @@ Pages.Players = async function(container, opts) {
       </div>
 
       <!-- Filtros -->
+      ${Utils.wrapFilters(`
       <div class="card mb-5" style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;">
         <div style="flex:2;min-width:180px;position:relative;">
           <label class="text-gray-400 text-sm">Buscar</label>
           <input type="text" id="pl-search" class="input-field mt-1"
             placeholder="🔍 Buscar jugador..."
-            oninput="Pages._plFilter()">
+            oninput="Pages._plFilter();Utils.updateFilterCount('pl-filters')">
         </div>
         <div style="flex:1;min-width:130px;">
           <label class="text-gray-400 text-sm">Deporte</label>
-          <select id="pl-sport" class="input-field mt-1" onchange="Pages._plFilter()">
+          <select id="pl-sport" class="input-field mt-1" onchange="Pages._plFilter();Utils.updateFilterCount('pl-filters')">
             <option value="">Todos</option>
             ${sports.map(s => `<option value="${s.name}">${Utils.sportIcon(s.name)} ${s.name}</option>`).join('')}
           </select>
         </div>
         <div style="flex:1;min-width:120px;">
           <label class="text-gray-400 text-sm">Género</label>
-          <select id="pl-gender" class="input-field mt-1" onchange="Pages._plFilter()">
+          <select id="pl-gender" class="input-field mt-1" onchange="Pages._plFilter();Utils.updateFilterCount('pl-filters')">
             <option value="">Todos</option>
             <option>Masculino</option><option>Femenino</option><option>Mixto</option>
           </select>
         </div>
         <div style="flex:1;min-width:130px;">
           <label class="text-gray-400 text-sm">Categoría</label>
-          <select id="pl-category" class="input-field mt-1" onchange="Pages._plFilter()">
+          <select id="pl-category" class="input-field mt-1" onchange="Pages._plFilter();Utils.updateFilterCount('pl-filters')">
             <option value="">Todas</option>
             ${allCategories.map(c => `<option value="${c}">${c}</option>`).join('')}
           </select>
         </div>
         <div style="flex:1;min-width:140px;">
           <label class="text-gray-400 text-sm">Colegio</label>
-          <select id="pl-school" class="input-field mt-1" onchange="Pages._plFilter()">
+          <select id="pl-school" class="input-field mt-1" onchange="Pages._plFilter();Utils.updateFilterCount('pl-filters')">
             <option value="">Todos</option>
             ${schools.map(s => `<option value="${s}">${Utils.truncate(s, 28)}</option>`).join('')}
           </select>
         </div>
       </div>
+      `, 'pl-filters')}
 
       <div id="players-list"></div>
     `;

@@ -106,6 +106,40 @@ const Utils = {
     };
     return colors[sport] || '#3b82f6';
   },
+
+  // Mobile filter toggle wrapper
+  wrapFilters(filterHtml, id) {
+    return `
+      <button class="mobile-filter-btn" onclick="Utils.toggleFilters('${id}')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="6" y1="12" x2="18" y2="12"/><line x1="8" y1="18" x2="16" y2="18"/></svg>
+        Filtros
+        <span class="filter-count" id="${id}-count" style="display:none;">0</span>
+      </button>
+      <div class="mobile-filter-content" id="${id}-content">
+        ${filterHtml}
+      </div>`;
+  },
+
+  toggleFilters(id) {
+    const content = document.getElementById(id + '-content');
+    if (!content) return;
+    content.classList.toggle('open');
+  },
+
+  updateFilterCount(id) {
+    const content = document.getElementById(id + '-content');
+    const badge = document.getElementById(id + '-count');
+    if (!content || !badge) return;
+    let count = 0;
+    content.querySelectorAll('select, input[type="date"]').forEach(el => {
+      if (el.value && el.value !== '') count++;
+    });
+    content.querySelectorAll('input[type="text"]').forEach(el => {
+      if (el.value.trim() !== '') count++;
+    });
+    badge.style.display = count > 0 ? '' : 'none';
+    badge.textContent = count;
+  },
 };
 
 // Configuración de deportes (eventos por deporte)

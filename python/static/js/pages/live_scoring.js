@@ -96,31 +96,41 @@ Pages.LiveScoring = async function(container, opts) {
     };
 
     container.innerHTML = `
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
-        <div>
-          <h2 class="text-3xl font-black" style="color:#dc2626;display:flex;align-items:center;gap:10px;">
-            <span style="animation:pulse 1.2s infinite;">🔴</span> En Vivo
-            ${liveMatches.length > 0 ? `<span style="font-size:14px;font-weight:600;background:#dc2626;color:white;padding:2px 10px;border-radius:12px;animation:pulse 1.2s infinite;">${liveMatches.length} activo${liveMatches.length > 1 ? 's' : ''}</span>` : ''}
-          </h2>
-          <p class="text-gray-400 mt-1" style="font-size:13px;">Partidos en curso · gestión en tiempo real</p>
+      <div style="margin-bottom:24px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+          <div>
+            <h2 class="text-3xl font-black" style="color:#dc2626;display:flex;align-items:center;gap:10px;">
+              <span style="animation:pulse 1.2s infinite;">🔴</span> En Vivo
+              ${liveMatches.length > 0 ? `<span style="font-size:14px;font-weight:600;background:#dc2626;color:white;padding:2px 10px;border-radius:12px;animation:pulse 1.2s infinite;">${liveMatches.length} activo${liveMatches.length > 1 ? 's' : ''}</span>` : ''}
+            </h2>
+            <p class="text-gray-400 mt-1" style="font-size:13px;">Partidos en curso · gestión en tiempo real</p>
+          </div>
         </div>
-        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-          ${sports.length > 1 ? `
-          <select id="lv-sport" class="input-field" style="min-width:140px;" onchange="window._lvFilter()">
-            <option value="">Todos deportes</option>
-            ${sports.map(s => `<option value="${s}">${Utils.sportIcon(s)} ${s}</option>`).join('')}
-          </select>` : ''}
-          ${genders.length > 1 ? `
-          <select id="lv-gender" class="input-field" style="min-width:120px;" onchange="window._lvFilter()">
-            <option value="">Todos géneros</option>
-            ${genders.map(g => `<option value="${g}">${g}</option>`).join('')}
-          </select>` : ''}
-          ${categories.length > 1 ? `
-          <select id="lv-category" class="input-field" style="min-width:130px;" onchange="window._lvFilter()">
-            <option value="">Todas categorías</option>
-            ${categories.map(c => `<option value="${c}">${c}</option>`).join('')}
-          </select>` : ''}
+        ${(sports.length > 1 || genders.length > 1 || categories.length > 1) ? Utils.wrapFilters(`
+        <div class="card mt-3" style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;">
+          ${sports.length > 1 ? `<div style="flex:1;min-width:100px;">
+            <label class="text-gray-400 text-sm">Deporte</label>
+            <select id="lv-sport" class="input-field mt-1" onchange="window._lvFilter();Utils.updateFilterCount('lv-filters')">
+              <option value="">Todos</option>
+              ${sports.map(s => `<option value="${s}">${Utils.sportIcon(s)} ${s}</option>`).join('')}
+            </select>
+          </div>` : ''}
+          ${genders.length > 1 ? `<div style="flex:1;min-width:80px;">
+            <label class="text-gray-400 text-sm">Género</label>
+            <select id="lv-gender" class="input-field mt-1" onchange="window._lvFilter();Utils.updateFilterCount('lv-filters')">
+              <option value="">Todos</option>
+              ${genders.map(g => `<option value="${g}">${g}</option>`).join('')}
+            </select>
+          </div>` : ''}
+          ${categories.length > 1 ? `<div style="flex:1;min-width:90px;">
+            <label class="text-gray-400 text-sm">Categoría</label>
+            <select id="lv-category" class="input-field mt-1" onchange="window._lvFilter();Utils.updateFilterCount('lv-filters')">
+              <option value="">Todas</option>
+              ${categories.map(c => `<option value="${c}">${c}</option>`).join('')}
+            </select>
+          </div>` : ''}
         </div>
+        `, 'lv-filters') : ''}
       </div>
       <div id="lv-list"></div>
 
@@ -151,24 +161,22 @@ function _lvCard(m) {
   const border = m.status === 'live' ? '#dc2626' : m.status === 'finished' ? '#6b7280' : '#3b82f6';
   return `
     <div class="card mb-4" style="border-left:4px solid ${border};">
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
-        <div>
-          <div style="font-size:13px;color:#94a3b8;">${Utils.sportIcon(m.sport)} ${m.sport} &bull; ${m.gender || ''} &bull; ${m.category || ''}</div>
-          <div style="display:flex;align-items:center;gap:16px;margin-top:10px;">
-            <span style="font-weight:700;font-size:17px;">${Utils.truncate(s1, 22)}</span>
-            <span style="font-weight:900;font-size:26px;color:#60a5fa;">${m.team1_score ?? 0} - ${m.team2_score ?? 0}</span>
-            <span style="font-weight:700;font-size:17px;">${Utils.truncate(s2, 22)}</span>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:12px;color:#94a3b8;">${Utils.sportIcon(m.sport)} ${m.sport} &bull; ${m.gender || ''} &bull; ${m.category || ''}</div>
+          <div style="display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap;">
+            <span style="font-weight:700;font-size:14px;">${Utils.truncate(s1, 18)}</span>
+            <span style="font-weight:900;font-size:22px;color:#60a5fa;">${m.team1_score ?? 0} - ${m.team2_score ?? 0}</span>
+            <span style="font-weight:700;font-size:14px;">${Utils.truncate(s2, 18)}</span>
           </div>
-          <div style="margin-top:6px;font-size:12px;color:#64748b;">📅 ${Utils.formatDateTime(m.match_date)} &bull; 📍 ${m.location || ''}</div>
+          <div style="margin-top:6px;font-size:11px;color:#64748b;">📅 ${Utils.formatDateTime(m.match_date)} &bull; 📍 ${m.location || ''}</div>
         </div>
-        <div style="text-align:center;">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
           ${Utils.statusBadge(m.status)}
-          <div style="margin-top:8px;">
-            ${App.canEditMatches()
-              ? `<button class="btn-primary" style="font-size:13px;" onclick="App.navigate('liveScoring',{matchId:'${m.id}'})">Gestionar →</button>`
-              : `<button class="btn-ghost" style="font-size:13px;" onclick="App.navigate('liveScoring',{matchId:'${m.id}'})">Ver →</button>`
-            }
-          </div>
+          ${App.canEditMatches()
+            ? `<button class="btn-primary" style="font-size:13px;" onclick="App.navigate('liveScoring',{matchId:'${m.id}'})">Gestionar →</button>`
+            : `<button class="btn-ghost" style="font-size:13px;" onclick="App.navigate('liveScoring',{matchId:'${m.id}'})">Ver →</button>`
+          }
         </div>
       </div>
     </div>`;
@@ -215,9 +223,9 @@ async function _lvDetail(container, matchId, allMatches, allPlayers) {
             📍 ${match.location || ''} &bull; 📅 ${Utils.formatDateTime(match.match_date)}
           </div>
 
-          <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;margin-top:24px;">
-            <div style="text-align:right;">
-              <div style="font-weight:800;font-size:18px;">${s1}</div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-top:24px;flex-wrap:wrap;">
+            <div style="text-align:center;min-width:80px;">
+              <div style="font-weight:800;font-size:16px;">${s1}</div>
               ${canManage && match.status === 'live' ? (sport === 'Voleibol' ? `
                 <input type="hidden" id="sc1" value="${sc1}">
               ` : `
@@ -227,9 +235,9 @@ async function _lvDetail(container, matchId, allMatches, allPlayers) {
                          border-radius:8px;color:white;">
               `) : ''}
             </div>
-            <div style="font-size:56px;font-weight:900;color:#60a5fa;line-height:1;">${sc1} - ${sc2}</div>
-            <div style="text-align:left;">
-              <div style="font-weight:800;font-size:18px;">${s2}</div>
+            <div style="font-size:48px;font-weight:900;color:#60a5fa;line-height:1;flex-shrink:0;" class="score-display">${sc1} - ${sc2}</div>
+            <div style="text-align:center;min-width:80px;">
+              <div style="font-weight:800;font-size:16px;">${s2}</div>
               ${canManage && match.status === 'live' ? (sport === 'Voleibol' ? `
                 <input type="hidden" id="sc2" value="${sc2}">
               ` : `

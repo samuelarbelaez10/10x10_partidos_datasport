@@ -60,15 +60,15 @@ Pages.Results = async function(container, opts) {
     const _resCard = (m) => `
       <div class="card mb-4" style="cursor:pointer;border-left:4px solid ${Utils.sportColor(m.sport)};"
            onclick="Pages._openResult('${m.id}')">
-        <div style="display:flex;justify-content:space-between;align-items:center;">
-          <div>
-            <div style="font-size:13px;color:#94a3b8;">${Utils.sportIcon(m.sport)} ${m.sport} &bull; ${m.gender || ''} &bull; ${m.category || ''}</div>
-            <div style="display:flex;align-items:center;gap:16px;margin-top:8px;">
-              <span style="font-weight:700;font-size:16px;">${Utils.truncate(m.team1?.name||m.team1?.school?.name||'Equipo 1',22)}</span>
-              <span style="font-weight:900;font-size:26px;color:#10b981;">${m.team1_score} - ${m.team2_score}</span>
-              <span style="font-weight:700;font-size:16px;">${Utils.truncate(m.team2?.name||m.team2?.school?.name||'Equipo 2',22)}</span>
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:12px;color:#94a3b8;">${Utils.sportIcon(m.sport)} ${m.sport} &bull; ${m.gender || ''} &bull; ${m.category || ''}</div>
+            <div style="display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap;">
+              <span style="font-weight:700;font-size:14px;">${Utils.truncate(m.team1?.name||m.team1?.school?.name||'Equipo 1',18)}</span>
+              <span style="font-weight:900;font-size:22px;color:#10b981;">${m.team1_score} - ${m.team2_score}</span>
+              <span style="font-weight:700;font-size:14px;">${Utils.truncate(m.team2?.name||m.team2?.school?.name||'Equipo 2',18)}</span>
             </div>
-            <div style="font-size:12px;color:#64748b;margin-top:6px;">📅 ${Utils.formatDateTime(m.match_date)} &bull; 📍 ${m.location||''}</div>
+            <div style="font-size:11px;color:#64748b;margin-top:6px;">📅 ${Utils.formatDateTime(m.match_date)} &bull; 📍 ${m.location||''}</div>
           </div>
           <span class="badge-finished">Finalizado</span>
         </div>
@@ -89,40 +89,42 @@ Pages.Results = async function(container, opts) {
         <h2 class="text-3xl font-black" style="color:#60a5fa;">📊 Resultados</h2>
         <p class="text-gray-400 mt-1" id="res-count">${matches.length} partidos finalizados</p>
       </div>
+      ${Utils.wrapFilters(`
       <div class="card mb-6" style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;">
         <div style="flex:1;min-width:130px;">
           <label class="text-gray-400 text-sm">Deporte</label>
-          <select class="input-field mt-1" id="res-sport" onchange="window._resFilter()">
+          <select class="input-field mt-1" id="res-sport" onchange="window._resFilter();Utils.updateFilterCount('res-filters')">
             <option value="">Todos</option>
             ${sports.map(s => `<option value="${s.name}">${Utils.sportIcon(s.name)} ${s.name}</option>`).join('')}
           </select>
         </div>
         <div style="flex:1;min-width:120px;">
           <label class="text-gray-400 text-sm">Género</label>
-          <select class="input-field mt-1" id="res-gender" onchange="window._resFilter()">
+          <select class="input-field mt-1" id="res-gender" onchange="window._resFilter();Utils.updateFilterCount('res-filters')">
             <option value="">Todos</option>
             <option>Masculino</option><option>Femenino</option><option>Mixto</option>
           </select>
         </div>
         <div style="flex:1;min-width:130px;">
           <label class="text-gray-400 text-sm">Categoría</label>
-          <select class="input-field mt-1" id="res-category" onchange="window._resFilter()">
+          <select class="input-field mt-1" id="res-category" onchange="window._resFilter();Utils.updateFilterCount('res-filters')">
             <option value="">Todas</option>
             ${allCategories.map(c => `<option value="${c}">${c}</option>`).join('')}
           </select>
         </div>
         <div style="flex:1;min-width:140px;">
           <label class="text-gray-400 text-sm">Colegio</label>
-          <select class="input-field mt-1" id="res-school" onchange="window._resFilter()">
+          <select class="input-field mt-1" id="res-school" onchange="window._resFilter();Utils.updateFilterCount('res-filters')">
             <option value="">Todos</option>
             ${allSchools.map(s => `<option value="${s}">${Utils.truncate(s,28)}</option>`).join('')}
           </select>
         </div>
         <button class="btn-ghost" style="padding:8px 14px;" onclick="
           ['res-sport','res-gender','res-category','res-school'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
-          window._resFilter();
+          window._resFilter();Utils.updateFilterCount('res-filters');
         ">🔄 Limpiar</button>
       </div>
+      `, 'res-filters')}
       <div id="res-list"></div>
     `;
 
@@ -219,16 +221,16 @@ async function _showResultDetail(container, m, players) {
       </div>
       <div class="card mb-6" style="text-align:center;border:2px solid #10b981;">
         <div style="font-size:13px;color:#94a3b8;margin-bottom:12px;">${Utils.sportIcon(sport)} ${sport} &bull; ${m.gender||''} &bull; ${m.category||''}</div>
-        <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:20px;">
-          <div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;">
+          <div style="text-align:center;min-width:80px;">
             <div class="team-name-large">${s1}</div>
             ${m.team1_score > m.team2_score ? '<div style="color:#fbbf24;font-size:12px;margin-top:4px;">🏆 Ganador</div>' : ''}
           </div>
-          <div>
+          <div style="text-align:center;">
             <div class="score-display">${m.team1_score} - ${m.team2_score}</div>
-            <div style="color:#10b981;font-size:14px;margin-top:4px;">Partido Finalizado</div>
+            <div style="color:#10b981;font-size:13px;margin-top:4px;">Partido Finalizado</div>
           </div>
-          <div>
+          <div style="text-align:center;min-width:80px;">
             <div class="team-name-large">${s2}</div>
             ${m.team2_score > m.team1_score ? '<div style="color:#fbbf24;font-size:12px;margin-top:4px;">🏆 Ganador</div>' : ''}
           </div>
@@ -420,15 +422,15 @@ function _resEventLog(events, players, m, canDelete) {
   }
 
   return `
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
-      <div style="padding-right:16px;border-right:1px solid rgba(255,255,255,0.07);">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0;">
+      <div style="padding-right:16px;padding-bottom:12px;border-right:1px solid rgba(255,255,255,0.07);">
         <div style="font-weight:700;font-size:13px;color:#60a5fa;margin-bottom:10px;
                     padding-bottom:6px;border-bottom:1px solid rgba(96,165,250,0.2);">
           ${Utils.truncate(s1, 20)}
         </div>
         ${renderTeamEvents(t1Events)}
       </div>
-      <div style="padding-left:16px;">
+      <div style="padding-left:16px;padding-bottom:12px;">
         <div style="font-weight:700;font-size:13px;color:#f472b6;margin-bottom:10px;
                     padding-bottom:6px;border-bottom:1px solid rgba(244,114,182,0.2);">
           ${Utils.truncate(s2, 20)}

@@ -118,28 +118,29 @@ Pages.Calendar = async function(container, opts) {
       </div>
 
       <!-- Filtros -->
+      ${Utils.wrapFilters(`
       <div class="card mb-6" style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;">
         <div style="flex:1;min-width:130px;">
           <label class="text-gray-400 text-sm">Deporte</label>
-          <select class="input-field mt-1" id="f-sport" onchange="Pages._calFilter()">
+          <select class="input-field mt-1" id="f-sport" onchange="Pages._calFilter();Utils.updateFilterCount('cal-filters')">
             <option value="">Todos</option>
             ${sports.map(s => `<option value="${s.name}">${Utils.sportIcon(s.name)} ${s.name}</option>`).join('')}
           </select>
         </div>
         <div style="flex:1;min-width:120px;">
           <label class="text-gray-400 text-sm">Género</label>
-          <select class="input-field mt-1" id="f-gender" onchange="Pages._calFilter()">
+          <select class="input-field mt-1" id="f-gender" onchange="Pages._calFilter();Utils.updateFilterCount('cal-filters')">
             <option value="">Todos</option>
             <option>Masculino</option><option>Femenino</option><option>Mixto</option>
           </select>
         </div>
         <div style="flex:1;min-width:130px;">
           <label class="text-gray-400 text-sm">Fecha</label>
-          <input type="date" class="input-field mt-1" id="f-date" onchange="Pages._calFilter()">
+          <input type="date" class="input-field mt-1" id="f-date" onchange="Pages._calFilter();Utils.updateFilterCount('cal-filters')">
         </div>
         <div style="flex:1;min-width:120px;">
           <label class="text-gray-400 text-sm">Estado</label>
-          <select class="input-field mt-1" id="f-status" onchange="Pages._calFilter()">
+          <select class="input-field mt-1" id="f-status" onchange="Pages._calFilter();Utils.updateFilterCount('cal-filters')">
             <option value="">Todos</option>
             <option value="pending">Pendiente</option>
             <option value="live">En Vivo</option>
@@ -148,7 +149,7 @@ Pages.Calendar = async function(container, opts) {
         </div>
         <div style="flex:1;min-width:130px;">
           <label class="text-gray-400 text-sm">Fase</label>
-          <select class="input-field mt-1" id="f-phase" onchange="Pages._calFilter()">
+          <select class="input-field mt-1" id="f-phase" onchange="Pages._calFilter();Utils.updateFilterCount('cal-filters')">
             <option value="">Todas</option>
             <option value="group">🏟️ Fase de Grupos</option>
             <option value="intergroup">🔀 Intergrupo</option>
@@ -157,14 +158,14 @@ Pages.Calendar = async function(container, opts) {
         </div>
         <div style="flex:1;min-width:130px;">
           <label class="text-gray-400 text-sm">Categoría</label>
-          <select class="input-field mt-1" id="f-category" onchange="Pages._calFilter()">
+          <select class="input-field mt-1" id="f-category" onchange="Pages._calFilter();Utils.updateFilterCount('cal-filters')">
             <option value="">Todas</option>
             ${allCategories.map(c => `<option value="${c}">${c}</option>`).join('')}
           </select>
         </div>
         <div style="flex:1;min-width:140px;">
           <label class="text-gray-400 text-sm">Colegio</label>
-          <select class="input-field mt-1" id="f-school" onchange="Pages._calFilter()">
+          <select class="input-field mt-1" id="f-school" onchange="Pages._calFilter();Utils.updateFilterCount('cal-filters')">
             <option value="">Todos</option>
             ${allSchools.map(s => `<option value="${s}">${Utils.truncate(s,28)}</option>`).join('')}
           </select>
@@ -174,9 +175,10 @@ Pages.Calendar = async function(container, opts) {
             const el = document.getElementById(id);
             if (el) el.value = '';
           });
-          Pages._calFilter();
+          Pages._calFilter();Utils.updateFilterCount('cal-filters');
         ">🔄 Limpiar</button>
       </div>
+      `, 'cal-filters')}
 
       <div id="cal-matches-list"></div>
     `;
@@ -434,20 +436,20 @@ function _calMatchCard(m) {
 
   return `
     <div class="card mb-3" style="border-left: 4px solid ${Utils.sportColor(sport)};">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-        <div style="flex:1;">
-          <div style="font-size:13px;color:#94a3b8;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;">
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:12px;color:#94a3b8;margin-bottom:8px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
             ${icon} ${sport} &bull; ${m.gender || ''} &bull; ${m.category || ''}
             ${phaseBadge}
           </div>
-          <div style="display:flex;align-items:center;gap:16px;">
-            <span style="font-weight:700;font-size:16px;">${Utils.truncate(s1, 25)}</span>
-            <span style="font-weight:900;font-size:22px;color:#60a5fa;padding:4px 16px;background:rgba(96,165,250,0.1);border-radius:8px;">${m.team1_score ?? 0} - ${m.team2_score ?? 0}</span>
-            <span style="font-weight:700;font-size:16px;">${Utils.truncate(s2, 25)}</span>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <span style="font-weight:700;font-size:14px;">${Utils.truncate(s1, 20)}</span>
+            <span style="font-weight:900;font-size:20px;color:#60a5fa;padding:2px 10px;background:rgba(96,165,250,0.1);border-radius:8px;">${m.team1_score ?? 0} - ${m.team2_score ?? 0}</span>
+            <span style="font-weight:700;font-size:14px;">${Utils.truncate(s2, 20)}</span>
           </div>
-          <div style="margin-top:8px;font-size:12px;color:#64748b;">📅 ${date} &bull; 📍 ${m.location || 'Por definir'}</div>
+          <div style="margin-top:6px;font-size:11px;color:#64748b;">📅 ${date} &bull; 📍 ${m.location || 'Por definir'}</div>
         </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px;">
           ${statusBadge}
           ${actions}
         </div>

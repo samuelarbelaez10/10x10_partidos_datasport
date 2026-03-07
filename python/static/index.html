@@ -67,14 +67,14 @@
       transform: translateY(-1px); box-shadow: 0 5px 16px rgba(220,38,38,0.6);
     }
     .btn-ghost {
-      background: rgba(255,255,255,0.06); color: var(--color-text);
-      padding: 8px 16px; border-radius: 10px;
-      border: 1px solid rgba(255,255,255,0.14); cursor: pointer;
-      transition: all 0.2s; font-family: inherit;
+      background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.7);
+      padding: 8px 16px; border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.1); cursor: pointer;
+      transition: all 0.2s; font-family: inherit; font-size: 13px;
     }
     .btn-ghost:hover {
-      background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.28);
-      transform: translateY(-1px);
+      background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.9);
     }
     .nav-tab {
       background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.78);
@@ -109,14 +109,24 @@
     }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.55} }
     .input-field {
-      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
-      color: white; padding: 10px 14px; border-radius: 10px;
-      width: 100%; box-sizing: border-box;
-      transition: border-color 0.2s, box-shadow 0.2s; font-family: inherit;
+      background-color: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+      color: #e2e8f0; padding: 9px 12px; border-radius: 8px;
+      width: 100%; box-sizing: border-box; font-size: 13px;
+      transition: border-color 0.2s, background-color 0.2s; font-family: inherit;
+      -webkit-appearance: none; appearance: none;
+    }
+    .input-field:hover {
+      background-color: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.16);
     }
     .input-field:focus {
-      outline: none; border-color: #3b82f6;
-      box-shadow: 0 0 0 3px rgba(59,130,246,0.18);
+      outline: none; border-color: rgba(59,130,246,0.5);
+      background-color: rgba(255,255,255,0.06);
+      box-shadow: 0 0 0 2px rgba(59,130,246,0.1);
+    }
+    select.input-field {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 10px center;
+      padding-right: 30px; cursor: pointer;
     }
     .input-field option { background: #1e293b; }
     .table-row:hover { background: rgba(255,255,255,0.04); }
@@ -193,6 +203,161 @@
       display: flex; align-items: center; justify-content: center;
       font-size: 24px; margin: 0 auto 13px;
       box-shadow: 0 4px 18px rgba(0,0,0,0.4);
+    }
+
+    /* Filter toggle button — visible on all screens */
+    .mobile-filter-btn {
+      display: flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, rgba(59,130,246,0.08) 0%, rgba(96,165,250,0.04) 100%);
+      color: #93c5fd;
+      border: 1px solid rgba(59,130,246,0.18); border-radius: 10px;
+      padding: 9px 18px; font-size: 13px; font-weight: 600;
+      cursor: pointer; font-family: inherit;
+      transition: all 0.2s;
+      margin-bottom: 12px;
+      width: auto;
+    }
+    .mobile-filter-btn:hover {
+      background: linear-gradient(135deg, rgba(59,130,246,0.14) 0%, rgba(96,165,250,0.08) 100%);
+      border-color: rgba(59,130,246,0.3);
+    }
+    .mobile-filter-btn:active { transform: scale(0.98); }
+    .mobile-filter-btn svg { opacity: 0.7; }
+    .mobile-filter-btn .filter-count {
+      background: linear-gradient(135deg, #2563eb, #3b82f6);
+      color: white; font-size: 11px; font-weight: 800;
+      padding: 2px 8px; border-radius: 10px; min-width: 20px; text-align: center;
+      box-shadow: 0 2px 6px rgba(37,99,235,0.3);
+    }
+    .mobile-filter-content { display: none; }
+    .mobile-filter-content.open {
+      display: block;
+      animation: filterSlideDown 0.2s ease-out;
+    }
+    @keyframes filterSlideDown { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
+
+    /* ─── RESPONSIVE / MOBILE ────────────────────────────────────── */
+    @media (max-width: 768px) {
+      /* Hamburger menu */
+      #hamburger-btn { display: flex !important; align-items: center; justify-content: center; }
+      #header-controls-desktop { display: none !important; }
+      #main-nav { display: none !important; }
+
+      /* Mobile nav tabs */
+      #mobile-nav { display: flex; gap: 6px; flex-wrap: wrap; }
+      #mobile-nav .nav-tab {
+        font-size: 11px !important; padding: 6px 10px !important;
+        flex: 0 0 auto;
+      }
+      #mobile-nav .nav-tab.active {
+        background: #ffffff !important; color: #1e3a8a !important;
+        font-weight: 700 !important;
+      }
+
+      /* Header */
+      header { padding: 10px 12px 8px !important; }
+
+      /* Main content */
+      #page-content { padding: 14px !important; }
+
+      /* Cards */
+      .card { padding: 12px !important; border-radius: 14px !important; }
+
+      /* Modals */
+      .modal-box { padding: 18px !important; max-width: 95vw !important; border-radius: 16px !important; }
+      .modal-box > div[style*="min-width"] { min-width: unset !important; }
+
+      /* Toast */
+      .toast { left: 16px; right: 16px; bottom: 16px; text-align: center; }
+
+      /* Grids: force single or dual column */
+      [style*="grid-template-columns:repeat(4"] { grid-template-columns: repeat(2, 1fr) !important; }
+      [style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+      [style*="grid-template-columns:1fr auto 1fr"] { grid-template-columns: 1fr !important; }
+
+      /* Score display */
+      .score-display { font-size: 36px !important; }
+      .team-name-large { font-size: 14px !important; }
+
+      /* Stat numbers */
+      .stat-number { font-size: 28px !important; }
+
+      /* ── Mobile filter button: full width ── */
+      .mobile-filter-btn {
+        width: 100% !important; justify-content: center !important;
+        padding: 11px 20px !important; font-size: 13px !important;
+        border-radius: 12px !important;
+      }
+
+      /* ── Mobile filter content: compact grid ── */
+      .mobile-filter-content .card,
+      .mobile-filter-content > div {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 10px !important;
+        padding: 14px !important;
+        margin-bottom: 14px;
+      }
+      .mobile-filter-content .card > div,
+      .mobile-filter-content > div > div {
+        min-width: 0 !important;
+        flex: unset !important;
+      }
+      .mobile-filter-content .card > button,
+      .mobile-filter-content > div > button,
+      .mobile-filter-content .card > span,
+      .mobile-filter-content > div > span {
+        grid-column: 1 / -1;
+      }
+
+      /* Smaller filter inputs on mobile */
+      .input-field {
+        padding: 7px 10px !important;
+        font-size: 13px !important;
+      }
+      .text-gray-400.text-sm { font-size: 11px !important; }
+
+      /* Inline filters (live scoring style) */
+      select.input-field[style*="min-width"],
+      select[style*="min-width:150px"],
+      select[style*="min-width:100px"],
+      select[style*="min-width:80px"],
+      select[style*="min-width:90px"] {
+        min-width: 0 !important;
+        width: 100% !important;
+        font-size: 12px !important;
+        padding: 6px 8px !important;
+      }
+
+      /* Tables: smaller */
+      table { font-size: 12px !important; }
+      thead th { padding: 8px 4px !important; font-size: 10px !important; }
+      tbody td { padding: 8px 4px !important; }
+
+      /* Login */
+      .login-card { padding: 28px 20px 24px !important; }
+
+      /* Tournament card */
+      #tournament-list > div > div:first-child { padding: 20px 16px 16px !important; }
+      #tournament-list > div > div:last-child { padding: 12px 16px !important; flex-direction: column !important; }
+
+      /* Titles */
+      h2.text-3xl { font-size: 22px !important; }
+    }
+
+    @media (max-width: 480px) {
+      [style*="grid-template-columns:repeat(2"] { grid-template-columns: 1fr !important; }
+      #mobile-nav .nav-tab { font-size: 10px !important; padding: 5px 8px !important; }
+      header h1 { font-size: 18px !important; }
+      h2.text-3xl { font-size: 20px !important; }
+      /* Hide logo on very small screens */
+      .header-logo { display: none !important; }
+
+      /* Filters: single column on very small screens */
+      .mobile-filter-content .card,
+      .mobile-filter-content > div {
+        grid-template-columns: 1fr !important;
+      }
     }
   </style>
 </head>
@@ -350,58 +515,97 @@
 <div id="main-app" class="hidden min-h-screen flex flex-col">
   <!-- Header -->
   <header style="background: var(--gradient-header);
-                 padding: 16px 40px 14px;
+                 padding: 16px 20px 14px;
                  box-shadow: 0 4px 32px rgba(0,0,0,0.5), 0 1px 0 rgba(96,165,250,0.22);
                  position: relative;
                  border-bottom: 1px solid rgba(59,130,246,0.2);">
     <div style="max-width:1400px;margin:0 auto;">
-      <!-- Logo + título -->
-      <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px;">
-        <!-- Logo ∧ mini en header -->
-        <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;
-                    width:44px;justify-content:center;">
-          <span style="font-size:7.5px;font-weight:800;letter-spacing:3px;color:rgba(255,255,255,0.92);
-                       text-transform:uppercase;line-height:1;">DATA</span>
-          <svg width="36" height="28" viewBox="0 0 80 64" fill="none" xmlns="http://www.w3.org/2000/svg"
-               style="filter:drop-shadow(0 0 10px rgba(147,197,253,0.65));margin:1px 0;">
-            <defs>
-              <linearGradient id="aGradH" x1="40" y1="4" x2="40" y2="60" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#ffffff"/>
-                <stop offset="100%" stop-color="#93c5fd"/>
-              </linearGradient>
-            </defs>
-            <line x1="40" y1="4" x2="6"  y2="60" stroke="url(#aGradH)" stroke-width="9" stroke-linecap="round"/>
-            <line x1="40" y1="4" x2="74" y2="60" stroke="url(#aGradH)" stroke-width="9" stroke-linecap="round"/>
+      <!-- Top bar: Logo + hamburger -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <!-- Logo ∧ mini en header -->
+          <div class="header-logo" style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;
+                      width:44px;justify-content:center;">
+            <span style="font-size:7.5px;font-weight:800;letter-spacing:3px;color:rgba(255,255,255,0.92);
+                         text-transform:uppercase;line-height:1;">DATA</span>
+            <svg width="36" height="28" viewBox="0 0 80 64" fill="none" xmlns="http://www.w3.org/2000/svg"
+                 style="filter:drop-shadow(0 0 10px rgba(147,197,253,0.65));margin:1px 0;">
+              <defs>
+                <linearGradient id="aGradH" x1="40" y1="4" x2="40" y2="60" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#ffffff"/>
+                  <stop offset="100%" stop-color="#93c5fd"/>
+                </linearGradient>
+              </defs>
+              <line x1="40" y1="4" x2="6"  y2="60" stroke="url(#aGradH)" stroke-width="9" stroke-linecap="round"/>
+              <line x1="40" y1="4" x2="74" y2="60" stroke="url(#aGradH)" stroke-width="9" stroke-linecap="round"/>
+            </svg>
+            <span style="font-size:7.5px;font-weight:800;letter-spacing:3px;color:rgba(255,255,255,0.92);
+                         text-transform:uppercase;line-height:1;">GAMES</span>
+          </div>
+          <div>
+            <h1 style="color:white;font-size:22px;font-weight:900;margin:0;
+                       letter-spacing:-0.5px;text-shadow:0 2px 10px rgba(0,0,0,0.4);">DATA GAMES</h1>
+            <p id="header-tournament-name"
+               style="color:rgba(147,197,253,0.45);font-size:10px;font-weight:700;
+                      letter-spacing:2.5px;text-transform:uppercase;margin:2px 0 0;"></p>
+          </div>
+        </div>
+        <!-- Desktop controls (hidden on mobile) -->
+        <div id="header-controls-desktop" style="display:flex;align-items:center;gap:8px;">
+          <button id="search-btn" onclick="App.openSearch()" class="btn-ghost"
+            style="font-size:12px;padding:6px 13px;border-color:rgba(255,255,255,0.2);"
+            title="Busqueda global (Ctrl+K)">🔍 Buscar</button>
+          <button id="qr-btn" onclick="App.openQr()" class="btn-ghost"
+            style="display:none;font-size:12px;padding:6px 13px;border-color:rgba(255,255,255,0.2);"
+            title="Generar QR de acceso lector">📱 QR</button>
+          <span id="user-badge"
+                style="background:rgba(255,255,255,0.12);color:white;
+                       padding:7px 14px;border-radius:20px;font-size:13px;
+                       border:1px solid rgba(255,255,255,0.18);
+                       backdrop-filter:blur(4px);"></span>
+          <button onclick="App.switchTournament()" class="btn-ghost"
+                  style="font-size:12px;padding:6px 12px;color:rgba(147,197,253,0.8);border-color:rgba(147,197,253,0.2);"
+                  title="Cambiar torneo">🏆 Torneo</button>
+          <button onclick="App.logout()" class="btn-ghost"
+                  style="font-size:12px;padding:6px 12px;color:rgba(255,255,255,0.7);">Salir</button>
+        </div>
+        <!-- Hamburger button (visible on mobile only) -->
+        <button id="hamburger-btn" onclick="App.toggleMobileMenu()"
+                style="display:none;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);
+                       border-radius:10px;padding:8px 10px;cursor:pointer;flex-shrink:0;">
+          <svg id="hamburger-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round">
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
           </svg>
-          <span style="font-size:7.5px;font-weight:800;letter-spacing:3px;color:rgba(255,255,255,0.92);
-                       text-transform:uppercase;line-height:1;">GAMES</span>
-        </div>
-        <div>
-          <h1 style="color:white;font-size:26px;font-weight:900;margin:0;
-                     letter-spacing:-0.5px;text-shadow:0 2px 10px rgba(0,0,0,0.4);">DATA GAMES</h1>
-          <p id="header-tournament-name"
-             style="color:rgba(147,197,253,0.45);font-size:10px;font-weight:700;
-                    letter-spacing:2.5px;text-transform:uppercase;margin:2px 0 0;"></p>
-        </div>
+          <svg id="close-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" style="display:none;">
+            <line x1="6" y1="6" x2="18" y2="18"/>
+            <line x1="6" y1="18" x2="18" y2="6"/>
+          </svg>
+        </button>
       </div>
+      <!-- Desktop nav (always visible on desktop) -->
       <nav id="main-nav" style="display:flex;gap:6px;flex-wrap:wrap;"></nav>
-      <div style="position:absolute;top:16px;right:40px;display:flex;align-items:center;gap:8px;">
-        <button id="search-btn" onclick="App.openSearch()" class="btn-ghost"
-          style="font-size:12px;padding:6px 13px;border-color:rgba(255,255,255,0.2);"
-          title="Búsqueda global (Ctrl+K)">🔍 Buscar</button>
-        <button id="qr-btn" onclick="App.openQr()" class="btn-ghost"
-          style="display:none;font-size:12px;padding:6px 13px;border-color:rgba(255,255,255,0.2);"
-          title="Generar QR de acceso lector">📱 QR</button>
-        <span id="user-badge"
-              style="background:rgba(255,255,255,0.12);color:white;
-                     padding:7px 14px;border-radius:20px;font-size:13px;
-                     border:1px solid rgba(255,255,255,0.18);
-                     backdrop-filter:blur(4px);"></span>
-        <button onclick="App.switchTournament()" class="btn-ghost"
-                style="font-size:12px;padding:6px 12px;color:rgba(147,197,253,0.8);border-color:rgba(147,197,253,0.2);"
-                title="Cambiar torneo">🏆 Torneo</button>
-        <button onclick="App.logout()" class="btn-ghost"
-                style="font-size:12px;padding:6px 12px;color:rgba(255,255,255,0.7);">Salir</button>
+      <!-- Mobile menu (hidden by default) -->
+      <div id="mobile-menu" style="display:none;flex-direction:column;gap:10px;padding-top:10px;
+                                    border-top:1px solid rgba(255,255,255,0.12);margin-top:6px;">
+        <nav id="mobile-nav" style="display:flex;gap:6px;flex-wrap:wrap;"></nav>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding-top:8px;
+                    border-top:1px solid rgba(255,255,255,0.06);">
+          <span id="user-badge-mobile"
+                style="background:rgba(255,255,255,0.12);color:white;
+                       padding:5px 10px;border-radius:16px;font-size:11px;
+                       border:1px solid rgba(255,255,255,0.18);
+                       overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:180px;"></span>
+          <button onclick="App.openSearch();App.closeMobileMenu()" class="btn-ghost"
+            style="font-size:11px;padding:5px 10px;border-color:rgba(255,255,255,0.2);">🔍</button>
+          <button id="qr-btn-mobile" onclick="App.openQr();App.closeMobileMenu()" class="btn-ghost"
+            style="display:none;font-size:11px;padding:5px 10px;border-color:rgba(255,255,255,0.2);">📱</button>
+          <button onclick="App.switchTournament();App.closeMobileMenu()" class="btn-ghost"
+                  style="font-size:11px;padding:5px 10px;color:rgba(147,197,253,0.8);border-color:rgba(147,197,253,0.2);">🏆</button>
+          <button onclick="App.logout()" class="btn-ghost"
+                  style="font-size:11px;padding:5px 10px;color:rgba(255,255,255,0.7);">Salir</button>
+        </div>
       </div>
     </div>
   </header>
