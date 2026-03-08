@@ -6,228 +6,280 @@
   <title>DATA GAMES - Big Games 2026</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --color-primary: #1e40af;
-      --color-secondary: #059669;
-      --color-accent: #dc2626;
-      --color-background: #07101f;
-      --color-card: #0c1728;
-      --color-text: #f1f5f9;
-      --gradient-header: linear-gradient(135deg, #060e22 0%, #101d50 40%, #1a3799 72%, #2256d8 100%);
-      --border-subtle: 1px solid rgba(255,255,255,0.07);
-      --shadow-card: 0 4px 28px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.06);
+      --bg: #050810;
+      --surface: #0C1020;
+      --card: #101628;
+      --border: rgba(255,255,255,0.06);
+      --accent: #00D4FF;
+      --accent2: #FF4D00;
+      --green: #00FF88;
+      --purple: #8B5CF6;
+      --text: #E8EDF5;
+      --muted: #5A6480;
     }
+
+    /* ── GLOBAL BACKGROUND ── */
     body {
-      background: var(--color-background); color: var(--color-text);
-      font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
-      background-image:
-        radial-gradient(ellipse 90% 55% at 50% -2%, rgba(30,64,175,0.26) 0%, transparent 62%),
-        radial-gradient(ellipse 45% 35% at 98% 98%, rgba(5,150,105,0.1) 0%, transparent 55%),
-        radial-gradient(circle, rgba(255,255,255,0.022) 1px, transparent 1px);
-      background-size: auto, auto, 30px 30px;
-      min-height: 100vh;
+      background: var(--bg); color: var(--text);
+      font-family: 'DM Sans', system-ui, sans-serif;
+      min-height: 100vh; margin: 0;
     }
+    body::before {
+      content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      background:
+        radial-gradient(ellipse 80% 60% at 10% 10%, rgba(0,212,255,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 90% 90%, rgba(255,77,0,0.05) 0%, transparent 55%),
+        url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0v2M0 20h2M20 38v2M38 20h2' stroke='%23ffffff' stroke-width='.5' opacity='.015'/%3E%3C/svg%3E");
+    }
+
+    /* ── TYPOGRAPHY ── */
+    .font-display { font-family: 'Bebas Neue', sans-serif; }
+    .font-mono { font-family: 'Space Mono', monospace; }
+
+    /* ── CARDS ── */
     .card {
-      background: var(--color-card); border-radius: 18px; padding: 20px;
-      box-shadow: var(--shadow-card); border: var(--border-subtle);
-      transition: border-color 0.25s, box-shadow 0.25s;
+      background: var(--card); border-radius: 16px; padding: 20px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+      transition: transform 0.2s, border-color 0.25s;
     }
+    .card:hover { transform: translateY(-2px); }
+
+    /* ── BUTTONS ── */
     .btn-primary {
-      background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
-      color: white; padding: 10px 20px; border-radius: 10px; border: none;
+      background: linear-gradient(135deg, #0088cc 0%, #00bbff 100%);
+      color: white; padding: 10px 20px; border-radius: 8px; border: none;
       cursor: pointer; font-weight: 600; transition: all 0.2s;
-      box-shadow: 0 2px 12px rgba(37,99,235,0.45); font-family: inherit;
+      box-shadow: 0 2px 12px rgba(0,212,255,0.3);
+      font-family: 'DM Sans', sans-serif; font-size: 14px;
     }
     .btn-primary:hover {
-      background: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 100%);
-      transform: translateY(-2px); box-shadow: 0 6px 24px rgba(37,99,235,0.65);
+      box-shadow: 0 6px 24px rgba(0,212,255,0.45);
+      transform: translateY(-2px);
     }
     .btn-primary:active { transform: translateY(0); }
     .btn-secondary {
-      background: linear-gradient(135deg, #047857 0%, #059669 100%);
-      color: white; padding: 10px 20px; border-radius: 10px; border: none;
+      background: linear-gradient(135deg, #059669 0%, #00FF88 100%);
+      color: #050810; padding: 10px 20px; border-radius: 8px; border: none;
       cursor: pointer; font-weight: 600; transition: all 0.2s;
-      box-shadow: 0 2px 12px rgba(5,150,105,0.45); font-family: inherit;
+      box-shadow: 0 2px 12px rgba(0,255,136,0.25);
+      font-family: 'DM Sans', sans-serif;
     }
-    .btn-secondary:hover {
-      background: linear-gradient(135deg, #065f46 0%, #047857 100%);
-      transform: translateY(-2px); box-shadow: 0 6px 24px rgba(5,150,105,0.65);
-    }
+    .btn-secondary:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,255,136,0.4); }
     .btn-secondary:active { transform: translateY(0); }
     .btn-danger {
-      background: linear-gradient(135deg, #b91c1c 0%, #dc2626 100%);
-      color: white; padding: 8px 16px; border-radius: 10px; border: none;
+      background: linear-gradient(135deg, #cc0000 0%, #ff3333 100%);
+      color: white; padding: 8px 16px; border-radius: 8px; border: none;
       cursor: pointer; font-weight: 600; transition: all 0.2s;
-      box-shadow: 0 2px 10px rgba(220,38,38,0.4); font-family: inherit;
+      box-shadow: 0 2px 10px rgba(255,0,0,0.3);
+      font-family: 'DM Sans', sans-serif;
     }
-    .btn-danger:hover {
-      background: linear-gradient(135deg, #991b1b 0%, #b91c1c 100%);
-      transform: translateY(-1px); box-shadow: 0 5px 16px rgba(220,38,38,0.6);
-    }
+    .btn-danger:hover { transform: translateY(-1px); box-shadow: 0 5px 16px rgba(255,0,0,0.45); }
     .btn-ghost {
-      background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.7);
-      padding: 8px 16px; border-radius: 8px;
-      border: 1px solid rgba(255,255,255,0.1); cursor: pointer;
-      transition: all 0.2s; font-family: inherit; font-size: 13px;
+      background: transparent; color: var(--muted);
+      padding: 8px 16px; border-radius: 6px;
+      border: 1px solid var(--border); cursor: pointer;
+      transition: all 0.2s; font-family: 'DM Sans', sans-serif; font-size: 13px;
     }
     .btn-ghost:hover {
-      background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2);
-      color: rgba(255,255,255,0.9);
+      background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12);
+      color: var(--text);
     }
+
+    /* ── NAVIGATION ── */
     .nav-tab {
-      background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.78);
-      padding: 7px 15px; border-radius: 10px;
-      border: 1px solid rgba(255,255,255,0.06); cursor: pointer;
-      font-weight: 500; font-size: 13px; letter-spacing: 0.01em;
-      white-space: nowrap; transition: all 0.18s; font-family: inherit;
+      background: transparent; color: var(--muted);
+      padding: 7px 14px; border-radius: 6px;
+      border: 1px solid transparent; cursor: pointer;
+      font-weight: 500; font-size: 13px;
+      white-space: nowrap; transition: all 0.18s;
+      font-family: 'DM Sans', sans-serif;
     }
     .nav-tab:hover {
-      background: rgba(255,255,255,0.14); color: white;
-      border-color: rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.05); color: var(--text);
     }
     .nav-tab.active {
-      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-      color: #1e3a8a; font-weight: 700;
-      border-color: rgba(59,130,246,0.25);
-      box-shadow: 0 2px 14px rgba(0,0,0,0.3), 0 0 0 1px rgba(59,130,246,0.12);
+      color: var(--accent);
+      background: rgba(0,212,255,0.08);
+      border-color: rgba(0,212,255,0.2);
+      font-weight: 600;
     }
+
+    /* ── BADGES ── */
     .badge-live {
-      background: linear-gradient(135deg, #b91c1c, #ef4444);
-      color: white; padding: 3px 8px; border-radius: 12px;
-      font-size: 11px; font-weight: 700; animation: pulse 1.5s infinite;
-      box-shadow: 0 0 10px rgba(239,68,68,0.5);
+      background: var(--green); color: #050810;
+      padding: 3px 8px; border-radius: 4px;
+      font-size: 10px; font-weight: 700; font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 1px; text-transform: uppercase;
+      animation: pulse-green 1.5s infinite;
     }
     .badge-scheduled {
-      background: linear-gradient(135deg, #1d4ed8, #3b82f6);
-      color: white; padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: 600;
+      background: rgba(90,100,128,0.3); color: var(--muted);
+      padding: 3px 8px; border-radius: 4px;
+      font-size: 10px; font-weight: 700; font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 1px; text-transform: uppercase;
     }
     .badge-finished {
-      background: linear-gradient(135deg, #047857, #10b981);
-      color: white; padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: 600;
+      background: rgba(139,92,246,0.2); color: var(--purple);
+      padding: 3px 8px; border-radius: 4px;
+      font-size: 10px; font-weight: 700; font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 1px; text-transform: uppercase;
     }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.55} }
+
+    /* ── INPUTS ── */
     .input-field {
-      background-color: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
-      color: #e2e8f0; padding: 9px 12px; border-radius: 8px;
+      background-color: var(--surface); border: 1px solid var(--border);
+      color: var(--text); padding: 9px 12px; border-radius: 6px;
       width: 100%; box-sizing: border-box; font-size: 13px;
-      transition: border-color 0.2s, background-color 0.2s; font-family: inherit;
+      transition: border-color 0.2s, background-color 0.2s;
+      font-family: 'DM Sans', sans-serif;
       -webkit-appearance: none; appearance: none;
     }
-    .input-field:hover {
-      background-color: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.16);
-    }
+    .input-field:hover { border-color: rgba(255,255,255,0.12); }
     .input-field:focus {
-      outline: none; border-color: rgba(59,130,246,0.5);
-      background-color: rgba(255,255,255,0.06);
-      box-shadow: 0 0 0 2px rgba(59,130,246,0.1);
+      outline: none; border-color: rgba(0,212,255,0.4);
+      box-shadow: 0 0 0 2px rgba(0,212,255,0.08);
     }
     select.input-field {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235A6480' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
       background-repeat: no-repeat; background-position: right 10px center;
       padding-right: 30px; cursor: pointer;
     }
-    .input-field option { background: #1e293b; }
-    .table-row:hover { background: rgba(255,255,255,0.04); }
+    .input-field option { background: var(--card); color: var(--text); }
+
+    /* ── TABLES ── */
+    .table-row:hover { background: rgba(255,255,255,0.03); }
+
+    /* ── SPINNER ── */
     .spinner {
-      border: 3px solid rgba(255,255,255,0.1); border-top: 3px solid #3b82f6;
+      border: 3px solid var(--border); border-top: 3px solid var(--accent);
       border-radius: 50%; width: 40px; height: 40px;
       animation: spin 0.75s linear infinite; margin: 40px auto;
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── MODALS ── */
     .modal-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.82);
+      position: fixed; inset: 0; background: rgba(5,8,16,0.85);
       display: flex; align-items: center; justify-content: center; z-index: 1000;
-      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
       animation: fadeIn 0.15s ease;
     }
-    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
     .modal-box {
-      background: linear-gradient(145deg, #09142a, #152038);
-      border: 1px solid rgba(255,255,255,0.1); border-radius: 22px;
+      background: var(--card); border: 1px solid var(--border); border-radius: 16px;
       padding: 30px; max-width: 500px; width: 90%; max-height: 90vh; overflow-y: auto;
-      box-shadow: 0 24px 80px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.09);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.7);
       animation: slideUp 0.22s cubic-bezier(0.34,1.3,0.64,1);
     }
-    @keyframes slideUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+
+    /* ── TOASTS ── */
     .toast {
-      position: fixed; bottom: 24px; right: 24px; padding: 14px 20px;
-      border-radius: 14px; font-weight: 600; z-index: 9999;
+      position: fixed; bottom: 60px; right: 24px; padding: 14px 20px;
+      border-radius: 10px; font-weight: 600; z-index: 9999;
       animation: slideIn 0.35s cubic-bezier(0.34,1.4,0.64,1);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.55); font-family: inherit;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.55);
+      font-family: 'DM Sans', sans-serif;
     }
     .toast-success {
-      background: linear-gradient(135deg, #047857, #059669); color: white;
-      border: 1px solid rgba(16,185,129,0.35);
+      background: var(--green); color: #050810;
+      border: 1px solid rgba(0,255,136,0.5);
     }
     .toast-error {
-      background: linear-gradient(135deg, #b91c1c, #dc2626); color: white;
-      border: 1px solid rgba(239,68,68,0.35);
+      background: var(--accent2); color: white;
+      border: 1px solid rgba(255,77,0,0.5);
     }
+
+    /* ── DISPLAY ── */
+    .score-display {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 56px; font-weight: 400; color: white;
+      text-align: center; letter-spacing: 2px;
+    }
+    .team-name-large {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 18px; font-weight: 600; text-align: center; color: var(--accent);
+    }
+    .stat-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 48px; color: var(--accent); letter-spacing: 1px;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+    @keyframes slideUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
     @keyframes slideIn { from{transform:translateX(110%);opacity:0} to{transform:translateX(0);opacity:1} }
-    .score-display { font-size: 52px; font-weight: 900; color: white; text-align: center; text-shadow: 0 2px 16px rgba(0,0,0,0.6); letter-spacing: -1px; }
-    .team-name-large { font-size: 18px; font-weight: 700; text-align: center; color: #93c5fd; }
-    .stat-number { font-size: 36px; font-weight: 900; color: #60a5fa; letter-spacing: -0.5px; }
-    ::-webkit-scrollbar { width: 5px; height: 5px; }
-    ::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
-    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.14); border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.26); }
-    /* Login card — pulso de borde */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse-green {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(0,255,136,0.6); }
+      50%       { box-shadow: 0 0 0 6px rgba(0,255,136,0); }
+    }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.55} }
+
+    /* ── LOGIN ── */
     @keyframes loginCardPulse {
-      0%,100% { border-color: rgba(59,130,246,0.2); box-shadow: 0 0 0 1px rgba(59,130,246,0.06), 0 32px 90px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.08); }
-      50%      { border-color: rgba(96,165,250,0.5); box-shadow: 0 0 0 1px rgba(59,130,246,0.14), 0 32px 90px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.08), 0 0 55px rgba(59,130,246,0.14); }
+      0%,100% { border-color: rgba(0,212,255,0.15); box-shadow: 0 0 0 1px rgba(0,212,255,0.04), 0 32px 90px rgba(0,0,0,0.65); }
+      50%      { border-color: rgba(0,212,255,0.4); box-shadow: 0 0 0 1px rgba(0,212,255,0.1), 0 32px 90px rgba(0,0,0,0.65), 0 0 55px rgba(0,212,255,0.08); }
     }
     .login-card { animation: loginCardPulse 4.5s ease-in-out infinite; }
-    /* Logo ∧ — pulso de glow */
     @keyframes logoGlow {
-      0%,100% { filter: drop-shadow(0 0 14px rgba(96,165,250,0.48)); }
-      50%      { filter: drop-shadow(0 0 38px rgba(96,165,250,1)); }
+      0%,100% { filter: drop-shadow(0 0 14px rgba(0,212,255,0.5)); }
+      50%      { filter: drop-shadow(0 0 38px rgba(0,212,255,1)); }
     }
     .logo-svg-animate { animation: logoGlow 3s ease-in-out infinite; }
-    /* Role cards en pantalla de login */
     .role-card {
       cursor: pointer; text-align: center; user-select: none;
-      background: rgba(255,255,255,0.035);
-      border: 1px solid rgba(255,255,255,0.09);
-      border-radius: 18px; padding: 24px 14px 20px;
+      background: rgba(255,255,255,0.025);
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 24px 14px 20px;
       transition: all 0.22s cubic-bezier(0.34,1.2,0.64,1);
     }
-    .role-card:hover   { background: rgba(255,255,255,0.07); transform: translateY(-5px); }
-    .role-card:active  { transform: translateY(-1px) scale(0.97); }
-    .role-card--gray:hover  { border-color: rgba(148,163,184,0.45); box-shadow: 0 14px 36px rgba(0,0,0,0.4); }
-    .role-card--green:hover { border-color: rgba(16,185,129,0.55);  box-shadow: 0 14px 36px rgba(0,0,0,0.4), 0 0 0 1px rgba(16,185,129,0.12); }
-    .role-card--blue:hover  { border-color: rgba(59,130,246,0.55);  box-shadow: 0 14px 36px rgba(0,0,0,0.4), 0 0 0 1px rgba(59,130,246,0.12); }
+    .role-card:hover { background: rgba(255,255,255,0.05); transform: translateY(-5px); }
+    .role-card:active { transform: translateY(-1px) scale(0.97); }
+    .role-card--gray:hover  { border-color: rgba(90,100,128,0.5); box-shadow: 0 14px 36px rgba(0,0,0,0.4); }
+    .role-card--green:hover { border-color: rgba(0,255,136,0.4); box-shadow: 0 14px 36px rgba(0,0,0,0.4), 0 0 0 1px rgba(0,255,136,0.08); }
+    .role-card--blue:hover  { border-color: rgba(0,212,255,0.4); box-shadow: 0 14px 36px rgba(0,0,0,0.4), 0 0 0 1px rgba(0,212,255,0.08); }
     .role-icon {
-      width: 52px; height: 52px; border-radius: 15px;
+      width: 52px; height: 52px; border-radius: 12px;
       display: flex; align-items: center; justify-content: center;
       font-size: 24px; margin: 0 auto 13px;
       box-shadow: 0 4px 18px rgba(0,0,0,0.4);
     }
 
-    /* Filter toggle button — visible on all screens */
+    /* ── FILTERS ── */
     .mobile-filter-btn {
       display: flex; align-items: center; gap: 10px;
-      background: linear-gradient(135deg, rgba(59,130,246,0.08) 0%, rgba(96,165,250,0.04) 100%);
-      color: #93c5fd;
-      border: 1px solid rgba(59,130,246,0.18); border-radius: 10px;
+      background: rgba(0,212,255,0.06);
+      color: var(--accent);
+      border: 1px solid rgba(0,212,255,0.15); border-radius: 8px;
       padding: 9px 18px; font-size: 13px; font-weight: 600;
-      cursor: pointer; font-family: inherit;
-      transition: all 0.2s;
-      margin-bottom: 12px;
-      width: auto;
+      cursor: pointer; font-family: 'DM Sans', sans-serif;
+      transition: all 0.2s; margin-bottom: 12px; width: auto;
     }
     .mobile-filter-btn:hover {
-      background: linear-gradient(135deg, rgba(59,130,246,0.14) 0%, rgba(96,165,250,0.08) 100%);
-      border-color: rgba(59,130,246,0.3);
+      background: rgba(0,212,255,0.1); border-color: rgba(0,212,255,0.25);
     }
     .mobile-filter-btn:active { transform: scale(0.98); }
     .mobile-filter-btn svg { opacity: 0.7; }
     .mobile-filter-btn .filter-count {
-      background: linear-gradient(135deg, #2563eb, #3b82f6);
-      color: white; font-size: 11px; font-weight: 800;
-      padding: 2px 8px; border-radius: 10px; min-width: 20px; text-align: center;
-      box-shadow: 0 2px 6px rgba(37,99,235,0.3);
+      background: var(--accent); color: #050810;
+      font-size: 11px; font-weight: 800;
+      padding: 2px 8px; border-radius: 4px; min-width: 20px; text-align: center;
     }
     .mobile-filter-content { display: none; }
     .mobile-filter-content.open {
@@ -236,128 +288,92 @@
     }
     @keyframes filterSlideDown { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
 
-    /* ─── RESPONSIVE / MOBILE ────────────────────────────────────── */
+    /* ── SECTION TITLES ── */
+    .section-title {
+      display: flex; align-items: center; gap: 16px;
+      font-family: 'Bebas Neue', sans-serif; font-size: 22px;
+      letter-spacing: 2px; color: var(--text); margin-bottom: 16px;
+    }
+    .section-title::after {
+      content: ''; flex: 1; height: 1px;
+      background: linear-gradient(90deg, var(--border), transparent);
+    }
+    .section-title .count-badge {
+      font-family: 'Space Mono', monospace; font-size: 12px;
+      background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.2);
+      color: var(--accent); padding: 2px 10px; border-radius: 4px;
+    }
+
+    /* ── TICKER ── */
+    #live-ticker {
+      position: fixed; bottom: 0; left: 0; right: 0; height: 36px;
+      background: rgba(5,8,16,0.95); border-top: 1px solid var(--border);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      z-index: 900; display: flex; align-items: center; overflow: hidden;
+    }
+    #live-ticker .ticker-label {
+      background: var(--accent); color: #050810;
+      font-family: 'Bebas Neue', sans-serif; font-size: 13px;
+      letter-spacing: 2px; padding: 0 14px; height: 100%;
+      display: flex; align-items: center; flex-shrink: 0;
+      z-index: 1;
+    }
+    #live-ticker .ticker-content {
+      display: flex; animation: ticker 40s linear infinite;
+      white-space: nowrap;
+    }
+    #live-ticker .ticker-item {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 0 24px; font-size: 12px; color: var(--muted);
+      border-right: 1px solid var(--border);
+    }
+    #live-ticker .ticker-item .ticker-score {
+      font-family: 'Space Mono', monospace; font-weight: 700; color: var(--text);
+    }
+
+    /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      /* Hamburger menu */
       #hamburger-btn { display: flex !important; align-items: center; justify-content: center; }
       #header-controls-desktop { display: none !important; }
       #main-nav { display: none !important; }
-
-      /* Mobile nav tabs */
       #mobile-nav { display: flex; gap: 6px; flex-wrap: wrap; }
-      #mobile-nav .nav-tab {
-        font-size: 11px !important; padding: 6px 10px !important;
-        flex: 0 0 auto;
-      }
-      #mobile-nav .nav-tab.active {
-        background: #ffffff !important; color: #1e3a8a !important;
-        font-weight: 700 !important;
-      }
-
-      /* Header */
+      #mobile-nav .nav-tab { font-size: 11px !important; padding: 6px 10px !important; }
       header { padding: 10px 12px 8px !important; }
-
-      /* Main content */
-      #page-content { padding: 14px !important; }
-
-      /* Cards */
-      .card { padding: 12px !important; border-radius: 14px !important; }
-
-      /* Modals */
-      .modal-box { padding: 18px !important; max-width: 95vw !important; border-radius: 16px !important; }
+      #page-content { padding: 14px !important; padding-bottom: 60px !important; }
+      .card { padding: 14px !important; border-radius: 12px !important; }
+      .modal-box { padding: 18px !important; max-width: 95vw !important; border-radius: 12px !important; }
       .modal-box > div[style*="min-width"] { min-width: unset !important; }
-
-      /* Toast */
-      .toast { left: 16px; right: 16px; bottom: 16px; text-align: center; }
-
-      /* Grids: force single or dual column */
+      .toast { left: 16px; right: 16px; bottom: 52px; text-align: center; }
       [style*="grid-template-columns:repeat(4"] { grid-template-columns: repeat(2, 1fr) !important; }
       [style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
-      [style*="grid-template-columns:1fr auto 1fr"] { grid-template-columns: 1fr !important; }
-
-      /* Score display */
-      .score-display { font-size: 36px !important; }
+      .score-display { font-size: 40px !important; }
       .team-name-large { font-size: 14px !important; }
-
-      /* Stat numbers */
-      .stat-number { font-size: 28px !important; }
-
-      /* ── Mobile filter button: full width ── */
-      .mobile-filter-btn {
-        width: 100% !important; justify-content: center !important;
-        padding: 11px 20px !important; font-size: 13px !important;
-        border-radius: 12px !important;
+      .stat-number { font-size: 36px !important; }
+      .mobile-filter-btn { width: 100% !important; justify-content: center !important; }
+      .mobile-filter-content .card, .mobile-filter-content > div {
+        display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 10px !important;
       }
-
-      /* ── Mobile filter content: compact grid ── */
-      .mobile-filter-content .card,
-      .mobile-filter-content > div {
-        display: grid !important;
-        grid-template-columns: 1fr 1fr !important;
-        gap: 10px !important;
-        padding: 14px !important;
-        margin-bottom: 14px;
-      }
-      .mobile-filter-content .card > div,
-      .mobile-filter-content > div > div {
-        min-width: 0 !important;
-        flex: unset !important;
-      }
-      .mobile-filter-content .card > button,
-      .mobile-filter-content > div > button,
-      .mobile-filter-content .card > span,
-      .mobile-filter-content > div > span {
-        grid-column: 1 / -1;
-      }
-
-      /* Smaller filter inputs on mobile */
-      .input-field {
-        padding: 7px 10px !important;
-        font-size: 13px !important;
-      }
-      .text-gray-400.text-sm { font-size: 11px !important; }
-
-      /* Inline filters (live scoring style) */
-      select.input-field[style*="min-width"],
-      select[style*="min-width:150px"],
-      select[style*="min-width:100px"],
-      select[style*="min-width:80px"],
-      select[style*="min-width:90px"] {
-        min-width: 0 !important;
-        width: 100% !important;
-        font-size: 12px !important;
-        padding: 6px 8px !important;
-      }
-
-      /* Tables: smaller */
+      .mobile-filter-content .card > button, .mobile-filter-content > div > button,
+      .mobile-filter-content .card > span, .mobile-filter-content > div > span { grid-column: 1 / -1; }
+      .input-field { padding: 7px 10px !important; font-size: 13px !important; }
+      select.input-field[style*="min-width"] { min-width: 0 !important; width: 100% !important; }
       table { font-size: 12px !important; }
       thead th { padding: 8px 4px !important; font-size: 10px !important; }
       tbody td { padding: 8px 4px !important; }
-
-      /* Login */
       .login-card { padding: 28px 20px 24px !important; }
-
-      /* Tournament card */
       #tournament-list > div > div:first-child { padding: 20px 16px 16px !important; }
-      #tournament-list > div > div:last-child { padding: 12px 16px !important; flex-direction: column !important; }
-
-      /* Titles */
       h2.text-3xl { font-size: 22px !important; }
+      #live-ticker { height: 32px; }
+      #live-ticker .ticker-label { font-size: 11px; padding: 0 10px; }
+      #live-ticker .ticker-item { font-size: 11px; padding: 0 16px; }
     }
-
     @media (max-width: 480px) {
       [style*="grid-template-columns:repeat(2"] { grid-template-columns: 1fr !important; }
       #mobile-nav .nav-tab { font-size: 10px !important; padding: 5px 8px !important; }
       header h1 { font-size: 18px !important; }
       h2.text-3xl { font-size: 20px !important; }
-      /* Hide logo on very small screens */
       .header-logo { display: none !important; }
-
-      /* Filters: single column on very small screens */
-      .mobile-filter-content .card,
-      .mobile-filter-content > div {
-        grid-template-columns: 1fr !important;
-      }
+      .mobile-filter-content .card, .mobile-filter-content > div { grid-template-columns: 1fr !important; }
     }
   </style>
 </head>
@@ -366,86 +382,57 @@
 <!-- Login Overlay -->
 <div id="login-screen" class="min-h-screen flex items-center justify-center"
      style="position:relative;overflow:hidden;">
-
-  <!-- Fondo decorativo con iconos de deporte -->
   <div style="position:absolute;inset:0;pointer-events:none;user-select:none;">
-    <div style="position:absolute;font-size:220px;opacity:0.022;top:-40px;left:-60px;transform:rotate(-18deg);">⚽</div>
-    <div style="position:absolute;font-size:180px;opacity:0.018;top:45%;right:-50px;transform:rotate(12deg) translateY(-50%);">🏀</div>
-    <div style="position:absolute;font-size:160px;opacity:0.02;bottom:-30px;left:32%;transform:rotate(6deg);">🏐</div>
-    <div style="position:absolute;font-size:120px;opacity:0.015;bottom:10%;left:5%;transform:rotate(-8deg);">🏆</div>
-    <div style="position:absolute;font-size:100px;opacity:0.015;top:8%;right:12%;transform:rotate(20deg);">🎽</div>
+    <div style="position:absolute;font-size:220px;opacity:0.02;top:-40px;left:-60px;transform:rotate(-18deg);">⚽</div>
+    <div style="position:absolute;font-size:180px;opacity:0.015;top:45%;right:-50px;transform:rotate(12deg) translateY(-50%);">🏀</div>
+    <div style="position:absolute;font-size:160px;opacity:0.018;bottom:-30px;left:32%;transform:rotate(6deg);">🏐</div>
   </div>
 
   <div class="card login-card text-center max-w-md w-full mx-4"
        style="position:relative;padding:40px 36px 36px;">
-
-    <!-- Logo DATA GAMES -->
     <div style="display:flex;flex-direction:column;align-items:center;margin-bottom:32px;">
-      <span style="font-size:14px;font-weight:800;letter-spacing:9px;text-transform:uppercase;
-                   background:linear-gradient(135deg,#bfdbfe,#93c5fd);
-                   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-                   background-clip:text;margin-bottom:5px;">DATA</span>
-      <svg class="logo-svg-animate" width="108" height="86" viewBox="0 0 80 64" fill="none"
-           xmlns="http://www.w3.org/2000/svg" style="margin:4px 0;">
+      <span class="font-display" style="font-size:16px;letter-spacing:10px;color:var(--accent);opacity:0.8;">DATA</span>
+      <svg class="logo-svg-animate" width="108" height="86" viewBox="0 0 80 64" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin:4px 0;">
         <defs>
           <linearGradient id="aGrad" x1="40" y1="4" x2="40" y2="60" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#bfdbfe"/>
-            <stop offset="55%" stop-color="#60a5fa"/>
-            <stop offset="100%" stop-color="#2563eb"/>
+            <stop offset="0%" stop-color="#00D4FF"/>
+            <stop offset="100%" stop-color="#0088cc"/>
           </linearGradient>
         </defs>
-        <line x1="40" y1="4" x2="6"  y2="60" stroke="url(#aGrad)" stroke-width="7.5" stroke-linecap="round"/>
+        <line x1="40" y1="4" x2="6" y2="60" stroke="url(#aGrad)" stroke-width="7.5" stroke-linecap="round"/>
         <line x1="40" y1="4" x2="74" y2="60" stroke="url(#aGrad)" stroke-width="7.5" stroke-linecap="round"/>
       </svg>
-      <span style="font-size:14px;font-weight:800;letter-spacing:9px;text-transform:uppercase;
-                   background:linear-gradient(135deg,#60a5fa,#2563eb);
-                   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-                   background-clip:text;margin-top:5px;">GAMES</span>
+      <span class="font-display" style="font-size:16px;letter-spacing:10px;color:var(--accent);opacity:0.6;">GAMES</span>
     </div>
-
-    <!-- Divisor sutil -->
-    <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(59,130,246,0.3),transparent);
-                margin-bottom:28px;"></div>
-
-    <p style="color:#475569;font-size:12px;margin-bottom:20px;letter-spacing:0.5px;text-transform:uppercase;font-weight:600;">Iniciar sesion</p>
-
-    <!-- Formulario directo -->
+    <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(0,212,255,0.25),transparent);margin-bottom:28px;"></div>
+    <p style="color:var(--muted);font-size:11px;margin-bottom:20px;letter-spacing:2px;text-transform:uppercase;font-weight:600;">Iniciar sesion</p>
     <div id="login-form">
       <div style="text-align:left;margin-bottom:12px;">
-        <label style="color:#64748b;font-size:12px;font-weight:600;
-                      text-transform:uppercase;letter-spacing:.5px;">Usuario</label>
-        <input type="text" id="login-username" class="input-field mt-1"
-          placeholder="Nombre de usuario"
+        <label style="color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;">Usuario</label>
+        <input type="text" id="login-username" class="input-field mt-1" placeholder="Nombre de usuario"
           onkeydown="if(event.key==='Enter')document.getElementById('login-password').focus()">
       </div>
       <div style="text-align:left;margin-bottom:16px;">
-        <label style="color:#64748b;font-size:12px;font-weight:600;
-                      text-transform:uppercase;letter-spacing:.5px;">Contraseña</label>
-        <input type="password" id="login-password" class="input-field mt-1"
-          placeholder="Contraseña"
+        <label style="color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;">Contraseña</label>
+        <input type="password" id="login-password" class="input-field mt-1" placeholder="Contraseña"
           onkeydown="if(event.key==='Enter')App.submitLoginDirect()">
       </div>
       <p id="login-error"
-         style="display:none;color:#fca5a5;font-size:13px;margin-bottom:12px;
-                background:rgba(220,38,38,0.12);padding:9px 14px;
-                border-radius:10px;border:1px solid rgba(220,38,38,0.25);">
+         style="display:none;color:#ff6b6b;font-size:13px;margin-bottom:12px;
+                background:rgba(255,77,0,0.1);padding:9px 14px;
+                border-radius:8px;border:1px solid rgba(255,77,0,0.2);">
         Usuario o contraseña incorrectos
       </p>
       <button onclick="App.submitLoginDirect()" class="btn-primary" style="width:100%;padding:12px 26px;font-size:15px;">
         Entrar
       </button>
     </div>
-
-    <!-- Divisor -->
     <div style="display:flex;align-items:center;gap:12px;margin-top:20px;margin-bottom:16px;">
-      <div style="flex:1;height:1px;background:rgba(255,255,255,0.08);"></div>
-      <span style="color:#475569;font-size:11px;font-weight:600;">O</span>
-      <div style="flex:1;height:1px;background:rgba(255,255,255,0.08);"></div>
+      <div style="flex:1;height:1px;background:var(--border);"></div>
+      <span style="color:var(--muted);font-size:11px;font-weight:600;">O</span>
+      <div style="flex:1;height:1px;background:var(--border);"></div>
     </div>
-
-    <!-- Entrar como lector -->
-    <button onclick="App.login('viewer')" class="btn-ghost"
-            style="width:100%;padding:11px;font-size:13px;color:rgba(255,255,255,0.6);">
+    <button onclick="App.login('viewer')" class="btn-ghost" style="width:100%;padding:11px;font-size:13px;">
       📖 Entrar como Lector (sin cuenta)
     </button>
   </div>
@@ -454,164 +441,124 @@
 <!-- Tournament Selection Screen -->
 <div id="tournament-screen" class="hidden min-h-screen flex items-center justify-center"
      style="position:relative;overflow:hidden;">
-
-  <!-- Fondo decorativo -->
   <div style="position:absolute;inset:0;pointer-events:none;user-select:none;">
-    <div style="position:absolute;font-size:220px;opacity:0.018;top:-40px;left:-60px;transform:rotate(-18deg);">⚽</div>
-    <div style="position:absolute;font-size:180px;opacity:0.014;top:45%;right:-50px;transform:rotate(12deg) translateY(-50%);">🏀</div>
-    <div style="position:absolute;font-size:160px;opacity:0.016;bottom:-30px;left:32%;transform:rotate(6deg);">🏐</div>
+    <div style="position:absolute;font-size:220px;opacity:0.015;top:-40px;left:-60px;transform:rotate(-18deg);">⚽</div>
+    <div style="position:absolute;font-size:180px;opacity:0.012;top:45%;right:-50px;transform:rotate(12deg);">🏀</div>
   </div>
-
   <div style="max-width:680px;width:100%;padding:0 20px;position:relative;">
-
-    <!-- Cabecera -->
     <div style="text-align:center;margin-bottom:40px;">
-      <!-- Logo ∧ con glow -->
       <div style="display:inline-flex;flex-direction:column;align-items:center;margin-bottom:20px;">
-        <span style="font-size:11px;font-weight:800;letter-spacing:7px;text-transform:uppercase;
-                     color:rgba(147,197,253,0.65);margin-bottom:3px;">DATA</span>
+        <span class="font-display" style="font-size:13px;letter-spacing:8px;color:rgba(0,212,255,0.6);">DATA</span>
         <svg class="logo-svg-animate" width="62" height="50" viewBox="0 0 80 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="aGradT" x1="40" y1="4" x2="40" y2="60" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stop-color="#bfdbfe"/>
-              <stop offset="60%" stop-color="#60a5fa"/>
-              <stop offset="100%" stop-color="#2563eb"/>
-            </linearGradient>
-          </defs>
-          <line x1="40" y1="4" x2="6"  y2="60" stroke="url(#aGradT)" stroke-width="7.5" stroke-linecap="round"/>
+          <defs><linearGradient id="aGradT" x1="40" y1="4" x2="40" y2="60" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#00D4FF"/><stop offset="100%" stop-color="#0088cc"/>
+          </linearGradient></defs>
+          <line x1="40" y1="4" x2="6" y2="60" stroke="url(#aGradT)" stroke-width="7.5" stroke-linecap="round"/>
           <line x1="40" y1="4" x2="74" y2="60" stroke="url(#aGradT)" stroke-width="7.5" stroke-linecap="round"/>
         </svg>
-        <span style="font-size:11px;font-weight:800;letter-spacing:7px;text-transform:uppercase;
-                     color:rgba(96,165,250,0.65);margin-top:3px;">GAMES</span>
+        <span class="font-display" style="font-size:13px;letter-spacing:8px;color:rgba(0,212,255,0.4);">GAMES</span>
       </div>
-
-      <!-- Divisor -->
-      <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(59,130,246,0.25),transparent);
-                  margin:0 auto 20px;max-width:260px;"></div>
-
-      <h2 style="color:white;font-size:24px;font-weight:800;margin:0 0 8px;letter-spacing:-0.4px;">
+      <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(0,212,255,0.2),transparent);margin:0 auto 20px;max-width:260px;"></div>
+      <h2 class="font-display" style="color:white;font-size:28px;letter-spacing:3px;margin:0 0 8px;">
         Selecciona el torneo
       </h2>
-      <p id="tournament-role-label"
-         style="color:#475569;font-size:13px;margin:0;font-weight:500;"></p>
+      <p id="tournament-role-label" style="color:var(--muted);font-size:13px;margin:0;font-weight:500;"></p>
     </div>
-
-    <!-- Lista de torneos (renderizada por JS) -->
     <div id="tournament-list" style="display:flex;flex-direction:column;gap:14px;"></div>
-
-    <!-- Volver -->
     <div style="text-align:center;margin-top:32px;">
-      <button onclick="App.backToLogin()" class="btn-ghost"
-              style="font-size:13px;padding:10px 24px;color:rgba(255,255,255,0.4);
-                     border-color:rgba(255,255,255,0.08);">
+      <button onclick="App.backToLogin()" class="btn-ghost" style="font-size:13px;padding:10px 24px;">
         ← Cambiar modo de acceso
       </button>
     </div>
-
   </div>
 </div>
 
-<!-- Main App (hidden until login) -->
+<!-- Main App -->
 <div id="main-app" class="hidden min-h-screen flex flex-col">
   <!-- Header -->
-  <header style="background: var(--gradient-header);
-                 padding: 16px 20px 14px;
-                 box-shadow: 0 4px 32px rgba(0,0,0,0.5), 0 1px 0 rgba(96,165,250,0.22);
-                 position: relative;
-                 border-bottom: 1px solid rgba(59,130,246,0.2);">
-    <div style="max-width:1400px;margin:0 auto;">
-      <!-- Top bar: Logo + hamburger -->
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-        <div style="display:flex;align-items:center;gap:12px;">
-          <!-- Logo ∧ mini en header -->
-          <div class="header-logo" style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;
-                      width:44px;justify-content:center;">
-            <span style="font-size:7.5px;font-weight:800;letter-spacing:3px;color:rgba(255,255,255,0.92);
-                         text-transform:uppercase;line-height:1;">DATA</span>
-            <svg width="36" height="28" viewBox="0 0 80 64" fill="none" xmlns="http://www.w3.org/2000/svg"
-                 style="filter:drop-shadow(0 0 10px rgba(147,197,253,0.65));margin:1px 0;">
-              <defs>
-                <linearGradient id="aGradH" x1="40" y1="4" x2="40" y2="60" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stop-color="#ffffff"/>
-                  <stop offset="100%" stop-color="#93c5fd"/>
-                </linearGradient>
-              </defs>
-              <line x1="40" y1="4" x2="6"  y2="60" stroke="url(#aGradH)" stroke-width="9" stroke-linecap="round"/>
-              <line x1="40" y1="4" x2="74" y2="60" stroke="url(#aGradH)" stroke-width="9" stroke-linecap="round"/>
-            </svg>
-            <span style="font-size:7.5px;font-weight:800;letter-spacing:3px;color:rgba(255,255,255,0.92);
-                         text-transform:uppercase;line-height:1;">GAMES</span>
-          </div>
-          <div>
-            <h1 style="color:white;font-size:22px;font-weight:900;margin:0;
-                       letter-spacing:-0.5px;text-shadow:0 2px 10px rgba(0,0,0,0.4);">DATA GAMES</h1>
-            <p id="header-tournament-name"
-               style="color:rgba(147,197,253,0.45);font-size:10px;font-weight:700;
-                      letter-spacing:2.5px;text-transform:uppercase;margin:2px 0 0;"></p>
-          </div>
-        </div>
-        <!-- Desktop controls (hidden on mobile) -->
-        <div id="header-controls-desktop" style="display:flex;align-items:center;gap:8px;">
-          <button id="search-btn" onclick="App.openSearch()" class="btn-ghost"
-            style="font-size:12px;padding:6px 13px;border-color:rgba(255,255,255,0.2);"
-            title="Busqueda global (Ctrl+K)">🔍 Buscar</button>
-          <button id="qr-btn" onclick="App.openQr()" class="btn-ghost"
-            style="display:none;font-size:12px;padding:6px 13px;border-color:rgba(255,255,255,0.2);"
-            title="Generar QR de acceso lector">📱 QR</button>
-          <span id="user-badge"
-                style="background:rgba(255,255,255,0.12);color:white;
-                       padding:7px 14px;border-radius:20px;font-size:13px;
-                       border:1px solid rgba(255,255,255,0.18);
-                       backdrop-filter:blur(4px);"></span>
-          <button onclick="App.switchTournament()" class="btn-ghost"
-                  style="font-size:12px;padding:6px 12px;color:rgba(147,197,253,0.8);border-color:rgba(147,197,253,0.2);"
-                  title="Cambiar torneo">🏆 Torneo</button>
-          <button onclick="App.logout()" class="btn-ghost"
-                  style="font-size:12px;padding:6px 12px;color:rgba(255,255,255,0.7);">Salir</button>
-        </div>
-        <!-- Hamburger button (visible on mobile only) -->
-        <button id="hamburger-btn" onclick="App.toggleMobileMenu()"
-                style="display:none;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);
-                       border-radius:10px;padding:8px 10px;cursor:pointer;flex-shrink:0;">
-          <svg id="hamburger-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round">
-            <line x1="3" y1="6" x2="21" y2="6"/>
-            <line x1="3" y1="12" x2="21" y2="12"/>
-            <line x1="3" y1="18" x2="21" y2="18"/>
+  <header style="position:sticky;top:0;z-index:100;
+                 background:rgba(5,8,16,0.85);
+                 backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+                 padding:0 20px; height:60px;
+                 border-bottom:1px solid var(--border);">
+    <div style="max-width:1280px;margin:0 auto;height:100%;display:flex;align-items:center;justify-content:space-between;">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <!-- Logo -->
+        <div class="header-logo" style="flex-shrink:0;display:flex;align-items:center;gap:3px;
+                    background:linear-gradient(135deg,#00aadd,#0066aa);
+                    border-radius:8px;padding:6px 8px;">
+          <svg width="20" height="16" viewBox="0 0 80 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="40" y1="4" x2="6" y2="60" stroke="white" stroke-width="10" stroke-linecap="round"/>
+            <line x1="40" y1="4" x2="74" y2="60" stroke="white" stroke-width="10" stroke-linecap="round"/>
           </svg>
-          <svg id="close-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" style="display:none;">
-            <line x1="6" y1="6" x2="18" y2="18"/>
-            <line x1="6" y1="18" x2="18" y2="6"/>
-          </svg>
-        </button>
+        </div>
+        <div>
+          <h1 class="font-display" style="color:white;font-size:22px;margin:0;letter-spacing:3px;line-height:1;">DATA GAMES</h1>
+          <p id="header-tournament-name" class="font-mono"
+             style="color:var(--accent);font-size:9px;font-weight:400;
+                    letter-spacing:2px;text-transform:uppercase;margin:2px 0 0;opacity:0.7;"></p>
+        </div>
       </div>
-      <!-- Desktop nav (always visible on desktop) -->
-      <nav id="main-nav" style="display:flex;gap:6px;flex-wrap:wrap;"></nav>
-      <!-- Mobile menu (hidden by default) -->
-      <div id="mobile-menu" style="display:none;flex-direction:column;gap:10px;padding-top:10px;
-                                    border-top:1px solid rgba(255,255,255,0.12);margin-top:6px;">
-        <nav id="mobile-nav" style="display:flex;gap:6px;flex-wrap:wrap;"></nav>
-        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding-top:8px;
-                    border-top:1px solid rgba(255,255,255,0.06);">
-          <span id="user-badge-mobile"
-                style="background:rgba(255,255,255,0.12);color:white;
-                       padding:5px 10px;border-radius:16px;font-size:11px;
-                       border:1px solid rgba(255,255,255,0.18);
-                       overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:180px;"></span>
-          <button onclick="App.openSearch();App.closeMobileMenu()" class="btn-ghost"
-            style="font-size:11px;padding:5px 10px;border-color:rgba(255,255,255,0.2);">🔍</button>
-          <button id="qr-btn-mobile" onclick="App.openQr();App.closeMobileMenu()" class="btn-ghost"
-            style="display:none;font-size:11px;padding:5px 10px;border-color:rgba(255,255,255,0.2);">📱</button>
-          <button onclick="App.switchTournament();App.closeMobileMenu()" class="btn-ghost"
-                  style="font-size:11px;padding:5px 10px;color:rgba(147,197,253,0.8);border-color:rgba(147,197,253,0.2);">🏆</button>
-          <button onclick="App.logout()" class="btn-ghost"
-                  style="font-size:11px;padding:5px 10px;color:rgba(255,255,255,0.7);">Salir</button>
-        </div>
+      <!-- Desktop controls -->
+      <div id="header-controls-desktop" style="display:flex;align-items:center;gap:8px;">
+        <button id="search-btn" onclick="App.openSearch()" class="btn-ghost"
+          style="font-size:12px;padding:6px 13px;" title="Busqueda global (Ctrl+K)">🔍 Buscar</button>
+        <button id="qr-btn" onclick="App.openQr()" class="btn-ghost"
+          style="display:none;font-size:12px;padding:6px 13px;" title="Generar QR">📱 QR</button>
+        <span id="user-badge"
+              style="background:rgba(0,212,255,0.08);color:var(--accent);
+                     padding:7px 14px;border-radius:6px;font-size:12px;
+                     border:1px solid rgba(0,212,255,0.2);
+                     font-family:'Space Mono',monospace;
+                     display:flex;align-items:center;gap:8px;">
+        </span>
+        <button onclick="App.switchTournament()" class="btn-ghost"
+                style="font-size:12px;padding:6px 12px;" title="Cambiar torneo">🏆 Torneo</button>
+        <button onclick="App.logout()" class="btn-ghost"
+                style="font-size:12px;padding:6px 12px;">Salir</button>
+      </div>
+      <!-- Hamburger -->
+      <button id="hamburger-btn" onclick="App.toggleMobileMenu()"
+              style="display:none;background:transparent;border:1px solid var(--border);
+                     border-radius:8px;padding:8px 10px;cursor:pointer;flex-shrink:0;">
+        <svg id="hamburger-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2.5" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+        <svg id="close-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2.5" stroke-linecap="round" style="display:none;">
+          <line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/>
+        </svg>
+      </button>
+    </div>
+    <!-- Desktop nav -->
+    <nav id="main-nav" style="display:flex;gap:4px;flex-wrap:wrap;max-width:1280px;margin:0 auto;padding-bottom:8px;"></nav>
+    <!-- Mobile menu -->
+    <div id="mobile-menu" style="display:none;flex-direction:column;gap:10px;padding:10px 0;
+                                  border-top:1px solid var(--border);">
+      <nav id="mobile-nav" style="display:flex;gap:6px;flex-wrap:wrap;"></nav>
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding-top:8px;border-top:1px solid var(--border);">
+        <span id="user-badge-mobile"
+              style="background:rgba(0,212,255,0.08);color:var(--accent);
+                     padding:5px 10px;border-radius:6px;font-size:11px;
+                     border:1px solid rgba(0,212,255,0.2);
+                     font-family:'Space Mono',monospace;"></span>
+        <button onclick="App.openSearch();App.closeMobileMenu()" class="btn-ghost" style="font-size:11px;padding:5px 10px;">🔍</button>
+        <button id="qr-btn-mobile" onclick="App.openQr();App.closeMobileMenu()" class="btn-ghost" style="display:none;font-size:11px;padding:5px 10px;">📱</button>
+        <button onclick="App.switchTournament();App.closeMobileMenu()" class="btn-ghost" style="font-size:11px;padding:5px 10px;">🏆</button>
+        <button onclick="App.logout()" class="btn-ghost" style="font-size:11px;padding:5px 10px;">Salir</button>
       </div>
     </div>
   </header>
 
   <!-- Page Container -->
-  <main id="page-content" style="flex:1;padding:40px;max-width:1400px;margin:0 auto;width:100%;box-sizing:border-box;"></main>
+  <main id="page-content" style="flex:1;padding:24px;padding-bottom:60px;max-width:1280px;margin:0 auto;width:100%;box-sizing:border-box;"></main>
+</div>
+
+<!-- Ticker -->
+<div id="live-ticker" style="display:none;">
+  <div class="ticker-label">EN VIVO</div>
+  <div style="overflow:hidden;flex:1;">
+    <div class="ticker-content" id="ticker-content"></div>
+  </div>
 </div>
 
 <!-- Toast container -->

@@ -61,7 +61,7 @@ Pages.Teams = async function(container, opts) {
 
     container.innerHTML = `
       <div class="mb-6">
-        <h2 class="text-3xl font-black" style="color:#60a5fa;">👥 Equipos</h2>
+        <h2 class="text-3xl font-black" style="color:var(--accent);">👥 Equipos</h2>
         <p class="text-gray-400 mt-1">${teams.length} equipos registrados en el torneo</p>
       </div>
 
@@ -134,7 +134,7 @@ Pages.Teams = async function(container, opts) {
 
   } catch (e) {
     console.error('Error en Teams:', e);
-    container.innerHTML = `<div class="card" style="border:1px solid #dc2626;color:#fca5a5;padding:20px;">
+    container.innerHTML = `<div class="card" style="border:1px solid var(--accent2);color:#fca5a5;padding:20px;">
       ⚠️ Error cargando equipos: ${e.message}
     </div>`;
   }
@@ -159,13 +159,13 @@ function _teamCard(t, players) {
                    background:white;padding:6px;border:3px solid ${color};"
             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
        <div style="display:none;width:72px;height:72px;border-radius:50%;
-                   background:linear-gradient(135deg,${color},#1e40af);
+                   background:linear-gradient(135deg,${color},var(--accent));
                    align-items:center;justify-content:center;
                    font-size:22px;font-weight:900;color:white;border:3px solid ${color};">
          ${Utils.schoolInitials(schoolName)}
        </div>`
     : `<div style="width:72px;height:72px;border-radius:50%;
-                   background:linear-gradient(135deg,${color},#1e40af);
+                   background:linear-gradient(135deg,${color},var(--accent));
                    display:flex;align-items:center;justify-content:center;
                    font-size:22px;font-weight:900;color:white;border:3px solid ${color};">
          ${Utils.schoolInitials(schoolName)}
@@ -186,26 +186,26 @@ function _teamCard(t, players) {
                       overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
             ${schoolName}
           </div>
-          <div style="font-size:13px;color:#94a3b8;margin-top:2px;">
+          <div style="font-size:13px;color:var(--muted);margin-top:2px;">
             ${icon} ${sportName}
           </div>
         </div>
       </div>
 
       <!-- Separador -->
-      <div style="border-top:1px solid rgba(255,255,255,0.07);margin-bottom:12px;"></div>
+      <div style="border-top:1px solid var(--border);margin-bottom:12px;"></div>
 
       <!-- Detalles -->
       <div style="display:flex;justify-content:space-between;align-items:center;">
         <div>
-          <div style="font-size:12px;color:#64748b;">${catName}</div>
-          <div style="font-size:12px;color:#64748b;margin-top:2px;">
+          <div style="font-size:12px;color:var(--muted);">${catName}</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px;">
             ${gender === 'Masculino' ? '🔵' : gender === 'Femenino' ? '🔴' : '🟣'} ${gender}
           </div>
         </div>
         <div style="text-align:right;">
           <div style="font-size:26px;font-weight:900;color:${color};">${count}</div>
-          <div style="font-size:11px;color:#64748b;">jugadores</div>
+          <div style="font-size:11px;color:var(--muted);">jugadores</div>
         </div>
       </div>
     </div>`;
@@ -234,13 +234,13 @@ function _renderTeamDetail(container, teamId, teams, players) {
                    box-shadow:0 0 30px rgba(0,0,0,0.4);"
             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
        <div style="display:none;width:110px;height:110px;border-radius:50%;
-                   background:linear-gradient(135deg,${color},#1e40af);
+                   background:linear-gradient(135deg,${color},var(--accent));
                    align-items:center;justify-content:center;font-size:36px;
                    font-weight:900;color:white;border:4px solid ${color};">
          ${Utils.schoolInitials(schoolName)}
        </div>`
     : `<div style="width:110px;height:110px;border-radius:50%;
-                   background:linear-gradient(135deg,${color},#1e40af);
+                   background:linear-gradient(135deg,${color},var(--accent));
                    display:flex;align-items:center;justify-content:center;font-size:36px;
                    font-weight:900;color:white;border:4px solid ${color};">
          ${Utils.schoolInitials(schoolName)}
@@ -263,11 +263,11 @@ function _renderTeamDetail(container, teamId, teams, players) {
           <h2 style="font-size:28px;font-weight:900;color:white;margin:8px 0 4px;">
             ${schoolName}
           </h2>
-          <div style="color:#94a3b8;font-size:14px;">${catName} &bull; ${gender}</div>
+          <div style="color:var(--muted);font-size:14px;">${catName} &bull; ${gender}</div>
           <div style="margin-top:12px;display:flex;gap:20px;align-items:center;">
             <div style="text-align:center;">
               <div style="font-size:28px;font-weight:900;color:${color};">${teamPlayers.length}</div>
-              <div style="font-size:12px;color:#64748b;">Jugadores</div>
+              <div style="font-size:12px;color:var(--muted);">Jugadores</div>
             </div>
             ${App.isEditor() ? `<button class="btn-danger" style="margin-left:auto;" onclick="window._deleteTeam('${team.id}','${schoolName.replace(/'/g,"\\'")}')">Eliminar Equipo</button>` : ''}
         </div>
@@ -284,7 +284,7 @@ function _renderTeamDetail(container, teamId, teams, players) {
               <div class="card" style="text-align:center;cursor:pointer;padding:16px;
                                        border-top:3px solid ${color};"
                    onclick="App.navigate('players',{playerId:'${p.id}'})"
-                   onmouseover="this.style.background='rgba(255,255,255,0.05)'"
+                   onmouseover="this.style.background='var(--border)'"
                    onmouseout="this.style.background=''">
                 <img src="${p.photo_url || 'https://via.placeholder.com/60'}"
                      style="width:64px;height:64px;border-radius:50%;object-fit:cover;

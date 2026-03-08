@@ -69,27 +69,27 @@ Pages.Players = async function(container, opts) {
                   style="background:#0f172a;border:1px solid ${isSuspended ? 'rgba(239,68,68,0.4)' : '#1e293b'};border-radius:14px;
                          overflow:hidden;cursor:pointer;transition:transform .15s,border-color .15s,box-shadow .15s;
                          position:relative;"
-                  onmouseenter="this.style.transform='translateY(-3px)';this.style.borderColor='${isSuspended ? '#ef4444' : color}';this.style.boxShadow='0 8px 24px rgba(0,0,0,.4)'"
+                  onmouseenter="this.style.transform='translateY(-3px)';this.style.borderColor='${isSuspended ? 'var(--accent2)' : color}';this.style.boxShadow='0 8px 24px rgba(0,0,0,.4)'"
                   onmouseleave="this.style.transform='';this.style.borderColor='${isSuspended ? 'rgba(239,68,68,0.4)' : '#1e293b'}';this.style.boxShadow=''">
 
                   <!-- Banda de color superior -->
-                  <div style="height:4px;background:${isSuspended ? '#dc2626' : color};"></div>
+                  <div style="height:4px;background:${isSuspended ? 'var(--accent2)' : color};"></div>
 
                   <!-- Cuerpo -->
                   <div style="padding:16px;text-align:center;">
                     ${isSuspended ? `
                     <div style="background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);
                                 border-radius:6px;padding:3px 8px;margin-bottom:8px;display:inline-block;">
-                      <span style="font-size:10px;font-weight:800;color:#f87171;">🚫 SUSPENDIDO</span>
+                      <span style="font-size:10px;font-weight:800;color:var(--accent2);">🚫 SUSPENDIDO</span>
                     </div>` : ''}
                     <!-- Foto + número -->
                     <div style="position:relative;display:inline-block;margin-bottom:10px;">
                       <img src="${photo}" alt="${p.full_name}"
                            style="width:70px;height:70px;border-radius:50%;object-fit:cover;
-                                  border:2px solid ${isSuspended ? '#dc2626' : color};display:block;
+                                  border:2px solid ${isSuspended ? 'var(--accent2)' : color};display:block;
                                   ${isSuspended ? 'filter:grayscale(40%)' : ''}">
                       <span style="position:absolute;bottom:-2px;right:-6px;
-                                   background:${isSuspended ? '#dc2626' : color};color:#0f172a;
+                                   background:${isSuspended ? 'var(--accent2)' : color};color:#0f172a;
                                    font-size:10px;font-weight:900;
                                    padding:2px 6px;border-radius:10px;
                                    border:2px solid #0f172a;line-height:1.2;">
@@ -98,13 +98,13 @@ Pages.Players = async function(container, opts) {
                     </div>
 
                     <!-- Nombre -->
-                    <div style="font-weight:700;font-size:14px;color:${isSuspended ? '#fca5a5' : '#f1f5f9'};
+                    <div style="font-weight:700;font-size:14px;color:${isSuspended ? '#fca5a5' : 'var(--text)'};
                                 line-height:1.3;margin-bottom:4px;">
                       ${Utils.truncate(p.full_name, 22)}
                     </div>
 
                     <!-- Deporte + Colegio -->
-                    <div style="font-size:11px;color:#64748b;margin-bottom:10px;line-height:1.6;">
+                    <div style="font-size:11px;color:var(--muted);margin-bottom:10px;line-height:1.6;">
                       <span style="color:${color};">${Utils.sportIcon(sport)} ${sport || '—'}</span><br>
                       ${Utils.truncate(school, 20)}
                     </div>
@@ -112,7 +112,7 @@ Pages.Players = async function(container, opts) {
                     <!-- Stats chips -->
                     ${pStats ? `
                     <div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap;">
-                      <span style="background:rgba(96,165,250,0.12);color:#93c5fd;
+                      <span style="background:rgba(96,165,250,0.12);color:var(--accent);
                                    font-size:10px;font-weight:700;
                                    padding:3px 8px;border-radius:8px;">
                         ⚡ ${totalScore}
@@ -124,13 +124,13 @@ Pages.Players = async function(container, opts) {
                         🟨 ${pStats.yellow_cards}
                       </span>` : ''}
                       ${pStats.red_cards > 0 ? `
-                      <span style="background:rgba(239,68,68,0.12);color:#f87171;
+                      <span style="background:rgba(239,68,68,0.12);color:var(--accent2);
                                    font-size:10px;font-weight:700;
                                    padding:3px 8px;border-radius:8px;">
                         🟥 ${pStats.red_cards}
                       </span>` : ''}
                     </div>` : `
-                    <div style="font-size:10px;color:#334155;">Sin estadísticas</div>`}
+                    <div style="font-size:10px;color:var(--muted);">Sin estadísticas</div>`}
                   </div>
                 </div>`;
             }).join('')}
@@ -146,8 +146,8 @@ Pages.Players = async function(container, opts) {
       <div style="display:flex;align-items:flex-end;justify-content:space-between;
                   margin-bottom:22px;flex-wrap:wrap;gap:10px;">
         <div>
-          <h2 style="font-size:28px;font-weight:900;color:#60a5fa;margin:0;">👥 Jugadores</h2>
-          <p style="color:#475569;font-size:13px;margin:4px 0 0;">
+          <h2 style="font-size:28px;font-weight:900;color:var(--accent);margin:0;">👥 Jugadores</h2>
+          <p style="color:var(--muted);font-size:13px;margin:4px 0 0;">
             Registro de jugadores por deporte y colegio
           </p>
         </div>
@@ -155,15 +155,15 @@ Pages.Players = async function(container, opts) {
         <div style="display:flex;gap:10px;flex-wrap:wrap;">
           <div style="background:rgba(96,165,250,0.1);border:1px solid rgba(96,165,250,0.2);
                       border-radius:10px;padding:8px 16px;text-align:center;">
-            <div style="font-size:20px;font-weight:900;color:#60a5fa;" id="pl-count">
+            <div style="font-size:20px;font-weight:900;color:var(--accent);" id="pl-count">
               ${players.length}
             </div>
-            <div style="font-size:11px;color:#475569;">jugadores</div>
+            <div style="font-size:11px;color:var(--muted);">jugadores</div>
           </div>
           <div style="background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.2);
                       border-radius:10px;padding:8px 16px;text-align:center;">
-            <div style="font-size:20px;font-weight:900;color:#a78bfa;">${sportsCount}</div>
-            <div style="font-size:11px;color:#475569;">deportes</div>
+            <div style="font-size:20px;font-weight:900;color:var(--purple);">${sportsCount}</div>
+            <div style="font-size:11px;color:var(--muted);">deportes</div>
           </div>
         </div>
       </div>
@@ -250,22 +250,22 @@ function _showPlayerDetail(container, playerId, players, teams, playerStats) {
   const photo = player.photo_url ||
     `https://ui-avatars.com/api/?background=1e40af&color=fff&size=120&name=${encodeURIComponent(player.full_name || '?')}`;
 
-  const statCard = (icon, value, label, valueColor = '#f1f5f9') => `
+  const statCard = (icon, value, label, valueColor = 'var(--text)') => `
     <div style="background:#0f172a;border:1px solid #1e293b;border-radius:12px;
                 padding:16px;text-align:center;">
       <div style="font-size:20px;margin-bottom:4px;">${icon}</div>
       <div style="font-size:26px;font-weight:900;color:${valueColor};line-height:1;">${value}</div>
-      <div style="font-size:12px;color:#475569;margin-top:4px;">${label}</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px;">${label}</div>
     </div>`;
 
   container.innerHTML = `
     <div style="margin-bottom:16px;">
       <button onclick="App.navigate('players')"
-        style="background:rgba(255,255,255,0.05);border:1px solid #1e293b;
-               color:#94a3b8;border-radius:8px;padding:6px 14px;
+        style="background:var(--surface);border:1px solid #1e293b;
+               color:var(--muted);border-radius:8px;padding:6px 14px;
                font-size:13px;cursor:pointer;transition:background .15s;"
         onmouseenter="this.style.background='rgba(255,255,255,0.1)'"
-        onmouseleave="this.style.background='rgba(255,255,255,0.05)'">
+        onmouseleave="this.style.background='var(--border)'">
         ← Volver a jugadores
       </button>
     </div>
@@ -287,22 +287,22 @@ function _showPlayerDetail(container, playerId, players, teams, playerStats) {
         </span>
       </div>
       <div style="flex:1;min-width:0;">
-        <h2 style="font-size:26px;font-weight:900;color:${isSuspended ? '#fca5a5' : '#f1f5f9'};margin:0 0 4px;">${player.full_name}</h2>
+        <h2 style="font-size:26px;font-weight:900;color:${isSuspended ? '#fca5a5' : 'var(--text)'};margin:0 0 4px;">${player.full_name}</h2>
         ${isSuspended ? `
         <div style="background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);
                     border-radius:8px;padding:6px 14px;margin-bottom:8px;display:inline-block;">
-          <span style="font-size:13px;font-weight:800;color:#f87171;">🚫 SUSPENDIDO — 2+ tarjetas amarillas acumuladas</span>
+          <span style="font-size:13px;font-weight:800;color:var(--accent2);">🚫 SUSPENDIDO — 2+ tarjetas amarillas acumuladas</span>
         </div>` : ''}
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px;">
-          <span style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+          <span style="background:var(--border);border:1px solid rgba(255,255,255,0.1);
                        color:${color};font-size:12px;font-weight:700;
                        padding:3px 10px;border-radius:20px;">
             ${Utils.sportIcon(sport)} ${sport}
           </span>
-          <span style="font-size:13px;color:#64748b;">${Utils.truncate(school, 30)}</span>
+          <span style="font-size:13px;color:var(--muted);">${Utils.truncate(school, 30)}</span>
         </div>
         ${team ? `
-        <div style="font-size:12px;color:#475569;">
+        <div style="font-size:12px;color:var(--muted);">
           ${team.category?.name || ''} · ${team.gender || ''} · ${Utils.truncate(team.name || '', 25)}
         </div>` : ''}
       </div>
@@ -311,17 +311,17 @@ function _showPlayerDetail(container, playerId, players, teams, playerStats) {
     <!-- Stats generales -->
     ${pStats ? `
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;">
-      ${statCard('⚡', totalScore,          'Anotaciones',   '#60a5fa')}
-      ${statCard('🎯', totalAssists,        'Asistencias',   '#10b981')}
+      ${statCard('⚡', totalScore,          'Anotaciones',   'var(--accent)')}
+      ${statCard('🎯', totalAssists,        'Asistencias',   'var(--green)')}
       ${statCard('🟨', pStats.yellow_cards, 'Amarillas',     '#fbbf24')}
-      ${statCard('🟥', pStats.red_cards,    'Rojas',         '#f87171')}
+      ${statCard('🟥', pStats.red_cards,    'Rojas',         'var(--accent2)')}
     </div>
 
     <!-- Stats por deporte -->
     ${(pStats.sport_stats || []).length > 0 ? `
     <div style="background:#0f172a;border:1px solid #1e293b;border-radius:14px;
                 padding:20px;margin-bottom:16px;">
-      <h3 style="font-size:15px;font-weight:700;color:#e2e8f0;margin:0 0 16px;
+      <h3 style="font-size:15px;font-weight:700;color:var(--text);margin:0 0 16px;
                  display:flex;align-items:center;gap:8px;">
         📊 <span>Estadísticas por deporte</span>
       </h3>
@@ -330,16 +330,16 @@ function _showPlayerDetail(container, playerId, players, teams, playerStats) {
         return `
         <div style="display:flex;justify-content:space-between;align-items:center;
                     padding:12px 14px;border-radius:10px;margin-bottom:8px;
-                    background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);">
+                    background:rgba(255,255,255,0.02);border:1px solid var(--border);">
           <div style="display:flex;align-items:center;gap:10px;">
             <span style="font-size:20px;">${Utils.sportIcon(ss.sport)}</span>
             <div>
-              <div style="font-weight:700;color:#f1f5f9;font-size:14px;">${ss.sport}</div>
-              <div style="font-size:11px;color:#475569;">${ss.score_term || 'Puntos'}</div>
+              <div style="font-weight:700;color:var(--text);font-size:14px;">${ss.sport}</div>
+              <div style="font-size:11px;color:var(--muted);">${ss.score_term || 'Puntos'}</div>
             </div>
           </div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;">
-            <span style="background:rgba(96,165,250,0.12);color:#93c5fd;
+            <span style="background:rgba(96,165,250,0.12);color:var(--accent);
                          font-size:12px;font-weight:700;
                          padding:4px 10px;border-radius:8px;">
               ⚡ ${ss.score}
@@ -378,8 +378,8 @@ function _showPlayerDetail(container, playerId, players, teams, playerStats) {
                 padding:14px 18px;display:flex;align-items:center;gap:12px;">
       <span style="font-size:28px;">🏟️</span>
       <div>
-        <div style="font-size:22px;font-weight:900;color:#a78bfa;">${pStats.matches_played || 0}</div>
-        <div style="font-size:12px;color:#475569;">Partidos jugados</div>
+        <div style="font-size:22px;font-weight:900;color:var(--purple);">${pStats.matches_played || 0}</div>
+        <div style="font-size:12px;color:var(--muted);">Partidos jugados</div>
       </div>
     </div>
 
@@ -387,7 +387,7 @@ function _showPlayerDetail(container, playerId, players, teams, playerStats) {
     <div style="background:#0f172a;border:1px solid #1e293b;border-radius:12px;
                 padding:32px;text-align:center;">
       <div style="font-size:36px;margin-bottom:8px;">📋</div>
-      <p style="color:#475569;font-size:14px;margin:0;">Sin estadísticas disponibles aún.</p>
+      <p style="color:var(--muted);font-size:14px;margin:0;">Sin estadísticas disponibles aún.</p>
     </div>`}
   `;
 }

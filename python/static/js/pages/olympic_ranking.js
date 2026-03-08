@@ -99,14 +99,14 @@ Pages.OlympicRanking = async function(container) {
       if (pos === 0) return '<span style="font-size:28px;">&#x1F947;</span>';
       if (pos === 1) return '<span style="font-size:28px;">&#x1F948;</span>';
       if (pos === 2) return '<span style="font-size:28px;">&#x1F949;</span>';
-      return `<span style="font-size:18px;font-weight:900;color:#64748b;">${pos + 1}</span>`;
+      return `<span style="font-size:18px;font-weight:900;color:var(--muted);">${pos + 1}</span>`;
     };
 
     const posColor = (pos) => {
       if (pos === 0) return '#fbbf24';
-      if (pos === 1) return '#94a3b8';
+      if (pos === 1) return 'var(--muted)';
       if (pos === 2) return '#cd7f32';
-      return '#e2e8f0';
+      return 'var(--text)';
     };
 
     const logoHtml = (name, logoUrl, size) => {
@@ -114,9 +114,9 @@ Pages.OlympicRanking = async function(container) {
       if (logoUrl) {
         return `<img src="${logoUrl}" style="width:${size}px;height:${size}px;border-radius:50%;object-fit:contain;background:white;padding:${size > 40 ? 6 : 3}px;"
                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-                <div style="width:${size}px;height:${size}px;border-radius:50%;background:linear-gradient(135deg,#1e40af,#3b82f6);display:none;align-items:center;justify-content:center;font-size:${Math.round(size/3)}px;font-weight:900;color:white;">${initials}</div>`;
+                <div style="width:${size}px;height:${size}px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent));display:none;align-items:center;justify-content:center;font-size:${Math.round(size/3)}px;font-weight:900;color:white;">${initials}</div>`;
       }
-      return `<div style="width:${size}px;height:${size}px;border-radius:50%;background:linear-gradient(135deg,#1e40af,#3b82f6);display:flex;align-items:center;justify-content:center;font-size:${Math.round(size/3)}px;font-weight:900;color:white;">${initials}</div>`;
+      return `<div style="width:${size}px;height:${size}px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent));display:flex;align-items:center;justify-content:center;font-size:${Math.round(size/3)}px;font-weight:900;color:white;">${initials}</div>`;
     };
 
     const podium = ranked.slice(0, 3);
@@ -134,20 +134,20 @@ Pages.OlympicRanking = async function(container) {
       <!-- Progreso del torneo -->
       <div class="card mb-6" style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
         <div style="flex:1;min-width:200px;">
-          <div style="font-size:12px;color:#94a3b8;margin-bottom:6px;">Progreso del torneo</div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:6px;">Progreso del torneo</div>
           <div style="background:#1e293b;border-radius:8px;height:10px;overflow:hidden;">
-            <div style="background:linear-gradient(90deg,#3b82f6,#60a5fa);height:100%;width:${progress}%;transition:width .5s;border-radius:8px;"></div>
+            <div style="background:linear-gradient(90deg,var(--accent),var(--accent));height:100%;width:${progress}%;transition:width .5s;border-radius:8px;"></div>
           </div>
-          <div style="font-size:11px;color:#64748b;margin-top:4px;">${finishedMatches.length} de ${totalMatches} partidos jugados (${progress}%)</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:4px;">${finishedMatches.length} de ${totalMatches} partidos jugados (${progress}%)</div>
         </div>
         <div style="display:flex;gap:16px;text-align:center;">
           <div>
-            <div style="font-size:22px;font-weight:900;color:#60a5fa;">${ranked.length}</div>
-            <div style="font-size:11px;color:#94a3b8;">Colegios</div>
+            <div style="font-size:22px;font-weight:900;color:var(--accent);">${ranked.length}</div>
+            <div style="font-size:11px;color:var(--muted);">Colegios</div>
           </div>
           <div>
-            <div style="font-size:22px;font-weight:900;color:#a78bfa;">${totalCategories}</div>
-            <div style="font-size:11px;color:#94a3b8;">Categorias</div>
+            <div style="font-size:22px;font-weight:900;color:var(--purple);">${totalCategories}</div>
+            <div style="font-size:11px;color:var(--muted);">Categorias</div>
           </div>
         </div>
       </div>
@@ -162,7 +162,7 @@ Pages.OlympicRanking = async function(container) {
           const h = heights[idx];
           const medals = [
             { icon: '&#x1F947;', color: '#fbbf24', bg: 'rgba(251,191,36,0.12)', border: 'rgba(251,191,36,0.4)' },
-            { icon: '&#x1F948;', color: '#94a3b8', bg: 'rgba(148,163,184,0.12)', border: 'rgba(148,163,184,0.4)' },
+            { icon: '&#x1F948;', color: 'var(--muted)', bg: 'rgba(148,163,184,0.12)', border: 'rgba(148,163,184,0.4)' },
             { icon: '&#x1F949;', color: '#cd7f32', bg: 'rgba(205,127,50,0.12)', border: 'rgba(205,127,50,0.4)' },
           ];
           const m = medals[idx];
@@ -178,11 +178,11 @@ Pages.OlympicRanking = async function(container) {
                           padding:16px 8px;">
                 <div style="display:flex;gap:10px;font-size:18px;font-weight:800;margin-bottom:8px;">
                   <span style="color:#fbbf24;">&#x1F947; ${s.golds}</span>
-                  <span style="color:#94a3b8;">&#x1F948; ${s.silvers}</span>
+                  <span style="color:var(--muted);">&#x1F948; ${s.silvers}</span>
                   <span style="color:#cd7f32;">&#x1F949; ${s.bronzes}</span>
                 </div>
                 <div style="font-size:32px;font-weight:900;color:${m.color};">${s.total}</div>
-                <div style="font-size:11px;color:#94a3b8;margin-top:2px;">medallas totales</div>
+                <div style="font-size:11px;color:var(--muted);margin-top:2px;">medallas totales</div>
               </div>
             </div>`;
         }).join('')}
@@ -194,7 +194,7 @@ Pages.OlympicRanking = async function(container) {
         <div style="overflow-x:auto;">
           <table style="width:100%;border-collapse:collapse;font-size:14px;min-width:500px;">
             <thead>
-              <tr style="color:#64748b;font-size:12px;text-align:center;">
+              <tr style="color:var(--muted);font-size:12px;text-align:center;">
                 <th style="padding:10px;text-align:center;width:50px;">#</th>
                 <th style="padding:10px;text-align:left;">Colegio</th>
                 <th style="padding:10px;">&#x1F947;</th>
@@ -205,7 +205,7 @@ Pages.OlympicRanking = async function(container) {
             </thead>
             <tbody>
               ${ranked.map((s, i) => `
-                <tr class="table-row" style="border-bottom:1px solid rgba(255,255,255,0.05);${i < 3 ? 'background:rgba(251,191,36,0.03);' : ''}cursor:pointer;"
+                <tr class="table-row" style="border-bottom:1px solid var(--border);${i < 3 ? 'background:rgba(251,191,36,0.03);' : ''}cursor:pointer;"
                     onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? '' : 'none'">
                   <td style="padding:12px;text-align:center;">${medalIcon(i)}</td>
                   <td style="padding:12px;">
@@ -215,18 +215,18 @@ Pages.OlympicRanking = async function(container) {
                     </div>
                   </td>
                   <td style="padding:10px;text-align:center;font-weight:800;font-size:16px;color:#fbbf24;">${s.golds}</td>
-                  <td style="padding:10px;text-align:center;font-weight:800;font-size:16px;color:#94a3b8;">${s.silvers}</td>
+                  <td style="padding:10px;text-align:center;font-weight:800;font-size:16px;color:var(--muted);">${s.silvers}</td>
                   <td style="padding:10px;text-align:center;font-weight:800;font-size:16px;color:#cd7f32;">${s.bronzes}</td>
-                  <td style="padding:10px;text-align:center;font-weight:900;font-size:20px;color:#60a5fa;">${s.total}</td>
+                  <td style="padding:10px;text-align:center;font-weight:900;font-size:20px;color:var(--accent);">${s.total}</td>
                 </tr>
                 <tr style="display:none;">
                   <td colspan="6" style="padding:4px 12px 12px 60px;">
                     ${s.details.length > 0
                       ? s.details.map(d => {
                           const mIcon = d.medal === 'gold' ? '&#x1F947;' : d.medal === 'silver' ? '&#x1F948;' : '&#x1F949;';
-                          return `<div style="font-size:12px;color:#94a3b8;padding:2px 0;">${mIcon} ${d.cat}</div>`;
+                          return `<div style="font-size:12px;color:var(--muted);padding:2px 0;">${mIcon} ${d.cat}</div>`;
                         }).join('')
-                      : '<div style="font-size:12px;color:#475569;font-style:italic;">Sin medallas aun</div>'
+                      : '<div style="font-size:12px;color:var(--muted);font-style:italic;">Sin medallas aun</div>'
                     }
                   </td>
                 </tr>
@@ -237,7 +237,7 @@ Pages.OlympicRanking = async function(container) {
       </div>
 
       <div style="margin-top:16px;text-align:center;">
-        <p style="font-size:11px;color:#334155;">
+        <p style="font-size:11px;color:var(--muted);">
           Medallas por categoria (deporte + categoria + genero). Click en una fila para ver detalle.
           Orden: mas oros &gt; mas platas &gt; mas bronces.
         </p>

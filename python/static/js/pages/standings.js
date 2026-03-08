@@ -32,7 +32,7 @@ Pages.Standings = async function(container, opts) {
       .reverse();
 
     if (!finished.length)
-      return `<span style="color:#334155;font-size:12px;letter-spacing:2px;">— — —</span>`;
+      return `<span style="color:var(--muted);font-size:12px;letter-spacing:2px;">— — —</span>`;
 
     const isFootball = /fútbol|futbol|softbol/i.test(sport || '');
     return finished.map(m => {
@@ -40,20 +40,20 @@ Pages.Standings = async function(container, opts) {
       const myScore  = isHome ? (m.team1_score ?? 0) : (m.team2_score ?? 0);
       const oppScore = isHome ? (m.team2_score ?? 0) : (m.team1_score ?? 0);
       if (myScore > oppScore)
-        return `<span title="Victoria" style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#10b981;margin:1px;vertical-align:middle;"></span>`;
+        return `<span title="Victoria" style="display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--green);margin:1px;vertical-align:middle;"></span>`;
       if (myScore < oppScore)
-        return `<span title="Derrota"  style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#ef4444;margin:1px;vertical-align:middle;"></span>`;
+        return `<span title="Derrota"  style="display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--accent2);margin:1px;vertical-align:middle;"></span>`;
       return isFootball
         ? `<span title="Empate" style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#f59e0b;margin:1px;vertical-align:middle;"></span>`
-        : `<span title="Derrota" style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#ef4444;margin:1px;vertical-align:middle;"></span>`;
+        : `<span title="Derrota" style="display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--accent2);margin:1px;vertical-align:middle;"></span>`;
     }).join('');
   }
 
   // ── Columnas según deporte ────────────────────────────────────────────────
   function _stCols(sport) {
-    const td  = 'style="padding:10px;text-align:center;"';
-    const tdG = d => `style="padding:10px;text-align:center;color:${d >= 0 ? '#10b981' : '#ef4444'};"`;
-    const formHead = `<th style="color:#94a3b8;font-size:11px;min-width:80px;padding:8px;">Forma</th>`;
+    const td  = 'style="padding:10px;text-align:center;font-family:\'Space Mono\',monospace;font-size:13px;"';
+    const tdG = d => `style="padding:10px;text-align:center;font-family:'Space Mono',monospace;font-size:13px;color:${d >= 0 ? 'var(--green)' : 'var(--accent2)'};"`;
+    const formHead = `<th style="color:var(--muted);font-size:11px;min-width:80px;padding:8px;">Forma</th>`;
 
     if (sport === 'Baloncesto') {
       return {
@@ -63,8 +63,8 @@ Pages.Standings = async function(container, opts) {
           const d = t.goal_difference || 0;
           return `
             <td ${td}>${t.matches_played || 0}</td>
-            <td style="padding:10px;text-align:center;color:#10b981;font-weight:700;">${t.wins || 0}</td>
-            <td style="padding:10px;text-align:center;color:#ef4444;">${t.losses || 0}</td>
+            <td style="padding:10px;text-align:center;color:var(--green);font-weight:700;">${t.wins || 0}</td>
+            <td style="padding:10px;text-align:center;color:var(--accent2);">${t.losses || 0}</td>
             <td ${td}>${t.goals_for || 0}</td>
             <td ${td}>${t.goals_against || 0}</td>
             <td ${tdG(d)}>${d > 0 ? '+' : ''}${d}</td>
@@ -81,8 +81,8 @@ Pages.Standings = async function(container, opts) {
           const d = t.goal_difference || 0;
           return `
             <td ${td}>${t.matches_played || 0}</td>
-            <td style="padding:10px;text-align:center;color:#10b981;font-weight:700;">${t.wins || 0}</td>
-            <td style="padding:10px;text-align:center;color:#ef4444;">${t.losses || 0}</td>
+            <td style="padding:10px;text-align:center;color:var(--green);font-weight:700;">${t.wins || 0}</td>
+            <td style="padding:10px;text-align:center;color:var(--accent2);">${t.losses || 0}</td>
             <td ${td}>${t.goals_for || 0}</td>
             <td ${td}>${t.goals_against || 0}</td>
             <td ${tdG(d)}>${d > 0 ? '+' : ''}${d}</td>
@@ -99,9 +99,9 @@ Pages.Standings = async function(container, opts) {
         const d = t.goal_difference || 0;
         return `
           <td ${td}>${t.matches_played || 0}</td>
-          <td style="padding:10px;text-align:center;color:#10b981;font-weight:700;">${t.wins || 0}</td>
-          <td style="padding:10px;text-align:center;color:#94a3b8;">${t.draws || 0}</td>
-          <td style="padding:10px;text-align:center;color:#ef4444;">${t.losses || 0}</td>
+          <td style="padding:10px;text-align:center;color:var(--green);font-weight:700;">${t.wins || 0}</td>
+          <td style="padding:10px;text-align:center;color:var(--muted);">${t.draws || 0}</td>
+          <td style="padding:10px;text-align:center;color:var(--accent2);">${t.losses || 0}</td>
           <td ${td}>${t.goals_for || 0}</td>
           <td ${td}>${t.goals_against || 0}</td>
           <td ${tdG(d)}>${d > 0 ? '+' : ''}${d}</td>
@@ -121,7 +121,7 @@ Pages.Standings = async function(container, opts) {
     document.querySelectorAll(`[data-sttab="${safeKey}"]`).forEach(btn => {
       const active = btn.dataset.grp === gKey;
       btn.style.background  = active ? 'white' : 'rgba(255,255,255,0.1)';
-      btn.style.color       = active ? '#1e40af' : 'white';
+      btn.style.color       = active ? 'var(--accent)' : 'white';
       btn.style.fontWeight  = active ? '700' : '500';
     });
   };
@@ -159,7 +159,7 @@ Pages.Standings = async function(container, opts) {
               style="padding:5px 18px;border-radius:8px;border:none;cursor:pointer;
                      font-size:13px;transition:all .15s;
                      background:${i === 0 ? 'white' : 'rgba(255,255,255,0.1)'};
-                     color:${i === 0 ? '#1e40af' : 'white'};
+                     color:${i === 0 ? 'var(--accent)' : 'white'};
                      font-weight:${i === 0 ? '700' : '500'};">
               Grupo ${gKey}
             </button>`).join('')}
@@ -179,7 +179,7 @@ Pages.Standings = async function(container, opts) {
                data-stcat="${safeKey}"
                style="display:${visible ? '' : 'none'};">
             ${!hasMultiple && gKey ? `
-              <div style="font-size:13px;font-weight:700;color:#a78bfa;margin-bottom:8px;">
+              <div style="font-size:13px;font-weight:700;color:var(--purple);margin-bottom:8px;">
                 <span style="background:rgba(139,92,246,0.2);border-radius:6px;
                              padding:3px 12px;border:1px solid rgba(139,92,246,0.3);">
                   Grupo ${gKey}
@@ -188,26 +188,26 @@ Pages.Standings = async function(container, opts) {
             <div style="overflow-x:auto;">
               <table style="width:100%;border-collapse:collapse;font-size:14px;min-width:${cols.minWidth};">
                 <thead>
-                  <tr style="color:#64748b;font-size:12px;text-align:center;">
+                  <tr style="color:var(--muted);font-size:12px;text-align:center;font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">
                     <th style="padding:8px;text-align:left;">#</th>
-                    <th style="padding:8px;text-align:left;">Equipo / Colegio</th>
+                    <th style="padding:8px;text-align:left;font-family:'DM Sans',sans-serif;letter-spacing:0;">Equipo / Colegio</th>
                     ${cols.head}
-                    <th style="color:#fbbf24;font-size:14px;">PTS</th>
+                    <th style="color:var(--accent);font-size:14px;">PTS</th>
                   </tr>
                 </thead>
                 <tbody>
                   ${grpTeams.map((t, i) => `
-                    <tr class="table-row" style="border-bottom:1px solid rgba(255,255,255,0.05);">
-                      <td style="padding:10px;font-weight:700;
-                                 color:${i===0?'#fbbf24':i===1?'#94a3b8':i===2?'#b87333':'#e2e8f0'};">
+                    <tr class="table-row" style="border-bottom:1px solid var(--border);">
+                      <td style="padding:10px;font-family:'Bebas Neue',sans-serif;font-size:18px;
+                                 color:${i===0?'var(--accent)':i===1?'var(--muted)':i===2?'#cd7f32':'var(--text)'};">
                         ${i + 1}
                       </td>
                       <td style="padding:10px;">
                         <span style="font-weight:600;">${Utils.truncate(t.team_name || t.school || '', 26)}</span>
                       </td>
                       ${cols.cell(t)}
-                      <td style="padding:10px;text-align:center;font-weight:900;
-                                 font-size:18px;color:#60a5fa;">${t.points || 0}</td>
+                      <td style="padding:10px;text-align:center;font-family:'Space Mono',monospace;font-weight:900;
+                                 font-size:18px;color:var(--accent);">${t.points || 0}</td>
                     </tr>`).join('')}
                 </tbody>
               </table>
@@ -220,7 +220,7 @@ Pages.Standings = async function(container, opts) {
           <h3 class="text-lg font-bold mb-3" style="color:${color};">
             ${Utils.sportIcon(cat.sport)} ${cat.sport} &bull; ${cat.category} &bull; ${cat.gender}
             ${hasMultiple
-              ? `<span style="font-size:12px;color:#a78bfa;margin-left:8px;font-weight:400;">
+              ? `<span style="font-size:12px;color:var(--purple);margin-left:8px;font-weight:400;">
                    ${namedGroups.length} grupos
                  </span>`
               : ''}
@@ -266,15 +266,15 @@ Pages.Standings = async function(container, opts) {
     <div style="display:flex;align-items:flex-end;justify-content:space-between;
                 margin-bottom:20px;flex-wrap:wrap;gap:10px;">
       <div>
-        <h2 class="text-3xl font-black" style="color:#60a5fa;">🏆 Tablas de Posiciones</h2>
-        <p class="text-gray-400 mt-1 text-sm">Fase de grupos — partidos intragrupo únicamente.</p>
+        <h2 class="section-title">🏆 Tablas de Posiciones</h2>
+        <p style="color:var(--muted);font-size:13px;margin-top:4px;">Fase de grupos — partidos intragrupo únicamente.</p>
       </div>
       <button onclick="window._stPrint()"
-        style="background:rgba(255,255,255,0.05);border:1px solid #334155;
-               color:#94a3b8;border-radius:8px;padding:7px 14px;
+        style="background:var(--surface);border:1px solid var(--border);
+               color:var(--muted);border-radius:8px;padding:7px 14px;
                font-size:13px;cursor:pointer;transition:background .15s;"
         onmouseenter="this.style.background='rgba(255,255,255,0.1)'"
-        onmouseleave="this.style.background='rgba(255,255,255,0.05)'">
+        onmouseleave="this.style.background='var(--border)'">
         🖨️ Imprimir
       </button>
     </div>

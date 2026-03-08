@@ -23,7 +23,7 @@ Pages.Register = async function(container, opts) {
 
     window._rgData = { teams, players, playerStats, suspendedIds, filterTeam: '' };
 
-    const inp = `background:#0f172a;color:#e2e8f0;border:1px solid #1e293b;
+    const inp = `background:#0f172a;color:var(--text);border:1px solid #1e293b;
                  border-radius:8px;padding:8px 12px;font-size:13px;
                  width:100%;box-sizing:border-box;outline:none;transition:border-color .15s;`;
 
@@ -44,23 +44,23 @@ Pages.Register = async function(container, opts) {
       <div style="display:flex;align-items:flex-end;justify-content:space-between;
                   margin-bottom:22px;flex-wrap:wrap;gap:10px;">
         <div>
-          <h2 style="font-size:28px;font-weight:900;color:#60a5fa;margin:0;">👤 Registrar Jugadores</h2>
-          <p style="color:#475569;font-size:13px;margin:4px 0 0;">
+          <h2 style="font-size:28px;font-weight:900;color:var(--accent);margin:0;">👤 Registrar Jugadores</h2>
+          <p style="color:var(--muted);font-size:13px;margin:4px 0 0;">
             Gestión de plantillas por equipo
           </p>
         </div>
         <div style="display:flex;gap:10px;">
           <div style="background:rgba(96,165,250,0.1);border:1px solid rgba(96,165,250,0.2);
                       border-radius:10px;padding:8px 16px;text-align:center;">
-            <div style="font-size:20px;font-weight:900;color:#60a5fa;" id="rg-total">
+            <div style="font-size:20px;font-weight:900;color:var(--accent);" id="rg-total">
               ${players.length}
             </div>
-            <div style="font-size:11px;color:#475569;">jugadores</div>
+            <div style="font-size:11px;color:var(--muted);">jugadores</div>
           </div>
           <div style="background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.2);
                       border-radius:10px;padding:8px 16px;text-align:center;">
-            <div style="font-size:20px;font-weight:900;color:#a78bfa;">${teams.length}</div>
-            <div style="font-size:11px;color:#475569;">equipos</div>
+            <div style="font-size:20px;font-weight:900;color:var(--purple);">${teams.length}</div>
+            <div style="font-size:11px;color:var(--muted);">equipos</div>
           </div>
         </div>
       </div>
@@ -78,36 +78,36 @@ Pages.Register = async function(container, opts) {
                   border-radius:16px;padding:20px;margin-bottom:24px;">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:18px;">
           <span style="font-size:16px;">➕</span>
-          <h3 style="font-size:15px;font-weight:700;color:#60a5fa;margin:0;">Registrar nuevo jugador</h3>
+          <h3 style="font-size:15px;font-weight:700;color:var(--accent);margin:0;">Registrar nuevo jugador</h3>
         </div>
 
         <div style="display:grid;grid-template-columns:2fr 100px 2fr;gap:12px;margin-bottom:14px;">
           <div>
-            <label style="font-size:11px;color:#475569;display:block;margin-bottom:4px;
+            <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;
                           text-transform:uppercase;letter-spacing:.5px;">Nombre completo *</label>
             <input type="text" id="rg-pname"
               placeholder="Nombre del jugador"
               style="${inp}"
-              onfocus="this.style.borderColor='#3b82f6'"
+              onfocus="this.style.borderColor='var(--accent)'"
               onblur="this.style.borderColor='#1e293b'"
               onkeydown="if(event.key==='Enter') Pages._rgSave()">
           </div>
           <div>
-            <label style="font-size:11px;color:#475569;display:block;margin-bottom:4px;
+            <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;
                           text-transform:uppercase;letter-spacing:.5px;">Camiseta</label>
             <input type="number" id="rg-jersey"
               placeholder="Nº" min="0" max="99"
               style="${inp}text-align:center;font-size:16px;font-weight:700;"
-              onfocus="this.style.borderColor='#3b82f6'"
+              onfocus="this.style.borderColor='var(--accent)'"
               onblur="this.style.borderColor='#1e293b'"
               onkeydown="if(event.key==='Enter') Pages._rgSave()">
           </div>
           <div>
-            <label style="font-size:11px;color:#475569;display:block;margin-bottom:4px;
+            <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;
                           text-transform:uppercase;letter-spacing:.5px;">Equipo *</label>
             <select id="rg-team"
               style="${inp}"
-              onfocus="this.style.borderColor='#3b82f6'"
+              onfocus="this.style.borderColor='var(--accent)'"
               onblur="this.style.borderColor='#1e293b'">
               <option value="">— Seleccionar equipo —</option>
               ${teams.map(t => {
@@ -121,7 +121,7 @@ Pages.Register = async function(container, opts) {
         </div>
 
         <button onclick="Pages._rgSave()"
-          style="background:linear-gradient(135deg,#1d4ed8,#3b82f6);color:white;
+          style="background:linear-gradient(135deg,#1d4ed8,var(--accent));color:white;
                  font-weight:700;font-size:13px;border:none;border-radius:10px;
                  padding:9px 22px;cursor:pointer;transition:opacity .15s;"
           onmouseenter="this.style.opacity='.85'"
@@ -134,15 +134,15 @@ Pages.Register = async function(container, opts) {
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
         <div style="position:relative;flex:1;min-width:200px;max-width:340px;">
           <span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);
-                       color:#475569;font-size:13px;pointer-events:none;">🔍</span>
+                       color:var(--muted);font-size:13px;pointer-events:none;">🔍</span>
           <input type="text" id="rg-filter"
             placeholder="Filtrar por equipo o colegio..."
             oninput="window._rgData.filterTeam=this.value; Pages._rgRefresh()"
             style="${inp}padding-left:30px;"
-            onfocus="this.style.borderColor='#3b82f6'"
+            onfocus="this.style.borderColor='var(--accent)'"
             onblur="this.style.borderColor='#1e293b'">
         </div>
-        <span style="font-size:12px;color:#475569;">${teams.length} equipos en total</span>
+        <span style="font-size:12px;color:var(--muted);">${teams.length} equipos en total</span>
       </div>
 
       <!-- Lista de jugadores por equipo -->
@@ -185,16 +185,16 @@ Pages.Register = async function(container, opts) {
     Pages._rgEditJersey = (playerId, playerName, currentJersey) => {
       Utils.showModal(`
         <h3 style="font-size:16px;font-weight:700;margin:0 0 4px;">✏️ Editar Camiseta</h3>
-        <p style="color:#64748b;font-size:13px;margin:0 0 16px;">${playerName}</p>
+        <p style="color:var(--muted);font-size:13px;margin:0 0 16px;">${playerName}</p>
         <div style="display:flex;align-items:center;gap:12px;">
           <input type="number" id="jersey-edit-input" value="${currentJersey ?? ''}"
             placeholder="Nº" min="0" max="99"
             style="width:90px;font-size:28px;font-weight:900;text-align:center;
-                   padding:10px;background:#0f172a;border:2px solid #3b82f6;
+                   padding:10px;background:#0f172a;border:2px solid var(--accent);
                    border-radius:10px;color:white;outline:none;"
             onkeydown="if(event.key==='Enter') Pages._rgSaveJersey('${playerId}')">
           <button onclick="Pages._rgSaveJersey('${playerId}')"
-            style="background:linear-gradient(135deg,#1d4ed8,#3b82f6);color:white;
+            style="background:linear-gradient(135deg,#1d4ed8,var(--accent));color:white;
                    font-weight:700;border:none;border-radius:10px;
                    padding:10px 20px;cursor:pointer;font-size:14px;">
             Guardar
@@ -240,7 +240,7 @@ function _rgRenderPlayers(players, teams, isEditor, filterTeam, suspendedIds = n
     : teams;
 
   if (filtered.length === 0) {
-    return `<div style="text-align:center;padding:32px;color:#475569;">
+    return `<div style="text-align:center;padding:32px;color:var(--muted);">
       <div style="font-size:32px;margin-bottom:8px;">🔍</div>
       <p style="font-size:14px;">No se encontraron equipos con ese filtro.</p>
     </div>`;
@@ -261,7 +261,7 @@ function _rgRenderPlayers(players, teams, isEditor, filterTeam, suspendedIds = n
     const initials = school.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
 
     const playersHtml = teamPlayers.length === 0
-      ? `<div style="padding:12px 0;color:#334155;font-size:13px;font-style:italic;">
+      ? `<div style="padding:12px 0;color:var(--muted);font-size:13px;font-style:italic;">
            Sin jugadores registrados en este equipo.
          </div>`
       : `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px;margin-top:12px;">
@@ -275,7 +275,7 @@ function _rgRenderPlayers(players, teams, isEditor, filterTeam, suspendedIds = n
                           background:${isSuspended ? 'rgba(239,68,68,0.06)' : '#0f172a'};
                           border:1px solid ${isSuspended ? 'rgba(239,68,68,0.3)' : '#1e293b'};
                           border-radius:10px;transition:border-color .15s;"
-                   onmouseenter="this.style.borderColor='${isSuspended ? '#ef4444' : color+'33'}'"
+                   onmouseenter="this.style.borderColor='${isSuspended ? 'var(--accent2)' : color+'33'}'"
                    onmouseleave="this.style.borderColor='${isSuspended ? 'rgba(239,68,68,0.3)' : '#1e293b'}'">
                 <div style="display:flex;align-items:center;gap:10px;min-width:0;">
                   <!-- Avatar con iniciales -->
@@ -288,12 +288,12 @@ function _rgRenderPlayers(players, teams, isEditor, filterTeam, suspendedIds = n
                   </div>
                   <div style="min-width:0;">
                     <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-                      <span style="font-size:13px;font-weight:600;color:${isSuspended ? '#fca5a5' : '#e2e8f0'};
+                      <span style="font-size:13px;font-weight:600;color:${isSuspended ? '#fca5a5' : 'var(--text)'};
                                   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
                         ${Utils.truncate(p.full_name, 18)}
                       </span>
                       ${isSuspended ? `<span style="font-size:9px;font-weight:800;
-                        background:rgba(239,68,68,0.2);color:#ef4444;
+                        background:rgba(239,68,68,0.2);color:var(--accent2);
                         border:1px solid rgba(239,68,68,0.4);
                         padding:1px 5px;border-radius:5px;white-space:nowrap;">
                         🚫 SUSP.
@@ -324,7 +324,7 @@ function _rgRenderPlayers(players, teams, isEditor, filterTeam, suspendedIds = n
          </div>`;
 
     return `
-      <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);
+      <div style="background:rgba(255,255,255,0.02);border:1px solid var(--border);
                   border-top:3px solid ${color};border-radius:14px;
                   padding:16px 18px;margin-bottom:12px;">
         <!-- Cabecera del equipo -->
@@ -339,8 +339,8 @@ function _rgRenderPlayers(players, teams, isEditor, filterTeam, suspendedIds = n
               ${initials}
             </div>
             <div>
-              <div style="font-weight:700;font-size:15px;color:#f1f5f9;">${school}</div>
-              <div style="font-size:12px;color:#64748b;margin-top:1px;">
+              <div style="font-weight:700;font-size:15px;color:var(--text);">${school}</div>
+              <div style="font-size:12px;color:var(--muted);margin-top:1px;">
                 ${Utils.sportIcon(sport)}
                 <span style="color:${color};font-weight:600;">${sport}</span>
                 ${cat ? `· ${cat}` : ''} ${gender ? `· ${gender}` : ''}

@@ -89,8 +89,8 @@ Pages.LiveScoring = async function(container, opts) {
       el.innerHTML = filtered.length === 0
         ? `<div style="text-align:center;padding:60px 20px;">
              <div style="font-size:48px;margin-bottom:16px;">🔴</div>
-             <p style="color:#64748b;font-size:16px;">No hay partidos en vivo ahora mismo</p>
-             <p style="color:#334155;font-size:13px;margin-top:8px;">Los partidos aparecerán aquí cuando se inicien desde la gestión</p>
+             <p style="color:var(--muted);font-size:16px;">No hay partidos en vivo ahora mismo</p>
+             <p style="color:var(--muted);font-size:13px;margin-top:8px;">Los partidos aparecerán aquí cuando se inicien desde la gestión</p>
            </div>`
         : filtered.map(_lvCard).join('');
     };
@@ -99,9 +99,9 @@ Pages.LiveScoring = async function(container, opts) {
       <div style="margin-bottom:24px;">
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
           <div>
-            <h2 class="text-3xl font-black" style="color:#dc2626;display:flex;align-items:center;gap:10px;">
+            <h2 class="text-3xl font-black" style="color:var(--accent2);display:flex;align-items:center;gap:10px;">
               <span style="animation:pulse 1.2s infinite;">🔴</span> En Vivo
-              ${liveMatches.length > 0 ? `<span style="font-size:14px;font-weight:600;background:#dc2626;color:white;padding:2px 10px;border-radius:12px;animation:pulse 1.2s infinite;">${liveMatches.length} activo${liveMatches.length > 1 ? 's' : ''}</span>` : ''}
+              ${liveMatches.length > 0 ? `<span style="font-size:14px;font-weight:600;background:var(--accent2);color:white;padding:2px 10px;border-radius:12px;animation:pulse 1.2s infinite;">${liveMatches.length} activo${liveMatches.length > 1 ? 's' : ''}</span>` : ''}
             </h2>
             <p class="text-gray-400 mt-1" style="font-size:13px;">Partidos en curso · gestión en tiempo real</p>
           </div>
@@ -135,9 +135,9 @@ Pages.LiveScoring = async function(container, opts) {
       <div id="lv-list"></div>
 
       ${App.canEditMatches() ? `
-      <div style="margin-top:32px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.06);">
-        <p style="color:#334155;font-size:13px;margin-bottom:12px;">
-          Para iniciar un partido ve al <strong style="color:#60a5fa;">Calendario</strong> y haz clic en el partido programado.
+      <div style="margin-top:32px;padding-top:24px;border-top:1px solid var(--border);">
+        <p style="color:var(--muted);font-size:13px;margin-bottom:12px;">
+          Para iniciar un partido ve al <strong style="color:var(--accent);">Calendario</strong> y haz clic en el partido programado.
         </p>
       </div>` : ''}
     `;
@@ -158,18 +158,18 @@ Pages.LiveScoring = async function(container, opts) {
 function _lvCard(m) {
   const s1     = m.team1?.name || m.team1?.school?.name || 'Equipo 1';
   const s2     = m.team2?.name || m.team2?.school?.name || 'Equipo 2';
-  const border = m.status === 'live' ? '#dc2626' : m.status === 'finished' ? '#6b7280' : '#3b82f6';
+  const border = m.status === 'live' ? 'var(--accent2)' : m.status === 'finished' ? '#6b7280' : 'var(--accent)';
   return `
     <div class="card mb-4" style="border-left:4px solid ${border};">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
         <div style="flex:1;min-width:0;">
-          <div style="font-size:12px;color:#94a3b8;">${Utils.sportIcon(m.sport)} ${m.sport} &bull; ${m.gender || ''} &bull; ${m.category || ''}</div>
+          <div style="font-size:12px;color:var(--muted);">${Utils.sportIcon(m.sport)} ${m.sport} &bull; ${m.gender || ''} &bull; ${m.category || ''}</div>
           <div style="display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap;">
             <span style="font-weight:700;font-size:14px;">${Utils.truncate(s1, 18)}</span>
-            <span style="font-weight:900;font-size:22px;color:#60a5fa;">${m.team1_score ?? 0} - ${m.team2_score ?? 0}</span>
+            <span style="font-weight:900;font-size:22px;color:var(--accent);">${m.team1_score ?? 0} - ${m.team2_score ?? 0}</span>
             <span style="font-weight:700;font-size:14px;">${Utils.truncate(s2, 18)}</span>
           </div>
-          <div style="margin-top:6px;font-size:11px;color:#64748b;">📅 ${Utils.formatDateTime(m.match_date)} &bull; 📍 ${m.location || ''}</div>
+          <div style="margin-top:6px;font-size:11px;color:var(--muted);">📅 ${Utils.formatDateTime(m.match_date)} &bull; 📍 ${m.location || ''}</div>
         </div>
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
           ${Utils.statusBadge(m.status)}
@@ -206,7 +206,7 @@ async function _lvDetail(container, matchId, allMatches, allPlayers) {
     const render = () => {
       const sc1    = match.team1_score ?? 0;
       const sc2    = match.team2_score ?? 0;
-      const border = match.status === 'live' ? '#dc2626' : match.status === 'finished' ? '#6b7280' : '#1e40af';
+      const border = match.status === 'live' ? 'var(--accent2)' : match.status === 'finished' ? '#6b7280' : 'var(--accent)';
 
       container.innerHTML = `
         <div class="mb-4">
@@ -216,10 +216,10 @@ async function _lvDetail(container, matchId, allMatches, allPlayers) {
         <!-- Marcador principal -->
         <div class="card mb-6" style="border:2px solid ${border};text-align:center;">
           ${Utils.statusBadge(match.status)}
-          <div style="font-size:13px;color:#94a3b8;margin-top:6px;">
+          <div style="font-size:13px;color:var(--muted);margin-top:6px;">
             ${Utils.sportIcon(sport)} ${sport} &bull; ${match.gender || ''} &bull; ${match.category || ''}
           </div>
-          <div style="font-size:12px;color:#64748b;margin-top:4px;">
+          <div style="font-size:12px;color:var(--muted);margin-top:4px;">
             📍 ${match.location || ''} &bull; 📅 ${Utils.formatDateTime(match.match_date)}
           </div>
 
@@ -231,11 +231,11 @@ async function _lvDetail(container, matchId, allMatches, allPlayers) {
               ` : `
                 <input type="number" id="sc1" value="${sc1}" min="0"
                   style="width:64px;margin-top:10px;text-align:center;font-size:18px;
-                         padding:6px;background:#1e293b;border:1px solid #334155;
+                         padding:6px;background:#1e293b;border:1px solid var(--border);
                          border-radius:8px;color:white;">
               `) : ''}
             </div>
-            <div style="font-size:48px;font-weight:900;color:#60a5fa;line-height:1;flex-shrink:0;" class="score-display">${sc1} - ${sc2}</div>
+            <div style="font-size:48px;font-weight:900;color:var(--accent);line-height:1;flex-shrink:0;" class="score-display">${sc1} - ${sc2}</div>
             <div style="text-align:center;min-width:80px;">
               <div style="font-weight:800;font-size:16px;">${s2}</div>
               ${canManage && match.status === 'live' ? (sport === 'Voleibol' ? `
@@ -243,15 +243,15 @@ async function _lvDetail(container, matchId, allMatches, allPlayers) {
               ` : `
                 <input type="number" id="sc2" value="${sc2}" min="0"
                   style="width:64px;margin-top:10px;text-align:center;font-size:18px;
-                         padding:6px;background:#1e293b;border:1px solid #334155;
+                         padding:6px;background:#1e293b;border:1px solid var(--border);
                          border-radius:8px;color:white;">
               `) : ''}
             </div>
           </div>
 
           ${canScore && match.status === 'live' && sport === 'Voleibol' ? `
-          <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.07);">
-            <p style="font-size:12px;color:#94a3b8;text-align:center;margin-bottom:12px;">
+          <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
+            <p style="font-size:12px;color:var(--muted);text-align:center;margin-bottom:12px;">
               🏐 Selecciona el resultado (sets ganados):
             </p>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:380px;margin:0 auto;">
@@ -260,8 +260,8 @@ async function _lvDetail(container, matchId, allMatches, allPlayers) {
                 const isSel  = sc1 === a && sc2 === b;
                 return `<button id="vb-${a}-${b}" onclick="window._volySelect(${a},${b})"
                   style="padding:10px 8px;border-radius:8px;font-size:13px;font-weight:600;
-                         cursor:pointer;color:#e2e8f0;text-align:center;
-                         border:2px solid ${isSel ? '#60a5fa' : '#334155'};
+                         cursor:pointer;color:var(--text);text-align:center;
+                         border:2px solid ${isSel ? 'var(--accent)' : 'var(--border)'};
                          background:${isSel ? 'rgba(96,165,250,0.15)' : 'rgba(30,41,59,0.8)'};">
                   ${setStr} &bull; ${Utils.truncate(winner, 14)}
                 </button>`;
@@ -332,7 +332,7 @@ async function _lvDetail(container, matchId, allMatches, allPlayers) {
         const btn = document.getElementById(`vb-${a}-${b}`);
         if (!btn) return;
         const sel = (a === t1 && b === t2);
-        btn.style.borderColor = sel ? '#60a5fa' : '#334155';
+        btn.style.borderColor = sel ? 'var(--accent)' : 'var(--border)';
         btn.style.background  = sel ? 'rgba(96,165,250,0.15)' : 'rgba(30,41,59,0.8)';
       });
     };
@@ -410,7 +410,7 @@ async function _lvDetail(container, matchId, allMatches, allPlayers) {
           <div style="background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.3);
                       border-radius:8px;padding:10px 14px;margin-bottom:12px;">
             <p style="color:#fbbf24;font-size:13px;">⚠️ Este equipo no tiene jugadores registrados.</p>
-            <p style="color:#94a3b8;font-size:12px;margin-top:4px;">Ve a <strong>Registrar → Jugador</strong> para agregar jugadores al equipo.</p>
+            <p style="color:var(--muted);font-size:12px;margin-top:4px;">Ve a <strong>Registrar → Jugador</strong> para agregar jugadores al equipo.</p>
           </div>
         ` : `<p class="text-gray-400 text-sm mb-3">Selecciona el jugador:</p>`}
         <div style="display:grid;gap:8px;max-height:320px;overflow-y:auto;">
@@ -422,7 +422,7 @@ async function _lvDetail(container, matchId, allMatches, allPlayers) {
             <button class="btn-ghost"
               style="text-align:left;display:flex;align-items:center;gap:10px;"
               onclick="window._lvSaveEvent('${evType}',${updatesScore},${points},'${teamId}','${p.id}')">
-              <span style="font-weight:700;color:#60a5fa;min-width:32px;">#${p.jersey_number ?? '?'}</span>
+              <span style="font-weight:700;color:var(--accent);min-width:32px;">#${p.jersey_number ?? '?'}</span>
               <span>${p.full_name}</span>
             </button>
           `).join('')}
@@ -494,7 +494,7 @@ function _lvTimeline(events, players, isEditor, match) {
   if (!events || events.length === 0) {
     return `<div style="text-align:center;padding:32px 0;">
       <div style="font-size:32px;margin-bottom:8px;">📋</div>
-      <p style="color:#475569;font-size:14px;">Sin eventos registrados</p>
+      <p style="color:var(--muted);font-size:14px;">Sin eventos registrados</p>
     </div>`;
   }
 
@@ -514,28 +514,28 @@ function _lvTimeline(events, players, isEditor, match) {
       const et = ev.event_type || '';
 
       // Bullet + color por tipo de evento
-      let bullet = '⚪', color = '#64748b';
+      let bullet = '⚪', color = 'var(--muted)';
       if (et === 'goal' || et === 'penalty')                    { bullet = '🟢'; color = '#22c55e'; }
-      else if (et === 'canasta_1pt' || et === 'canasta_2pts')   { bullet = '🔵'; color = '#60a5fa'; }
+      else if (et === 'canasta_1pt' || et === 'canasta_2pts')   { bullet = '🔵'; color = 'var(--accent)'; }
       else if (et === 'canasta_3pts')                           { bullet = '🟡'; color = '#f59e0b'; }
       else if (et === 'yellow_card')                            { bullet = '🟡'; color = '#fbbf24'; }
-      else if (et === 'red_card')                               { bullet = '🔴'; color = '#ef4444'; }
-      else if (et === 'point_volleyball' || et === 'ace')       { bullet = '🟣'; color = '#a78bfa'; }
-      else if (et === 'bloqueo' || et === 'block')              { bullet = '🔴'; color = '#f87171'; }
-      else if (et === 'falta_tecnica')                          { bullet = '🔴'; color = '#f87171'; }
+      else if (et === 'red_card')                               { bullet = '🔴'; color = 'var(--accent2)'; }
+      else if (et === 'point_volleyball' || et === 'ace')       { bullet = '🟣'; color = 'var(--purple)'; }
+      else if (et === 'bloqueo' || et === 'block')              { bullet = '🔴'; color = 'var(--accent2)'; }
+      else if (et === 'falta_tecnica')                          { bullet = '🔴'; color = 'var(--accent2)'; }
 
       const meta = [team, pName].filter(Boolean).join(' · ');
 
       return `
-        <div style="display:flex;gap:12px;padding:12px 4px;border-bottom:1px solid rgba(255,255,255,0.05);align-items:flex-start;">
+        <div style="display:flex;gap:12px;padding:12px 4px;border-bottom:1px solid var(--border);align-items:flex-start;">
           <div style="font-size:18px;flex-shrink:0;margin-top:2px;">${bullet}</div>
           <div style="flex:1;min-width:0;">
             <div style="font-weight:600;color:${color};font-size:14px;">${label}</div>
-            ${meta ? `<div style="font-size:12px;color:#94a3b8;margin-top:2px;">${meta}</div>` : ''}
-            ${time ? `<div style="font-size:11px;color:#334155;margin-top:2px;">${time}</div>` : ''}
+            ${meta ? `<div style="font-size:12px;color:var(--muted);margin-top:2px;">${meta}</div>` : ''}
+            ${time ? `<div style="font-size:11px;color:var(--muted);margin-top:2px;">${time}</div>` : ''}
           </div>
           ${isEditor ? `
-            <button style="flex-shrink:0;background:rgba(239,68,68,0.12);color:#f87171;
+            <button style="flex-shrink:0;background:rgba(239,68,68,0.12);color:var(--accent2);
                            border:1px solid rgba(239,68,68,0.2);border-radius:6px;
                            padding:4px 8px;font-size:11px;cursor:pointer;"
               onclick="window._lvDeleteEvent('${ev.id}','${ev.event_type}','${ev.team_id || ''}')">✕</button>

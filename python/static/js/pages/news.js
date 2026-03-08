@@ -42,12 +42,12 @@ Pages.News = async function(container) {
   container.innerHTML = `
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
       <div>
-        <h2 class="text-3xl font-black" style="color:#60a5fa;">📰 Noticias</h2>
+        <h2 class="text-3xl font-black" style="color:var(--accent);">📰 Noticias</h2>
         <p class="text-gray-400 mt-1" style="font-size:13px;">Feed del torneo · actualiza cada 20 s</p>
       </div>
       <div style="display:flex;align-items:center;gap:8px;">
-        <div id="news-dot" style="width:8px;height:8px;background:#64748b;border-radius:50%;"></div>
-        <span id="news-status" style="color:#64748b;font-size:12px;font-weight:600;">Cargando…</span>
+        <div id="news-dot" style="width:8px;height:8px;background:var(--muted);border-radius:50%;"></div>
+        <span id="news-status" style="color:var(--muted);font-size:12px;font-weight:600;">Cargando…</span>
       </div>
     </div>
 
@@ -58,16 +58,16 @@ Pages.News = async function(container) {
       <div class="card" style="margin-bottom:20px;padding:16px 20px;">
         <div style="display:flex;gap:12px;align-items:flex-start;">
           <div style="width:40px;height:40px;border-radius:50%;flex-shrink:0;
-                      background:linear-gradient(135deg,#1e40af,#3b82f6);
+                      background:linear-gradient(135deg,var(--accent),var(--accent));
                       display:flex;align-items:center;justify-content:center;font-size:20px;">✏️</div>
           <div style="flex:1;min-width:0;">
             <textarea id="post-content" rows="2"
-              style="width:100%;box-sizing:border-box;background:rgba(255,255,255,0.04);
+              style="width:100%;box-sizing:border-box;background:var(--surface);
                      border:1px solid rgba(255,255,255,0.12);border-radius:10px;
-                     color:#f1f5f9;padding:11px 14px;font-size:15px;resize:none;
+                     color:var(--text);padding:11px 14px;font-size:15px;resize:none;
                      font-family:inherit;line-height:1.5;outline:none;
                      transition:border-color .2s;"
-              onfocus="this.style.borderColor='#3b82f6'"
+              onfocus="this.style.borderColor='var(--accent)'"
               onblur="this.style.borderColor='rgba(255,255,255,0.12)'"
               placeholder="¿Qué está pasando en el torneo?"></textarea>
 
@@ -87,16 +87,16 @@ Pages.News = async function(container) {
             <!-- Barra de acciones -->
             <div style="display:flex;justify-content:space-between;align-items:center;
                         margin-top:12px;padding-top:10px;
-                        border-top:1px solid rgba(255,255,255,0.07);">
+                        border-top:1px solid var(--border);">
               <div style="display:flex;gap:6px;align-items:center;">
                 <!-- Botón principal: galería o cámara -->
                 <label for="post-file"
                   style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;
-                         background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);
-                         border-radius:8px;padding:8px 14px;font-size:13px;color:#94a3b8;
+                         background:var(--surface);border:1px solid rgba(255,255,255,0.15);
+                         border-radius:8px;padding:8px 14px;font-size:13px;color:var(--muted);
                          transition:all .15s;user-select:none;"
-                  onmouseenter="this.style.background='rgba(255,255,255,0.1)';this.style.color='#f1f5f9'"
-                  onmouseleave="this.style.background='rgba(255,255,255,0.05)';this.style.color='#94a3b8'">
+                  onmouseenter="this.style.background='rgba(255,255,255,0.1)';this.style.color='var(--text)'"
+                  onmouseleave="this.style.background='var(--border)';this.style.color='var(--muted)'">
                   📷 Foto / Video
                 </label>
                 <!-- accept sin capture = el dispositivo muestra "Tomar foto" O "Galería" -->
@@ -106,7 +106,7 @@ Pages.News = async function(container) {
                   onchange="window._newsPickFile(this)">
 
                 <span id="post-file-name"
-                  style="font-size:12px;color:#475569;max-width:140px;
+                  style="font-size:12px;color:var(--muted);max-width:140px;
                          overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
               </div>
 
@@ -137,10 +137,10 @@ Pages.News = async function(container) {
       txt.textContent      = 'EN VIVO';
       txt.style.color      = '#22c55e';
     } else {
-      dot.style.background = '#64748b';
+      dot.style.background = 'var(--muted)';
       dot.style.animation  = '';
       txt.textContent      = 'Sin partidos en vivo';
-      txt.style.color      = '#64748b';
+      txt.style.color      = 'var(--muted)';
     }
   };
 
@@ -272,8 +272,8 @@ Pages.News = async function(container) {
         el.innerHTML = `
           <div style="text-align:center;padding:60px 20px;">
             <div style="font-size:52px;margin-bottom:16px;">📰</div>
-            <p style="color:#64748b;font-size:16px;">Sin noticias todavía</p>
-            <p style="color:#334155;font-size:13px;margin-top:8px;">
+            <p style="color:var(--muted);font-size:16px;">Sin noticias todavía</p>
+            <p style="color:var(--muted);font-size:13px;margin-top:8px;">
               ${App.isEditor()
                 ? 'Sé el primero en publicar algo arriba.'
                 : 'Las noticias aparecerán aquí cuando el editor publique o haya partidos en vivo.'}
@@ -288,7 +288,7 @@ Pages.News = async function(container) {
 
     } catch(e) {
       const el2 = document.getElementById('news-feed');
-      if (el2) el2.innerHTML = `<p style="color:#f87171;padding:20px;">Error: ${e.message}</p>`;
+      if (el2) el2.innerHTML = `<p style="color:var(--accent2);padding:20px;">Error: ${e.message}</p>`;
     }
   };
 
@@ -325,9 +325,9 @@ function _newsPostCard(post) {
     return `<button onclick="window._newsReact('${post.id}','${type}')"
       style="display:inline-flex;align-items:center;gap:4px;
              padding:5px 12px;border-radius:20px;font-size:14px;cursor:pointer;
-             border:1px solid ${active ? '#3b82f6' : 'rgba(255,255,255,0.1)'};
+             border:1px solid ${active ? 'var(--accent)' : 'rgba(255,255,255,0.1)'};
              background:${active ? 'rgba(96,165,250,0.15)' : 'rgba(255,255,255,0.04)'};
-             color:${active ? '#60a5fa' : '#94a3b8'};
+             color:${active ? 'var(--accent)' : 'var(--muted)'};
              transition:all .15s;"
       onmouseenter="this.style.opacity='.8'"
       onmouseleave="this.style.opacity='1'">
@@ -382,11 +382,11 @@ function _newsPostCard(post) {
       : '';
     const canDelete = c.session_id === sid || App.isEditor();
     return `
-      <div style="padding:8px 10px;border-radius:8px;background:rgba(255,255,255,0.03);
+      <div style="padding:8px 10px;border-radius:8px;background:var(--surface);
                   margin-bottom:6px;">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px;">
           <div style="flex:1;min-width:0;">
-            ${cTime ? `<span style="font-size:11px;color:#475569;">${cTime}</span>` : ''}
+            ${cTime ? `<span style="font-size:11px;color:var(--muted);">${cTime}</span>` : ''}
             <p style="font-size:13px;color:#cbd5e1;margin:4px 0 0;line-height:1.5;
                       word-break:break-word;white-space:pre-wrap;">
               ${_newsEscape(c.content)}
@@ -395,24 +395,24 @@ function _newsPostCard(post) {
           ${canDelete ? `
           <button onclick="window._newsDeleteComment('${post.id}','${c.id}')"
             title="Eliminar"
-            style="background:none;border:none;color:#334155;cursor:pointer;
+            style="background:none;border:none;color:var(--muted);cursor:pointer;
                    font-size:12px;padding:2px 4px;flex-shrink:0;line-height:1;
                    border-radius:4px;"
-            onmouseenter="this.style.color='#f87171'"
-            onmouseleave="this.style.color='#334155'">✕</button>
+            onmouseenter="this.style.color='var(--accent2)'"
+            onmouseleave="this.style.color='var(--border)'">✕</button>
           ` : ''}
         </div>
       </div>`;
   }).join('');
 
   const commentsSection = `
-    <div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.06);">
+    <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);">
       <button onclick="window._newsToggleComments('${post.id}')"
-        style="background:none;border:none;cursor:pointer;color:#64748b;font-size:13px;
+        style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:13px;
                padding:4px 0;display:inline-flex;align-items:center;gap:5px;
                font-family:inherit;transition:color .15s;"
-        onmouseenter="this.style.color='#94a3b8'"
-        onmouseleave="this.style.color='#64748b'">
+        onmouseenter="this.style.color='var(--muted)'"
+        onmouseleave="this.style.color='var(--muted)'">
         💬
         <span style="font-weight:600;">
           ${commentCount > 0
@@ -424,29 +424,29 @@ function _newsPostCard(post) {
 
       <div id="cmts-${post.id}" style="display:${isOpen ? 'block' : 'none'};margin-top:10px;">
         <div id="cmts-list-${post.id}">
-          ${commentRows || '<p style="font-size:12px;color:#475569;margin:0 0 10px;">Sé el primero en comentar.</p>'}
+          ${commentRows || '<p style="font-size:12px;color:var(--muted);margin:0 0 10px;">Sé el primero en comentar.</p>'}
         </div>
         <!-- Formulario -->
         <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px;
-                    padding-top:10px;border-top:1px solid rgba(255,255,255,0.05);">
+                    padding-top:10px;border-top:1px solid var(--border);">
           <div style="display:flex;gap:8px;align-items:flex-end;">
             <textarea id="cmt-text-${post.id}" rows="2" maxlength="500"
               placeholder="Escribe un comentario…"
-              style="flex:1;background:rgba(255,255,255,0.05);
-                     border:1px solid rgba(255,255,255,0.08);border-radius:8px;
-                     padding:7px 12px;color:#f1f5f9;font-size:13px;
+              style="flex:1;background:var(--surface);
+                     border:1px solid var(--border);border-radius:8px;
+                     padding:7px 12px;color:var(--text);font-size:13px;
                      resize:none;outline:none;font-family:inherit;line-height:1.5;"
-              onfocus="this.style.borderColor='#3b82f6'"
-              onblur="this.style.borderColor='rgba(255,255,255,0.08)'"
+              onfocus="this.style.borderColor='var(--accent)'"
+              onblur="this.style.borderColor='var(--border)'"
               onkeydown="if(event.ctrlKey&&event.key==='Enter')window._newsAddComment('${post.id}')"></textarea>
             <button onclick="window._newsAddComment('${post.id}')"
-              style="background:#3b82f6;color:white;border:none;border-radius:8px;
+              style="background:var(--accent);color:white;border:none;border-radius:8px;
                      padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;
                      white-space:nowrap;flex-shrink:0;"
               onmouseenter="this.style.background='#2563eb'"
-              onmouseleave="this.style.background='#3b82f6'">Enviar</button>
+              onmouseleave="this.style.background='var(--accent)'">Enviar</button>
           </div>
-          <p style="font-size:11px;color:#334155;margin:0;">Ctrl+Enter para enviar</p>
+          <p style="font-size:11px;color:var(--muted);margin:0;">Ctrl+Enter para enviar</p>
         </div>
       </div>
     </div>`;
@@ -456,27 +456,27 @@ function _newsPostCard(post) {
       <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">
         <div style="display:flex;align-items:center;gap:10px;">
           <div style="width:40px;height:40px;border-radius:50%;flex-shrink:0;
-                      background:linear-gradient(135deg,#1e40af,#3b82f6);
+                      background:linear-gradient(135deg,var(--accent),var(--accent));
                       display:flex;align-items:center;justify-content:center;font-size:20px;">✏️</div>
           <div>
-            <div style="font-weight:700;font-size:13px;color:#60a5fa;">Editor DATA SPORT</div>
-            ${timeStr ? `<div style="font-size:11px;color:#475569;">${timeStr}</div>` : ''}
+            <div style="font-weight:700;font-size:13px;color:var(--accent);">Editor DATA SPORT</div>
+            ${timeStr ? `<div style="font-size:11px;color:var(--muted);">${timeStr}</div>` : ''}
           </div>
         </div>
         ${App.isEditor() ? `
           <button onclick="window._newsDeletePost('${post.id}')"
-            style="background:rgba(239,68,68,0.1);color:#f87171;
+            style="background:rgba(239,68,68,0.1);color:var(--accent2);
                    border:1px solid rgba(239,68,68,0.2);border-radius:6px;
                    padding:4px 8px;font-size:11px;cursor:pointer;flex-shrink:0;">✕</button>
         ` : ''}
       </div>
       ${post.content
-        ? `<p style="margin-top:12px;font-size:15px;line-height:1.65;color:#e2e8f0;
+        ? `<p style="margin-top:12px;font-size:15px;line-height:1.65;color:var(--text);
                      white-space:pre-wrap;word-break:break-word;">${_newsEscape(post.content)}</p>`
         : ''}
       ${mediaHTML}
       <div style="display:flex;gap:6px;margin-top:12px;padding-top:10px;
-                  border-top:1px solid rgba(255,255,255,0.06);">
+                  border-top:1px solid var(--border);">
         ${reactionBar}
       </div>
       ${commentsSection}
@@ -573,15 +573,15 @@ function _newsEventCard(item) {
   const s2    = item._s2;
   const ev    = item.event_type || '';
 
-  let icon = '📋', color = '#94a3b8', bg = 'rgba(148,163,184,0.07)';
+  let icon = '📋', color = 'var(--muted)', bg = 'rgba(148,163,184,0.07)';
   if (ev === 'goal' || ev === 'penalty')                  { icon = '⚽'; color = '#22c55e'; bg = 'rgba(34,197,94,0.1)'; }
-  else if (ev === 'canasta_1pt' || ev === 'canasta_2pts') { icon = '🏀'; color = '#60a5fa'; bg = 'rgba(96,165,250,0.1)'; }
+  else if (ev === 'canasta_1pt' || ev === 'canasta_2pts') { icon = '🏀'; color = 'var(--accent)'; bg = 'rgba(96,165,250,0.1)'; }
   else if (ev === 'canasta_3pts')                         { icon = '🏀'; color = '#f59e0b'; bg = 'rgba(245,158,11,0.1)'; }
   else if (ev === 'yellow_card')                          { icon = '🟨'; color = '#fbbf24'; bg = 'rgba(251,191,36,0.1)'; }
-  else if (ev === 'red_card')                             { icon = '🟥'; color = '#ef4444'; bg = 'rgba(239,68,68,0.1)'; }
-  else if (ev === 'point_volleyball' || ev === 'ace')     { icon = '🏐'; color = '#a78bfa'; bg = 'rgba(167,139,250,0.1)'; }
-  else if (ev === 'bloqueo' || ev === 'block')            { icon = '🚫'; color = '#f87171'; bg = 'rgba(248,113,113,0.08)'; }
-  else if (ev === 'falta_tecnica')                        { icon = '❌'; color = '#f87171'; bg = 'rgba(248,113,113,0.08)'; }
+  else if (ev === 'red_card')                             { icon = '🟥'; color = 'var(--accent2)'; bg = 'rgba(239,68,68,0.1)'; }
+  else if (ev === 'point_volleyball' || ev === 'ace')     { icon = '🏐'; color = 'var(--purple)'; bg = 'rgba(167,139,250,0.1)'; }
+  else if (ev === 'bloqueo' || ev === 'block')            { icon = '🚫'; color = 'var(--accent2)'; bg = 'rgba(248,113,113,0.08)'; }
+  else if (ev === 'falta_tecnica')                        { icon = '❌'; color = 'var(--accent2)'; bg = 'rgba(248,113,113,0.08)'; }
 
   const label      = _NEWS_LABELS[ev] || ev;
   const teamName   = item.team_id === m.team1_id ? s1 : item.team_id === m.team2_id ? s2 : '';
@@ -596,15 +596,15 @@ function _newsEventCard(item) {
       <div style="font-size:26px;flex-shrink:0;padding-top:2px;">${icon}</div>
       <div style="flex:1;min-width:0;">
         <div style="font-weight:700;font-size:15px;color:${color};">${label}</div>
-        ${playerName ? `<div style="font-size:14px;font-weight:600;color:#f1f5f9;margin-top:3px;">👤 ${playerName}</div>` : ''}
-        <div style="font-size:13px;color:#94a3b8;margin-top:2px;">
+        ${playerName ? `<div style="font-size:14px;font-weight:600;color:var(--text);margin-top:3px;">👤 ${playerName}</div>` : ''}
+        <div style="font-size:13px;color:var(--muted);margin-top:2px;">
           ${teamName ? Utils.truncate(teamName, 28) + ' · ' : ''}${Utils.sportIcon(sport)} ${sport}
         </div>
-        <div style="font-size:12px;color:#475569;margin-top:4px;">
+        <div style="font-size:12px;color:var(--muted);margin-top:4px;">
           ${Utils.truncate(s1, 18)}
-          <strong style="color:#60a5fa;margin:0 4px;">${m.team1_score ?? 0}–${m.team2_score ?? 0}</strong>
+          <strong style="color:var(--accent);margin:0 4px;">${m.team1_score ?? 0}–${m.team2_score ?? 0}</strong>
           ${Utils.truncate(s2, 18)}
-          ${timeStr ? `<span style="color:#334155;margin-left:6px;">· ${timeStr}</span>` : ''}
+          ${timeStr ? `<span style="color:var(--muted);margin-left:6px;">· ${timeStr}</span>` : ''}
         </div>
       </div>
     </div>`;

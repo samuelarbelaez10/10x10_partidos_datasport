@@ -7,7 +7,7 @@ Pages.Schedule = async function(container, opts) {
     if (!App.isEditor()) {
       container.innerHTML = `
         <div class="mb-6">
-          <h2 class="text-3xl font-black" style="color:#60a5fa;">🏆 Generar Torneo</h2>
+          <h2 class="text-3xl font-black" style="color:var(--accent);">🏆 Generar Torneo</h2>
         </div>
         <div class="card" style="border:1px solid rgba(220,38,38,0.3);background:rgba(220,38,38,0.1);">
           <p style="color:#fca5a5;">⚠️ Solo los editores pueden generar el torneo.</p>
@@ -23,14 +23,14 @@ Pages.Schedule = async function(container, opts) {
 
     container.innerHTML = `
       <div class="mb-6">
-        <h2 class="text-3xl font-black" style="color:#60a5fa;">🏆 Generar Torneo Big Games 2026</h2>
+        <h2 class="text-3xl font-black" style="color:var(--accent);">🏆 Generar Torneo Big Games 2026</h2>
         <p class="text-gray-400 mt-1">Genera todos los partidos respetando deportes, categorías, grupos, canchas y horarios</p>
       </div>
 
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;">
 
         <!-- Config -->
-        <div class="card" style="border-top:4px solid #3b82f6;">
+        <div class="card" style="border-top:4px solid var(--accent);">
           <h3 class="text-xl font-bold mb-4">⚙️ Opciones</h3>
 
           ${existingCount > 0 ? `
@@ -39,7 +39,7 @@ Pages.Schedule = async function(container, opts) {
             <p style="font-size:13px;color:#fbbf24;font-weight:600;">
               ⚠️ Hay ${existingCount} partidos en la base de datos
             </p>
-            <p style="font-size:12px;color:#94a3b8;margin-top:4px;">
+            <p style="font-size:12px;color:var(--muted);margin-top:4px;">
               Se borrarán todos al regenerar el torneo.
             </p>
           </div>` : `
@@ -50,10 +50,10 @@ Pages.Schedule = async function(container, opts) {
 
           <div style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);
                       border-radius:8px;padding:12px;margin-bottom:16px;">
-            <p style="font-size:13px;color:#93c5fd;font-weight:600;margin-bottom:6px;">
+            <p style="font-size:13px;color:var(--accent);font-weight:600;margin-bottom:6px;">
               ✅ Configuración automática Big Games 2026
             </p>
-            <ul style="font-size:12px;color:#94a3b8;line-height:1.9;margin:0;padding-left:16px;">
+            <ul style="font-size:12px;color:var(--muted);line-height:1.9;margin:0;padding-left:16px;">
               <li>⚽ Fútbol: 57 min · intervalo 70 min · grupos A/B por categoría</li>
               <li>🏀 Baloncesto: 47 min · intervalo 70 min · British Basket 1 y 2</li>
               <li>🏐 Voleibol: 75 min · intervalo 75 min · máx. 2 partidos seguidos</li>
@@ -63,20 +63,6 @@ Pages.Schedule = async function(container, opts) {
             </ul>
           </div>
 
-          <div style="background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.2);
-                      border-radius:8px;padding:10px 12px;margin-bottom:16px;">
-            <p style="font-size:12px;color:#a78bfa;font-weight:600;margin-bottom:4px;">
-              ⚠️ Prerequisito: columnas en Supabase
-            </p>
-            <p style="font-size:11px;color:#94a3b8;">
-              Ejecuta en el SQL Editor de Supabase antes de generar:
-            </p>
-            <code style="display:block;font-size:11px;color:#c4b5fd;margin-top:6px;
-                         background:rgba(0,0,0,0.3);padding:8px;border-radius:6px;
-                         white-space:pre-wrap;">ALTER TABLE matches ADD COLUMN IF NOT EXISTS group_name text;
-ALTER TABLE matches ADD COLUMN IF NOT EXISTS phase text DEFAULT 'group';</code>
-          </div>
-
           <button id="sc-btn" class="btn-primary"
                   style="width:100%;font-size:18px;padding:16px;font-weight:800;">
             🗓️ ${existingCount > 0 ? 'Borrar y Regenerar Torneo' : 'Generar Torneo Completo'}
@@ -84,23 +70,23 @@ ALTER TABLE matches ADD COLUMN IF NOT EXISTS phase text DEFAULT 'group';</code>
         </div>
 
         <!-- Preview -->
-        <div class="card" style="border-top:4px solid #8b5cf6;">
+        <div class="card" style="border-top:4px solid var(--purple);">
           <h3 class="text-xl font-bold mb-2">📊 Vista previa</h3>
           ${preview.groups.length > 0 ? `
           <div style="display:flex;gap:16px;margin-bottom:12px;flex-wrap:wrap;">
             <div style="background:rgba(16,185,129,0.1);border-radius:8px;padding:8px 14px;text-align:center;">
               <div style="font-size:22px;font-weight:900;color:#6ee7b7;">${preview.total_expected_matches}</div>
-              <div style="font-size:11px;color:#94a3b8;">partidos totales</div>
+              <div style="font-size:11px;color:var(--muted);">partidos totales</div>
             </div>
             ${preview.total_intra_matches > 0 ? `
             <div style="background:rgba(59,130,246,0.1);border-radius:8px;padding:8px 14px;text-align:center;">
-              <div style="font-size:20px;font-weight:800;color:#93c5fd;">${preview.total_intra_matches}</div>
-              <div style="font-size:11px;color:#94a3b8;">intragrupo</div>
+              <div style="font-size:20px;font-weight:800;color:var(--accent);">${preview.total_intra_matches}</div>
+              <div style="font-size:11px;color:var(--muted);">intragrupo</div>
             </div>` : ''}
             ${preview.total_inter_matches > 0 ? `
             <div style="background:rgba(245,158,11,0.1);border-radius:8px;padding:8px 14px;text-align:center;">
               <div style="font-size:20px;font-weight:800;color:#fbbf24;">${preview.total_inter_matches}</div>
-              <div style="font-size:11px;color:#94a3b8;">intergrupo</div>
+              <div style="font-size:11px;color:var(--muted);">intergrupo</div>
             </div>` : ''}
           </div>
           <div style="max-height:460px;overflow-y:auto;">
@@ -123,8 +109,8 @@ ALTER TABLE matches ADD COLUMN IF NOT EXISTS phase text DEFAULT 'group';</code>
       btn.disabled = true;
       btn.textContent = '⏳ Procesando...';
       result.innerHTML = `
-        <div class="card" style="border-top:4px solid #3b82f6;">
-          <div id="sc-log" style="font-family:monospace;font-size:13px;color:#93c5fd;line-height:2;"></div>
+        <div class="card" style="border-top:4px solid var(--accent);">
+          <div id="sc-log" style="font-family:monospace;font-size:13px;color:var(--accent);line-height:2;"></div>
         </div>`;
 
       const log = (msg) => {
@@ -145,41 +131,41 @@ ALTER TABLE matches ADD COLUMN IF NOT EXISTS phase text DEFAULT 'group';</code>
         const res = await Api.generateAllSchedule({ clear_existing: false });
 
         const intraLine = res.intra_matches > 0
-          ? `<span style="color:#93c5fd;">${res.intra_matches} intragrupo</span>` : '';
+          ? `<span style="color:var(--accent);">${res.intra_matches} intragrupo</span>` : '';
         const interLine = res.inter_matches > 0
           ? `<span style="color:#fbbf24;">${res.inter_matches} intergrupo</span>` : '';
         const phaseLine = [intraLine, interLine].filter(Boolean).join(' + ');
 
         result.innerHTML = `
-          <div class="card" style="border-top:4px solid #10b981;">
+          <div class="card" style="border-top:4px solid var(--green);">
             <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;">
               <div style="font-size:48px;">✅</div>
               <div>
                 <div style="font-size:28px;font-weight:900;color:#6ee7b7;">${res.total_matches} partidos generados</div>
-                <div style="color:#94a3b8;margin-top:4px;">${phaseLine || res.groups.length + ' grupos'}</div>
+                <div style="color:var(--muted);margin-top:4px;">${phaseLine || res.groups.length + ' grupos'}</div>
               </div>
             </div>
             <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin-bottom:20px;">
               ${res.groups.map(g => {
                 const color = Utils.sportColor(g.sport);
                 const grpBadge = g.num_groups > 1
-                  ? `<span style="font-size:10px;background:rgba(139,92,246,0.2);color:#a78bfa;
+                  ? `<span style="font-size:10px;background:rgba(139,92,246,0.2);color:var(--purple);
                                   border-radius:4px;padding:1px 5px;margin-left:4px;">
                        ${g.num_groups} grupos
                      </span>` : '';
                 return `
-                  <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;
+                  <div style="background:var(--surface);border-radius:8px;padding:12px;
                                border-left:3px solid ${color};">
                     <div style="font-size:13px;font-weight:700;color:white;">
                       ${Utils.sportIcon(g.sport)} ${g.sport}${grpBadge}
                     </div>
-                    <div style="font-size:12px;color:#94a3b8;margin-top:2px;">${g.category} · ${g.gender}</div>
+                    <div style="font-size:12px;color:var(--muted);margin-top:2px;">${g.category} · ${g.gender}</div>
                     <div style="margin-top:8px;display:flex;justify-content:space-between;align-items:center;">
-                      <span style="font-size:11px;color:#64748b;">👥 ${g.teams} equipos</span>
+                      <span style="font-size:11px;color:var(--muted);">👥 ${g.teams} equipos</span>
                       <span style="font-size:13px;font-weight:700;color:${color};">${g.matches} partidos</span>
                     </div>
                     ${g.inter_matches > 0 ? `
-                    <div style="margin-top:4px;font-size:11px;color:#94a3b8;">
+                    <div style="margin-top:4px;font-size:11px;color:var(--muted);">
                       ${g.intra_matches} intra + ${g.inter_matches} inter
                     </div>` : ''}
                   </div>`;
@@ -189,7 +175,7 @@ ALTER TABLE matches ADD COLUMN IF NOT EXISTS phase text DEFAULT 'group';</code>
             <div style="margin-bottom:16px;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);
                         border-radius:8px;padding:12px;">
               <p style="font-size:12px;color:#fbbf24;font-weight:600;margin-bottom:4px;">⚠️ Columnas group_name/phase no disponibles</p>
-              <p style="font-size:11px;color:#94a3b8;">
+              <p style="font-size:11px;color:var(--muted);">
                 Los partidos se generaron sin información de grupo/fase. Para habilitarlo, ejecuta en Supabase SQL Editor:<br>
                 <code style="color:#c4b5fd;">ALTER TABLE matches ADD COLUMN IF NOT EXISTS group_name text;</code><br>
                 <code style="color:#c4b5fd;">ALTER TABLE matches ADD COLUMN IF NOT EXISTS phase text DEFAULT 'group';</code><br>
@@ -239,34 +225,34 @@ function _scRenderGroups(groups) {
         <div style="font-size:13px;font-weight:700;color:${color};margin-bottom:6px;
                     display:flex;justify-content:space-between;align-items:center;">
           <span>${icon} ${sport}</span>
-          <span style="color:#64748b;font-size:12px;">${totalAll} partidos</span>
+          <span style="color:var(--muted);font-size:12px;">${totalAll} partidos</span>
         </div>
         ${items.map(g => {
           const hasGroups = g.num_groups > 1;
           const perGrp    = g.teams_per_group || Math.floor(g.teams / (g.num_groups || 1));
           return `
             <div style="padding:8px 10px;border-radius:6px;margin-bottom:4px;
-                        background:rgba(255,255,255,0.03);">
+                        background:var(--surface);">
               <div style="display:flex;justify-content:space-between;align-items:center;">
                 <div>
-                  <span style="font-size:12px;color:#e2e8f0;">${g.category}</span>
-                  <span style="font-size:11px;color:#64748b;margin-left:6px;">
+                  <span style="font-size:12px;color:var(--text);">${g.category}</span>
+                  <span style="font-size:11px;color:var(--muted);margin-left:6px;">
                     ${g.gender === 'Masculino' ? '🔵' : g.gender === 'Femenino' ? '🔴' : '🟣'} ${g.gender}
                   </span>
-                  ${hasGroups ? `<span style="font-size:10px;background:rgba(139,92,246,0.15);color:#a78bfa;
+                  ${hasGroups ? `<span style="font-size:10px;background:rgba(139,92,246,0.15);color:var(--purple);
                                               border-radius:3px;padding:1px 4px;margin-left:4px;">
                                   ${g.num_groups} grupos × ${perGrp} eq
                                 </span>` : ''}
                 </div>
                 <div style="text-align:right;">
-                  <span style="font-size:11px;color:#94a3b8;">👥 ${g.teams}</span>
+                  <span style="font-size:11px;color:var(--muted);">👥 ${g.teams}</span>
                   <span style="font-size:12px;font-weight:700;color:${color};margin-left:8px;">
                     ${g.expected_matches} partidos
                   </span>
                 </div>
               </div>
               ${hasGroups && g.inter_matches > 0 ? `
-              <div style="font-size:11px;color:#64748b;margin-top:3px;padding-left:2px;">
+              <div style="font-size:11px;color:var(--muted);margin-top:3px;padding-left:2px;">
                 ${g.intra_matches} intragrupo + ${g.inter_matches} intergrupo
               </div>` : ''}
             </div>`;
