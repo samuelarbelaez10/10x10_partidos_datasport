@@ -79,7 +79,7 @@ const Utils = {
   sportIcon(sport) {
     const icons = {
       'Fútbol': '⚽', 'Fútbol 7': '⚽', 'Baloncesto': '🏀', 'Voleibol': '🏐',
-      'Natación': '🏊', 'Tenis': '🎾', 'Pádel': '🏸',
+      'Natación': '🏊', 'Tenis': '🎾', 'Pádel': '🏓',
       'Softbol': '🥎', 'Softball': '🎾', 'Ajedrez': '♟️', 'Gimnasia': '🤸',
       'Golf': '⛳', 'Equitación': '🏇', 'Hípica': '🏇',
     };
@@ -104,7 +104,7 @@ const Utils = {
       'Softbol': '#dc2626', 'Softball': '#dc2626', 'Ajedrez': '#374151', 'Gimnasia': '#db2777',
       'Golf': '#65a30d', 'Equitación': '#92400e', 'Hípica': '#92400e',
     };
-    return colors[sport] || '#00D4FF';
+    return colors[sport] || '#3b82f6';
   },
 
   // Mobile filter toggle wrapper

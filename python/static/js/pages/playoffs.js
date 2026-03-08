@@ -48,15 +48,15 @@ Pages.Playoffs = async function(container, opts) {
     if (p.includes('semi'))
       return { bg: 'rgba(192,132,252,0.15)', color: '#c084fc', border: '#c084fc', icon: '🥈' };
     if (p.includes('cuarto'))
-      return { bg: 'rgba(96,165,250,0.15)', color: 'var(--accent)', border: 'var(--accent)', icon: '⚔️' };
+      return { bg: 'rgba(96,165,250,0.15)', color: '#60a5fa', border: '#60a5fa', icon: '⚔️' };
     if (p.includes('bronce') || p.includes('3er') || p.includes('tercero'))
       return { bg: 'rgba(205,127,50,0.15)', color: '#cd7f32', border: '#cd7f32', icon: '🥉' };
-    return { bg: 'rgba(100,116,139,0.15)', color: 'var(--muted)', border: 'var(--muted)', icon: '🎯' };
+    return { bg: 'rgba(100,116,139,0.15)', color: '#94a3b8', border: '#475569', icon: '🎯' };
   }
 
-  const inp = 'background:#1e293b;color:var(--text);border:1px solid var(--border);' +
+  const inp = 'background:#1e293b;color:#e2e8f0;border:1px solid #334155;' +
               'border-radius:8px;padding:8px 12px;font-size:13px;width:100%;box-sizing:border-box;';
-  const fsS = 'background:#1e293b;color:var(--text);border:1px solid var(--border);' +
+  const fsS = 'background:#1e293b;color:#e2e8f0;border:1px solid #334155;' +
               'border-radius:8px;padding:5px 10px;font-size:12px;';
 
   // ── Vista: 'list' | 'bracket' ─────────────────────────────────────────────
@@ -68,7 +68,7 @@ Pages.Playoffs = async function(container, opts) {
       const btn = document.getElementById(`po-view-${v}`);
       if (btn) {
         btn.style.background  = v === view ? 'white' : 'rgba(255,255,255,0.1)';
-        btn.style.color       = v === view ? 'var(--accent)' : 'white';
+        btn.style.color       = v === view ? '#1e40af' : 'white';
         btn.style.fontWeight  = v === view ? '700' : '500';
       }
     });
@@ -91,7 +91,7 @@ Pages.Playoffs = async function(container, opts) {
     if (countEl) countEl.textContent = `${list.length} partido${list.length !== 1 ? 's' : ''}`;
 
     if (!list.length) {
-      el.innerHTML = `<div style="text-align:center;padding:40px 20px;color:var(--muted);">
+      el.innerHTML = `<div style="text-align:center;padding:40px 20px;color:#475569;">
         <div style="font-size:40px;margin-bottom:12px;">🏅</div>
         <p style="font-size:14px;">No hay partidos de fase final para estos filtros.</p>
       </div>`;
@@ -110,7 +110,7 @@ Pages.Playoffs = async function(container, opts) {
     function bCard(m, borderColor) {
       if (!m) {
         return `<div style="width:180px;background:#0f172a;border-radius:8px;border:1px dashed #1e293b;padding:10px 12px;opacity:.5;">
-          <div style="font-size:11px;color:var(--muted);text-align:center;">POR DEFINIR</div>
+          <div style="font-size:11px;color:#475569;text-align:center;">POR DEFINIR</div>
         </div>`;
       }
       const teamA = m.team1?.name || m.team1?.school?.name || 'POR DEFINIR';
@@ -121,19 +121,19 @@ Pages.Playoffs = async function(container, opts) {
       const live  = m.status === 'live';
       const winA  = done && s1 !== null && s2 !== null && s1 > s2;
       const winB  = done && s1 !== null && s2 !== null && s2 > s1;
-      const liveD = live ? `<span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent2);animation:pulse 1.2s infinite;margin-right:3px;vertical-align:middle;"></span>` : '';
+      const liveD = live ? `<span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#ef4444;animation:pulse 1.2s infinite;margin-right:3px;vertical-align:middle;"></span>` : '';
 
       return `
         <div style="width:180px;background:#1e293b;border-radius:8px;overflow:hidden;
-                    border:1px solid ${borderColor || 'var(--border)'};box-shadow:0 2px 8px rgba(0,0,0,.3);">
-          <div style="padding:7px 10px;border-bottom:1px solid var(--border);
+                    border:1px solid ${borderColor || '#334155'};box-shadow:0 2px 8px rgba(0,0,0,.3);">
+          <div style="padding:7px 10px;border-bottom:1px solid #334155;
                       background:${winA ? 'rgba(16,185,129,.12)' : 'transparent'};">
             <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;">
               <span style="font-size:11px;font-weight:${winA?'700':'500'};color:${winA?'#6ee7b7':'#cbd5e1'};
                            white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px;">
                 ${Utils.truncate(teamA, 16)}
               </span>
-              <span style="font-size:14px;font-weight:900;color:${winA?'#6ee7b7':'var(--muted)'};flex-shrink:0;">
+              <span style="font-size:14px;font-weight:900;color:${winA?'#6ee7b7':'#94a3b8'};flex-shrink:0;">
                 ${s1 !== null ? s1 : (done||live ? '-' : '')}
               </span>
             </div>
@@ -144,7 +144,7 @@ Pages.Playoffs = async function(container, opts) {
                            white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px;">
                 ${liveD}${Utils.truncate(teamB, 16)}
               </span>
-              <span style="font-size:14px;font-weight:900;color:${winB?'#6ee7b7':'var(--muted)'};flex-shrink:0;">
+              <span style="font-size:14px;font-weight:900;color:${winB?'#6ee7b7':'#94a3b8'};flex-shrink:0;">
                 ${s2 !== null ? s2 : (done||live ? '-' : '')}
               </span>
             </div>
@@ -155,8 +155,8 @@ Pages.Playoffs = async function(container, opts) {
     // Conector horizontal entre columnas
     const connector = `
       <div style="display:flex;flex-direction:column;justify-content:space-around;width:24px;align-self:stretch;">
-        <div style="flex:1;border-right:2px solid var(--border);border-top:2px solid var(--border);
-                    border-bottom:2px solid var(--border);border-radius:0 6px 6px 0;margin:4px 0;"></div>
+        <div style="flex:1;border-right:2px solid #334155;border-top:2px solid #334155;
+                    border-bottom:2px solid #334155;border-radius:0 6px 6px 0;margin:4px 0;"></div>
       </div>`;
 
     el.innerHTML = Object.values(byCat).map(cat => {
@@ -193,12 +193,12 @@ Pages.Playoffs = async function(container, opts) {
 
       if (hasQ) {
         rounds.push({
-          label: 'Cuartos', color: 'var(--accent)',
+          label: 'Cuartos', color: '#60a5fa',
           col: `<div style="${colStyle}">
-            ${bCard(q1, 'var(--accent)')}
-            ${bCard(q2, 'var(--accent)')}
-            ${bCard(q3, 'var(--accent)')}
-            ${bCard(q4, 'var(--accent)')}
+            ${bCard(q1, '#60a5fa')}
+            ${bCard(q2, '#60a5fa')}
+            ${bCard(q3, '#60a5fa')}
+            ${bCard(q4, '#60a5fa')}
           </div>`,
         });
       }
@@ -251,10 +251,10 @@ Pages.Playoffs = async function(container, opts) {
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:18px;">
             <span style="font-size:18px;">${Utils.sportIcon(cat.sport)}</span>
             <span style="font-weight:700;color:${color};font-size:15px;">${cat.sport}</span>
-            <span style="color:var(--muted);">·</span>
-            <span style="color:var(--muted);font-size:13px;">${cat.category}</span>
-            <span style="color:var(--muted);">·</span>
-            <span style="color:var(--muted);font-size:13px;">${cat.gender}</span>
+            <span style="color:#475569;">·</span>
+            <span style="color:#94a3b8;font-size:13px;">${cat.category}</span>
+            <span style="color:#475569;">·</span>
+            <span style="color:#94a3b8;font-size:13px;">${cat.gender}</span>
           </div>
           <!-- Round headers -->
           <div style="display:flex;align-items:flex-end;gap:0;margin-bottom:6px;margin-left:0;">
@@ -285,7 +285,7 @@ Pages.Playoffs = async function(container, opts) {
 
     if (list.length === 0) {
       el.innerHTML = `
-        <div style="text-align:center;padding:40px 20px;color:var(--muted);">
+        <div style="text-align:center;padding:40px 20px;color:#475569;">
           <div style="font-size:40px;margin-bottom:12px;">🏅</div>
           <p style="font-size:14px;">No hay partidos de fase final para estos filtros.</p>
         </div>`;
@@ -333,14 +333,14 @@ Pages.Playoffs = async function(container, opts) {
           const isDone = m.status === 'finished';
 
           let statusChip = '';
-          if (isLive)      statusChip = `<span style="background:rgba(239,68,68,0.2);color:var(--accent2);font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;border:1px solid rgba(239,68,68,0.4);">🔴 EN VIVO</span>`;
+          if (isLive)      statusChip = `<span style="background:rgba(239,68,68,0.2);color:#f87171;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;border:1px solid rgba(239,68,68,0.4);">🔴 EN VIVO</span>`;
           else if (isDone) statusChip = `<span style="background:rgba(16,185,129,0.2);color:#6ee7b7;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;border:1px solid rgba(16,185,129,0.3);">✅ FINALIZADO</span>`;
-          else             statusChip = `<span style="background:rgba(100,116,139,0.2);color:var(--muted);font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;border:1px solid var(--border);">📅 PROGRAMADO</span>`;
+          else             statusChip = `<span style="background:rgba(100,116,139,0.2);color:#94a3b8;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;border:1px solid #334155;">📅 PROGRAMADO</span>`;
 
           const scoreHtml = (isLive || isDone)
             ? `<div style="display:flex;align-items:center;gap:10px;margin-top:8px;justify-content:center;">
                  <span style="font-size:22px;font-weight:900;color:#f8fafc;">${s1 !== '' ? s1 : '-'}</span>
-                 <span style="font-size:14px;color:var(--muted);">:</span>
+                 <span style="font-size:14px;color:#475569;">:</span>
                  <span style="font-size:22px;font-weight:900;color:#f8fafc;">${s2 !== '' ? s2 : '-'}</span>
                </div>`
             : '';
@@ -357,12 +357,12 @@ Pages.Playoffs = async function(container, opts) {
                   ${statusChip}
                 </div>
                 <div style="display:flex;align-items:center;gap:6px;">
-                  <span style="font-size:11px;color:var(--muted);">${date}</span>
-                  ${loc ? `<span style="font-size:11px;color:var(--muted);">📍 ${loc}</span>` : ''}
+                  <span style="font-size:11px;color:#475569;">${date}</span>
+                  ${loc ? `<span style="font-size:11px;color:#475569;">📍 ${loc}</span>` : ''}
                   ${App.isEditor() ? `
                   <button onclick="window._poEditTeams('${m.id}')"
                     style="padding:2px 8px;border-radius:6px;border:none;cursor:pointer;
-                           font-size:11px;background:rgba(96,165,250,0.1);color:var(--accent);
+                           font-size:11px;background:rgba(96,165,250,0.1);color:#93c5fd;
                            transition:background .2s;"
                     onmouseenter="this.style.background='rgba(96,165,250,0.25)'"
                     onmouseleave="this.style.background='rgba(96,165,250,0.1)'">✏️</button>
@@ -378,7 +378,7 @@ Pages.Playoffs = async function(container, opts) {
               <!-- Equipos -->
               <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;">
                 <div style="text-align:right;">
-                  <div style="font-size:14px;font-weight:700;color:var(--text);line-height:1.3;">
+                  <div style="font-size:14px;font-weight:700;color:#e2e8f0;line-height:1.3;">
                     ${Utils.truncate(teamA, 20)}
                   </div>
                 </div>
@@ -386,13 +386,13 @@ Pages.Playoffs = async function(container, opts) {
                   ${(isLive || isDone)
                     ? `<div style="display:flex;align-items:center;gap:6px;">
                          <span style="font-size:20px;font-weight:900;color:#f8fafc;">${s1 !== '' ? s1 : '?'}</span>
-                         <span style="font-size:13px;color:var(--muted);font-weight:700;">:</span>
+                         <span style="font-size:13px;color:#475569;font-weight:700;">:</span>
                          <span style="font-size:20px;font-weight:900;color:#f8fafc;">${s2 !== '' ? s2 : '?'}</span>
                        </div>`
-                    : `<span style="font-size:14px;color:var(--muted);font-weight:700;">vs</span>`}
+                    : `<span style="font-size:14px;color:#475569;font-weight:700;">vs</span>`}
                 </div>
                 <div style="text-align:left;">
-                  <div style="font-size:14px;font-weight:700;color:var(--text);line-height:1.3;">
+                  <div style="font-size:14px;font-weight:700;color:#e2e8f0;line-height:1.3;">
                     ${Utils.truncate(teamB, 20)}
                   </div>
                 </div>
@@ -403,14 +403,14 @@ Pages.Playoffs = async function(container, opts) {
         return `
           <div style="margin-bottom:18px;">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-              <div style="height:1px;flex:1;background:var(--border);"></div>
+              <div style="height:1px;flex:1;background:rgba(255,255,255,0.06);"></div>
               <span style="background:${ps.bg};color:${ps.color};
                            border:1px solid ${ps.border};border-radius:20px;
                            padding:4px 14px;font-size:12px;font-weight:700;
                            white-space:nowrap;">
                 ${ps.icon} ${pKey}
               </span>
-              <div style="height:1px;flex:1;background:var(--border);"></div>
+              <div style="height:1px;flex:1;background:rgba(255,255,255,0.06);"></div>
             </div>
             <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;">
               ${cardsHtml}
@@ -419,16 +419,16 @@ Pages.Playoffs = async function(container, opts) {
       }).join('');
 
       return `
-        <div style="background:rgba(255,255,255,0.02);border:1px solid var(--border);
+        <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);
                     border-top:3px solid ${color};border-radius:12px;padding:16px 20px;
                     margin-bottom:16px;">
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
             <span style="font-size:18px;">${Utils.sportIcon(cat.sport)}</span>
             <span style="font-weight:700;color:${color};font-size:15px;">${cat.sport}</span>
-            <span style="color:var(--muted);font-size:13px;">·</span>
-            <span style="color:var(--muted);font-size:13px;">${cat.category}</span>
-            <span style="color:var(--muted);font-size:13px;">·</span>
-            <span style="color:var(--muted);font-size:13px;">${cat.gender}</span>
+            <span style="color:#475569;font-size:13px;">·</span>
+            <span style="color:#94a3b8;font-size:13px;">${cat.category}</span>
+            <span style="color:#475569;font-size:13px;">·</span>
+            <span style="color:#94a3b8;font-size:13px;">${cat.gender}</span>
           </div>
           ${phasesHtml}
         </div>`;
@@ -457,12 +457,12 @@ Pages.Playoffs = async function(container, opts) {
       }).join('');
 
     Utils.showModal(`
-      <h3 style="font-size:16px;font-weight:700;color:var(--accent);margin:0 0 4px;">✏️ Editar Equipos</h3>
-      <p style="color:var(--muted);font-size:13px;margin:0 0 18px;">
+      <h3 style="font-size:16px;font-weight:700;color:#60a5fa;margin:0 0 4px;">✏️ Editar Equipos</h3>
+      <p style="color:#64748b;font-size:13px;margin:0 0 18px;">
         ${match.sport} · ${match.category} · ${match.gender} · <strong style="color:#fbbf24;">${match.group_name || ''}</strong>
       </p>
       <div style="margin-bottom:12px;">
-        <label style="font-size:11px;color:var(--accent);display:block;margin-bottom:4px;font-weight:600;text-transform:uppercase;">Equipo A (Local)</label>
+        <label style="font-size:11px;color:#93c5fd;display:block;margin-bottom:4px;font-weight:600;text-transform:uppercase;">Equipo A (Local)</label>
         <select id="edit-po-team-a" style="${mi}">${makeOpts(match.team1_id)}</select>
       </div>
       <div style="margin-bottom:18px;">
@@ -471,12 +471,12 @@ Pages.Playoffs = async function(container, opts) {
       </div>
       <div style="display:flex;gap:10px;">
         <button onclick="window._poSaveTeams('${matchId}')"
-          style="background:linear-gradient(135deg,#1d4ed8,var(--accent));color:white;
+          style="background:linear-gradient(135deg,#1d4ed8,#3b82f6);color:white;
                  font-weight:700;border:none;border-radius:10px;padding:9px 20px;cursor:pointer;">
           💾 Guardar
         </button>
         <button onclick="Utils.closeModal()"
-          style="background:var(--surface);color:var(--muted);border:1px solid var(--border);
+          style="background:rgba(255,255,255,0.05);color:#94a3b8;border:1px solid #334155;
                  border-radius:10px;padding:9px 16px;cursor:pointer;">
           Cancelar
         </button>
@@ -704,7 +704,7 @@ Pages.Playoffs = async function(container, opts) {
                    background-clip:text;margin:0;">
           🏅 Fase Final
         </h2>
-        <p style="color:var(--muted);font-size:13px;margin:4px 0 0;">
+        <p style="color:#475569;font-size:13px;margin:4px 0 0;">
           Cuartos de final · Semifinales · Final · Bronce
         </p>
       </div>
@@ -726,7 +726,7 @@ Pages.Playoffs = async function(container, opts) {
 
       <!-- Fase destacada -->
       <div style="margin-bottom:16px;">
-        <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px;font-weight:600;
+        <label style="font-size:12px;color:#94a3b8;display:block;margin-bottom:6px;font-weight:600;
                       text-transform:uppercase;letter-spacing:.5px;">Ronda / Fase del partido</label>
         <div style="display:flex;gap:8px;flex-wrap:wrap;" id="po-phase-btns">
           ${PHASE_OPTIONS.map((p, i) => {
@@ -747,7 +747,7 @@ Pages.Playoffs = async function(container, opts) {
       <!-- Deporte / Categoría / Género -->
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px;">
         <div>
-          <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;
+          <label style="font-size:11px;color:#64748b;display:block;margin-bottom:4px;
                         text-transform:uppercase;letter-spacing:.5px;">Deporte</label>
           <select id="po-sport" style="${inp}" onchange="window._poOnSport(this.value)">
             <option value="">— Seleccionar —</option>
@@ -755,14 +755,14 @@ Pages.Playoffs = async function(container, opts) {
           </select>
         </div>
         <div>
-          <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;
+          <label style="font-size:11px;color:#64748b;display:block;margin-bottom:4px;
                         text-transform:uppercase;letter-spacing:.5px;">Categoría</label>
           <select id="po-cat" style="${inp}" onchange="window._poOnCat(this.value)">
             <option value="">— primero el deporte —</option>
           </select>
         </div>
         <div>
-          <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;
+          <label style="font-size:11px;color:#64748b;display:block;margin-bottom:4px;
                         text-transform:uppercase;letter-spacing:.5px;">Género</label>
           <select id="po-gender" style="${inp}" onchange="window._poOnGender(this.value)">
             <option value="">— primero la categoría —</option>
@@ -774,14 +774,14 @@ Pages.Playoffs = async function(container, opts) {
       <div style="display:grid;grid-template-columns:1fr 36px 1fr;gap:8px;
                   align-items:end;margin-bottom:6px;">
         <div>
-          <label style="font-size:11px;color:var(--accent);display:block;margin-bottom:4px;
+          <label style="font-size:11px;color:#93c5fd;display:block;margin-bottom:4px;
                         text-transform:uppercase;letter-spacing:.5px;">Equipo A</label>
           <select id="po-team-a" style="${inp}">
             <option value="">— POR DEFINIR —</option>
           </select>
         </div>
         <div style="text-align:center;padding-bottom:10px;font-size:15px;
-                    color:var(--muted);font-weight:900;">vs</div>
+                    color:#475569;font-weight:900;">vs</div>
         <div>
           <label style="font-size:11px;color:#c4b5fd;display:block;margin-bottom:4px;
                         text-transform:uppercase;letter-spacing:.5px;">Equipo B</label>
@@ -790,24 +790,24 @@ Pages.Playoffs = async function(container, opts) {
           </select>
         </div>
       </div>
-      <p style="font-size:11px;color:var(--muted);margin:4px 0 14px;">
+      <p style="font-size:11px;color:#334155;margin:4px 0 14px;">
         Deja vacío si los equipos aún no se conocen.
       </p>
 
       <!-- Fecha / Hora / Sede -->
       <div style="display:grid;grid-template-columns:140px 120px 1fr;gap:12px;margin-bottom:16px;">
         <div>
-          <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;
+          <label style="font-size:11px;color:#64748b;display:block;margin-bottom:4px;
                         text-transform:uppercase;letter-spacing:.5px;">Fecha</label>
           <input id="po-date" type="date" style="${inp}" min="2026-03-06" max="2026-03-14" />
         </div>
         <div>
-          <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;
+          <label style="font-size:11px;color:#64748b;display:block;margin-bottom:4px;
                         text-transform:uppercase;letter-spacing:.5px;">Hora</label>
           <input id="po-time" type="time" style="${inp}" value="12:00" />
         </div>
         <div>
-          <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;
+          <label style="font-size:11px;color:#64748b;display:block;margin-bottom:4px;
                         text-transform:uppercase;letter-spacing:.5px;">Sede / Cancha</label>
           <input id="po-loc" type="text" style="${inp}" placeholder="Ej: Marathon gym principal" />
         </div>
@@ -821,23 +821,29 @@ Pages.Playoffs = async function(container, opts) {
         onmouseleave="this.style.opacity='1'">
         ➕ Crear partido
       </button>
-    </div>` : ``}
+    </div>` : `
+    <div style="background:rgba(245,158,11,0.05);border:1px solid rgba(245,158,11,0.15);
+                border-radius:12px;padding:14px 18px;margin-bottom:24px;">
+      <p style="color:#fbbf24;font-size:13px;margin:0;">
+        Solo los editores pueden crear partidos de fase final.
+      </p>
+    </div>`}
 
     <!-- Lista -->
-    <div style="background:rgba(255,255,255,0.02);border:1px solid var(--border);
+    <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);
                 border-radius:16px;padding:18px 20px;">
       <div style="display:flex;align-items:center;justify-content:space-between;
                   margin-bottom:16px;flex-wrap:wrap;gap:10px;">
         <div style="display:flex;align-items:center;gap:12px;">
-          <h3 style="font-size:15px;font-weight:700;color:var(--text);margin:0;">
+          <h3 style="font-size:15px;font-weight:700;color:#e2e8f0;margin:0;">
             📋 Partidos de Fase Final
           </h3>
           <!-- Toggle Lista / Bracket -->
-          <div style="display:flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+          <div style="display:flex;border:1px solid #334155;border-radius:8px;overflow:hidden;">
             <button id="po-view-list"
               onclick="window._poToggleView('list')"
               style="padding:4px 12px;border:none;cursor:pointer;font-size:12px;font-weight:700;
-                     background:white;color:var(--accent);transition:all .15s;">
+                     background:white;color:#1e40af;transition:all .15s;">
               📋 Lista
             </button>
             <button id="po-view-bracket"

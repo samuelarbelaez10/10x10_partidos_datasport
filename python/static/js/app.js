@@ -92,7 +92,7 @@ const App = {
 
     const list = document.getElementById('tournament-list');
     list.innerHTML = this.TOURNAMENTS.map(t => {
-      const statusColor = t.status === 'active' ? 'var(--green)' : t.status === 'upcoming' ? '#f59e0b' : 'var(--muted)';
+      const statusColor = t.status === 'active' ? '#10b981' : t.status === 'upcoming' ? '#f59e0b' : '#64748b';
       const statusLabel = t.status === 'active' ? 'Activo' : t.status === 'upcoming' ? 'Próximamente' : 'Finalizado';
       return `
         <div onclick="App.selectTournament('${t.id}')"
@@ -155,11 +155,11 @@ const App = {
                       border-top:1px solid rgba(255,255,255,0.06);">
             <div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center;">
               ${t.sports.map(s => `<span style="font-size:12px;background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.65);padding:4px 11px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);">${s}</span>`).join('')}
-              <span style="font-size:12px;color:var(--muted);padding:4px 11px;border-radius:8px;
+              <span style="font-size:12px;color:#475569;padding:4px 11px;border-radius:8px;
                            background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);">📋 ${t.categories} categorías</span>
             </div>
             <div style="flex-shrink:0;display:flex;align-items:center;gap:6px;
-                        background:linear-gradient(135deg,#0088cc,#00bbff);color:white;
+                        background:linear-gradient(135deg,#1e40af,#2563eb);color:white;
                         font-size:13px;font-weight:600;padding:9px 22px;border-radius:12px;
                         box-shadow:0 4px 16px rgba(37,99,235,0.5);">
               Entrar <span style="font-size:17px;line-height:1;">›</span>
@@ -186,12 +186,10 @@ const App = {
 
     const role = this.currentUser.role;
     const roleIcon = role === 'editor' ? '✏️' : role === 'arbitro' ? '🏃' : '📖';
-    const roleName = role === 'editor' ? 'Editor' : role === 'arbitro' ? 'Árbitro' : 'Lector';
-    const badgeText = `${roleIcon} ${roleName}`;
-    const userBadge = document.getElementById('user-badge');
-    if (userBadge) userBadge.innerHTML = `<span style="width:6px;height:6px;border-radius:50%;background:var(--green);display:inline-block;animation:pulse-green 1.5s infinite;"></span> ${badgeText}`;
+    const badgeText = `${roleIcon} ${this.currentUser.email}`;
+    document.getElementById('user-badge').textContent = badgeText;
     const mobileBadge = document.getElementById('user-badge-mobile');
-    if (mobileBadge) mobileBadge.innerHTML = `<span style="width:5px;height:5px;border-radius:50%;background:var(--green);display:inline-block;"></span> ${badgeText}`;
+    if (mobileBadge) mobileBadge.textContent = badgeText;
     const qrBtn = document.getElementById('qr-btn');
     if (qrBtn) qrBtn.style.display = role === 'editor' ? 'inline-flex' : 'none';
     const qrBtnMobile = document.getElementById('qr-btn-mobile');
@@ -210,22 +208,79 @@ const App = {
       const style = document.createElement('style');
       style.id = 'tournament-theme';
       style.textContent = `
+        body {
+          background: #2c3142 !important;
+          background-image: none !important;
+        }
+        .card {
+          background: #363c51 !important;
+          border-color: rgba(255,255,255,0.08) !important;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.04) !important;
+        }
+        header {
+          background: #363c51 !important;
+          border-bottom: 3px solid #dd2b2f !important;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.35) !important;
+        }
         .btn-primary {
-          background: linear-gradient(135deg, #dd2b2f, #e84548) !important;
+          background: #dd2b2f !important;
           box-shadow: 0 2px 12px rgba(221,43,47,0.35) !important;
         }
         .btn-primary:hover {
-          background: linear-gradient(135deg, #e84548, #ef5558) !important;
+          background: #e84548 !important;
           box-shadow: 0 6px 20px rgba(221,43,47,0.5) !important;
         }
         .btn-secondary {
-          background: linear-gradient(135deg, #dd2b2f, #e84548) !important;
+          background: #dd2b2f !important;
           box-shadow: 0 2px 12px rgba(221,43,47,0.3) !important;
         }
         .btn-secondary:hover {
-          background: linear-gradient(135deg, #e84548, #ef5558) !important;
+          background: #e84548 !important;
+        }
+        .nav-tab {
+          background: rgba(255,255,255,0.07) !important;
+          border-color: rgba(255,255,255,0.07) !important;
+        }
+        .nav-tab:hover {
+          background: rgba(255,255,255,0.14) !important;
+        }
+        .nav-tab.active {
+          background: #ffffff !important;
+          color: #dd2b2f !important;
+          font-weight: 700 !important;
+          border-color: #ffffff !important;
+          box-shadow: 0 2px 12px rgba(0,0,0,0.2) !important;
+        }
+        .input-field {
+          background-color: rgba(255,255,255,0.06) !important;
+          border-color: rgba(255,255,255,0.12) !important;
+        }
+        select.input-field {
+          background-color: rgba(255,255,255,0.06) !important;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") !important;
+          background-repeat: no-repeat !important;
+          background-position: right 10px center !important;
+        }
+        .input-field:focus {
+          border-color: #dd2b2f !important;
+          box-shadow: 0 0 0 3px rgba(221,43,47,0.15) !important;
+        }
+        .mobile-filter-btn {
+          background: linear-gradient(135deg, rgba(221,43,47,0.12) 0%, rgba(221,43,47,0.06) 100%) !important;
+          color: #f87171 !important;
+          border-color: rgba(221,43,47,0.25) !important;
+          box-shadow: 0 2px 12px rgba(221,43,47,0.08) !important;
+        }
+        .mobile-filter-btn:active {
+          background: linear-gradient(135deg, rgba(221,43,47,0.2) 0%, rgba(221,43,47,0.1) 100%) !important;
+        }
+        .mobile-filter-btn .filter-count {
+          background: #dd2b2f !important;
         }
         .badge-live { background: #dd2b2f !important; }
+        .stat-number { color: #dd2b2f !important; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15) !important; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25) !important; }
       `;
       document.head.appendChild(style);
       // Update header logo SVG gradient to red/white
@@ -253,14 +308,6 @@ const App = {
     document.getElementById('login-screen').classList.remove('hidden');
     this.currentUser = null;
     sessionStorage.removeItem('ds_user');
-  },
-
-  toggleTheme() {
-    // Dark-only design — toggle disabled
-  },
-
-  _loadTheme() {
-    // Dark-only design — no theme loading needed
   },
 
   logout() {
@@ -407,7 +454,7 @@ const App = {
       if (count > 0) {
         btn.innerHTML = `🔴 En Vivo <span style="
           display:inline-block;
-          background:var(--accent2);
+          background:#ef4444;
           color:white;
           font-size:10px;
           font-weight:700;
@@ -484,11 +531,11 @@ const App = {
           <span style="font-size:18px;">🔍</span>
           <input type="text" id="gs-input"
             placeholder="Buscar jugadores, colegios, partidos..."
-            style="flex:1;background:var(--surface);border:2px solid var(--accent);border-radius:10px;
-                   color:var(--text);padding:10px 14px;font-size:15px;outline:none;">
+            style="flex:1;background:#0f172a;border:2px solid #3b82f6;border-radius:10px;
+                   color:#f1f5f9;padding:10px 14px;font-size:15px;outline:none;">
         </div>
         <div id="gs-results" style="max-height:400px;overflow-y:auto;">
-          <p style="color:var(--muted);text-align:center;padding:20px 0;font-size:13px;">
+          <p style="color:#475569;text-align:center;padding:20px 0;font-size:13px;">
             Escribe para buscar…
           </p>
         </div>
@@ -503,19 +550,19 @@ const App = {
       if (!el) return;
 
       if (!q || q.length < 2) {
-        el.innerHTML = `<p style="color:var(--muted);text-align:center;padding:20px 0;font-size:13px;">Escribe al menos 2 caracteres…</p>`;
+        el.innerHTML = `<p style="color:#475569;text-align:center;padding:20px 0;font-size:13px;">Escribe al menos 2 caracteres…</p>`;
         return;
       }
 
       if (!cache) {
-        el.innerHTML = `<p style="color:var(--muted);text-align:center;padding:12px 0;font-size:13px;">Cargando…</p>`;
+        el.innerHTML = `<p style="color:#475569;text-align:center;padding:12px 0;font-size:13px;">Cargando…</p>`;
         try {
           const [players, teams, matches, schools] = await Promise.all([
             Api.getPlayers(), Api.getTeams(), Api.getMatches(), Api.getSchools(),
           ]);
           cache = { players, teams, matches, schools };
         } catch(e) {
-          el.innerHTML = `<p style="color:var(--accent2);padding:12px;">Error cargando datos</p>`;
+          el.innerHTML = `<p style="color:#f87171;padding:12px;">Error cargando datos</p>`;
           return;
         }
       }
@@ -559,7 +606,7 @@ const App = {
       });
 
       if (results.length === 0) {
-        el.innerHTML = `<p style="color:var(--muted);text-align:center;padding:20px;font-size:13px;">Sin resultados para "${q}"</p>`;
+        el.innerHTML = `<p style="color:#475569;text-align:center;padding:20px;font-size:13px;">Sin resultados para "${q}"</p>`;
         return;
       }
 
@@ -571,8 +618,8 @@ const App = {
           onmouseout="this.style.background=''">
           <span style="font-size:20px;flex-shrink:0;">${r.icon}</span>
           <div style="min-width:0;">
-            <div style="font-weight:600;color:var(--text);font-size:14px;">${r.primary}</div>
-            <div style="font-size:12px;color:var(--muted);">${r.secondary}</div>
+            <div style="font-weight:600;color:#e2e8f0;font-size:14px;">${r.primary}</div>
+            <div style="font-size:12px;color:#64748b;">${r.secondary}</div>
           </div>
         </div>`).join('');
     };
@@ -603,9 +650,9 @@ const App = {
 
     Utils.showModal(`
       <div style="text-align:center;min-width:320px;">
-        <h3 style="font-size:20px;font-weight:700;color:var(--accent);margin-bottom:4px;">📱 Acceso por QR</h3>
-        <p style="color:var(--muted);font-size:13px;margin-bottom:18px;">
-          Escanea con la cámara del celular para entrar en <strong style="color:var(--text);">Modo Lector</strong>
+        <h3 style="font-size:20px;font-weight:700;color:#93c5fd;margin-bottom:4px;">📱 Acceso por QR</h3>
+        <p style="color:#64748b;font-size:13px;margin-bottom:18px;">
+          Escanea con la cámara del celular para entrar en <strong style="color:#f1f5f9;">Modo Lector</strong>
         </p>
         <div style="background:white;display:inline-block;padding:12px;border-radius:12px;margin-bottom:16px;
                     box-shadow:0 4px 20px rgba(0,0,0,0.4);">
@@ -613,7 +660,7 @@ const App = {
         </div>
         <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);
                     border-radius:8px;padding:10px 14px;margin-bottom:14px;word-break:break-all;text-align:left;">
-          <p style="font-size:11px;color:var(--muted);margin:0 0 4px;">URL de acceso directo</p>
+          <p style="font-size:11px;color:#475569;margin:0 0 4px;">URL de acceso directo</p>
           <code style="color:#7dd3fc;font-size:12px;">${url}</code>
         </div>
         <button onclick="
@@ -630,7 +677,6 @@ const App = {
 
   // Inicialización - restaurar sesión si existe
   init() {
-    this._loadTheme();
     // 1. Auto-login vía parámetro URL (?access=lector) — generado por QR
     const params = new URLSearchParams(window.location.search);
     if (params.get('access') === 'lector') {

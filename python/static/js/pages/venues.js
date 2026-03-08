@@ -20,12 +20,12 @@ Pages.Venues = async function(container) {
           var deleteBtn = App.isEditor()
             ? '<button class="btn-danger" style="font-size:11px;padding:4px 10px;margin-top:8px;" onclick="event.stopPropagation();window._deleteVenue(\'' + v.id + '\',\'' + (v.name || '').replace(/'/g, "\\'") + '\')">Eliminar</button>'
             : '';
-          return '<div class="card" style="border-left:4px solid var(--green);">' +
+          return '<div class="card" style="border-left:4px solid #10b981;">' +
             '<div style="display:flex;align-items:center;gap:12px;">' +
-              '<div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--green),#059669);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">🏟️</div>' +
+              '<div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#10b981,#059669);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">🏟️</div>' +
               '<div style="flex:1;min-width:0;">' +
                 '<div style="font-weight:700;font-size:16px;color:white;">' + (v.name || '') + '</div>' +
-                (v.description ? '<div style="font-size:13px;color:var(--muted);margin-top:2px;">' + v.description + '</div>' : '') +
+                (v.description ? '<div style="font-size:13px;color:#94a3b8;margin-top:2px;">' + v.description + '</div>' : '') +
               '</div>' +
             '</div>' +
             deleteBtn +
@@ -35,7 +35,7 @@ Pages.Venues = async function(container) {
     };
 
     var addForm = App.isEditor()
-      ? '<div class="card mb-6" style="border-top:3px solid var(--green);">' +
+      ? '<div class="card mb-6" style="border-top:3px solid #10b981;">' +
           '<h3 style="font-weight:700;margin-bottom:12px;">Agregar Escenario</h3>' +
           '<div style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;">' +
             '<div style="flex:2;min-width:180px;">' +
@@ -53,7 +53,7 @@ Pages.Venues = async function(container) {
 
     container.innerHTML =
       '<div class="mb-6">' +
-        '<h2 class="text-3xl font-black" style="color:var(--accent);">🏟️ Escenarios</h2>' +
+        '<h2 class="text-3xl font-black" style="color:#60a5fa;">🏟️ Escenarios</h2>' +
         '<p class="text-gray-400 mt-1">' + venues.length + ' escenarios registrados</p>' +
       '</div>' +
       addForm +

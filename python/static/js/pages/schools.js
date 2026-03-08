@@ -20,7 +20,7 @@ Pages.Schools = async function(container, opts) {
     var addSchoolHtml = '';
     if (App.isEditor()) {
       addSchoolHtml =
-        '<div class="card mb-6" style="border-top:3px solid var(--accent);">' +
+        '<div class="card mb-6" style="border-top:3px solid #3b82f6;">' +
           '<h3 style="font-weight:700;margin-bottom:12px;">Agregar Colegio</h3>' +
           '<div style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;">' +
             '<div style="flex:2;min-width:180px;">' +
@@ -38,7 +38,7 @@ Pages.Schools = async function(container, opts) {
 
     container.innerHTML =
       '<div class="mb-6">' +
-        '<h2 class="text-3xl font-black" style="color:var(--accent);">🏫 Colegios</h2>' +
+        '<h2 class="text-3xl font-black" style="color:#60a5fa;">🏫 Colegios</h2>' +
         '<p class="text-gray-400 mt-1">' + schools.length + ' colegios participantes</p>' +
       '</div>' +
       addSchoolHtml +
@@ -52,15 +52,15 @@ Pages.Schools = async function(container, opts) {
           });
           var logoHtml = school.logo_url
             ? '<img src="' + school.logo_url + '" style="width:80px;height:80px;border-radius:50%;margin:0 auto 12px;object-fit:contain;background:white;padding:8px;" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\';">' +
-              '<div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent));display:none;align-items:center;justify-content:center;font-size:28px;font-weight:900;color:white;margin:0 auto 12px;">' + Utils.schoolInitials(school.name) + '</div>'
-            : '<div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent));display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;color:white;margin:0 auto 12px;">' + Utils.schoolInitials(school.name) + '</div>';
+              '<div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#1e40af,#3b82f6);display:none;align-items:center;justify-content:center;font-size:28px;font-weight:900;color:white;margin:0 auto 12px;">' + Utils.schoolInitials(school.name) + '</div>'
+            : '<div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#1e40af,#3b82f6);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;color:white;margin:0 auto 12px;">' + Utils.schoolInitials(school.name) + '</div>';
           var sportBadges = sportNames.map(function(s) {
-            return '<span style="background:var(--surface);border-radius:8px;padding:2px 8px;font-size:11px;">' + Utils.sportIcon(s) + ' ' + s + '</span>';
+            return '<span style="background:rgba(255,255,255,0.05);border-radius:8px;padding:2px 8px;font-size:11px;">' + Utils.sportIcon(s) + ' ' + s + '</span>';
           }).join('');
           return '<div class="card" style="cursor:pointer;text-align:center;" onclick="window._openSchool(\'' + school.id + '\')">' +
             logoHtml +
             '<h3 style="font-weight:700;font-size:16px;">' + school.name + '</h3>' +
-            '<p style="color:var(--muted);font-size:13px;margin-top:4px;">' + schoolTeams.length + ' equipos</p>' +
+            '<p style="color:#94a3b8;font-size:13px;margin-top:4px;">' + schoolTeams.length + ' equipos</p>' +
             '<div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-top:8px;">' + sportBadges + '</div>' +
           '</div>';
         }).join('') +
@@ -110,8 +110,8 @@ function _showSchoolDetail(container, schoolId, schools, teams, sports, categori
 
   var logoHtml = school.logo_url
     ? '<img src="' + school.logo_url + '" style="width:100px;height:100px;border-radius:50%;margin:0 auto 16px;object-fit:contain;background:white;padding:12px;" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\';">' +
-      '<div style="width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent));display:none;align-items:center;justify-content:center;font-size:36px;font-weight:900;color:white;margin:0 auto 16px;">' + Utils.schoolInitials(school.name) + '</div>'
-    : '<div style="width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent));display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:900;color:white;margin:0 auto 16px;">' + Utils.schoolInitials(school.name) + '</div>';
+      '<div style="width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,#1e40af,#3b82f6);display:none;align-items:center;justify-content:center;font-size:36px;font-weight:900;color:white;margin:0 auto 16px;">' + Utils.schoolInitials(school.name) + '</div>'
+    : '<div style="width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,#1e40af,#3b82f6);display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:900;color:white;margin:0 auto 16px;">' + Utils.schoolInitials(school.name) + '</div>';
 
   var deleteBtn = App.isEditor()
     ? '<button class="btn-danger" style="margin-top:12px;" onclick="window._deleteSchool(\'' + school.id + '\',\'' + school.name.replace(/'/g, "\\'") + '\')">Eliminar Colegio</button>'
@@ -128,7 +128,7 @@ function _showSchoolDetail(container, schoolId, schools, teams, sports, categori
     }).join('');
 
     addTeamHtml =
-      '<div class="card mb-6" style="border-top:3px solid var(--green);">' +
+      '<div class="card mb-6" style="border-top:3px solid #10b981;">' +
         '<h3 style="font-weight:700;margin-bottom:12px;">Agregar Equipo a ' + school.name + '</h3>' +
         '<div style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;">' +
           '<div style="flex:1;min-width:150px;">' +
@@ -158,9 +158,9 @@ function _showSchoolDetail(container, schoolId, schools, teams, sports, categori
             ? '<button class="btn-danger" style="font-size:11px;padding:3px 8px;margin-top:6px;" onclick="event.stopPropagation();window._deleteTeamFromSchool(\'' + t.id + '\',\'' + (t.name || '').replace(/'/g, "\\'") + '\')">Eliminar</button>'
             : '';
           return '<div class="card" style="cursor:pointer;border-left:4px solid ' + color + ';" onclick="App.navigate(\'teams\',{teamId:\'' + t.id + '\'})">' +
-            '<div style="font-size:13px;color:var(--muted);">' + Utils.sportIcon(t.sport?.name || '') + ' ' + (t.sport?.name || '') + '</div>' +
+            '<div style="font-size:13px;color:#94a3b8;">' + Utils.sportIcon(t.sport?.name || '') + ' ' + (t.sport?.name || '') + '</div>' +
             '<div style="font-weight:700;margin-top:4px;">' + (t.name || '') + '</div>' +
-            '<div style="font-size:12px;color:var(--muted);">' + (t.category?.name || '') + ' &bull; ' + (t.gender || '') + '</div>' +
+            '<div style="font-size:12px;color:#64748b;">' + (t.category?.name || '') + ' &bull; ' + (t.gender || '') + '</div>' +
             delBtn +
           '</div>';
         }).join('') +
@@ -171,7 +171,7 @@ function _showSchoolDetail(container, schoolId, schools, teams, sports, categori
     '<div class="card mb-6" style="text-align:center;">' +
       logoHtml +
       '<h2 style="font-size:28px;font-weight:900;color:white;">' + school.name + '</h2>' +
-      '<p style="color:var(--muted);margin-top:4px;">' + schoolTeams.length + ' equipos en el torneo</p>' +
+      '<p style="color:#94a3b8;margin-top:4px;">' + schoolTeams.length + ' equipos en el torneo</p>' +
       deleteBtn +
     '</div>' +
     addTeamHtml +

@@ -27,7 +27,7 @@ Pages.Calendar = async function(container, opts) {
       window._calView = v;
       document.querySelectorAll('.cal-view-btn').forEach(b => {
         b.style.background  = b.dataset.v === v ? 'white' : 'rgba(255,255,255,0.1)';
-        b.style.color       = b.dataset.v === v ? 'var(--accent)' : 'white';
+        b.style.color       = b.dataset.v === v ? '#1e40af' : 'white';
         b.style.fontWeight  = b.dataset.v === v ? '700' : '500';
       });
       Pages._calFilter();
@@ -86,7 +86,7 @@ Pages.Calendar = async function(container, opts) {
       <div style="display:flex;align-items:flex-end;justify-content:space-between;
                   margin-bottom:20px;flex-wrap:wrap;gap:10px;">
         <div>
-          <h2 class="text-3xl font-black" style="color:var(--accent);">📅 Calendario</h2>
+          <h2 class="text-3xl font-black" style="color:#60a5fa;">📅 Calendario</h2>
           <p class="text-gray-400 mt-1 text-sm">
             <span id="cal-count">${matches.length} partidos</span> registrados
           </p>
@@ -95,7 +95,7 @@ Pages.Calendar = async function(container, opts) {
           <!-- Vista toggle -->
           <div style="display:flex;border:1px solid rgba(255,255,255,0.15);border-radius:8px;overflow:hidden;">
             <button class="cal-view-btn" data-v="list" onclick="window._calToggleView('list')"
-              style="background:white;color:var(--accent);font-weight:700;
+              style="background:white;color:#1e40af;font-weight:700;
                      padding:7px 14px;font-size:13px;border:none;cursor:pointer;">
               ☰ Lista
             </button>
@@ -106,11 +106,11 @@ Pages.Calendar = async function(container, opts) {
             </button>
           </div>
           <button onclick="Pages._calPrint()"
-            style="background:var(--surface);border:1px solid var(--border);
-                   color:var(--muted);border-radius:8px;padding:7px 14px;
+            style="background:rgba(255,255,255,0.05);border:1px solid #334155;
+                   color:#94a3b8;border-radius:8px;padding:7px 14px;
                    font-size:13px;cursor:pointer;transition:background .15s;"
             onmouseenter="this.style.background='rgba(255,255,255,0.1)'"
-            onmouseleave="this.style.background='var(--border)'">
+            onmouseleave="this.style.background='rgba(255,255,255,0.05)'">
             🖨️ Imprimir
           </button>
           ${App.canEditMatches() ? `<button class="btn-primary" onclick="_showAddMatch()">+ Agregar Partido</button>` : ''}
@@ -292,7 +292,7 @@ Pages.Calendar = async function(container, opts) {
 
       Utils.showModal(`
         <h3 class="text-xl font-bold mb-2">✏️ Editar Partido</h3>
-        <p style="color:var(--muted);font-size:14px;margin-bottom:16px;">
+        <p style="color:#94a3b8;font-size:14px;margin-bottom:16px;">
           ${Utils.truncate(s1, 25)} vs ${Utils.truncate(s2, 25)}
         </p>
         <div class="grid gap-3">
@@ -391,7 +391,7 @@ function _calPhaseBadge(m) {
     let icon = '🏅', color = '#f59e0b', bg = 'rgba(245,158,11,0.12)', border = 'rgba(245,158,11,0.3)';
     if (p.includes('final') && !p.includes('semi'))   { icon = '🏆'; color = '#fbbf24'; bg = 'rgba(251,191,36,0.12)'; border = 'rgba(251,191,36,0.3)'; }
     else if (p.includes('semi'))                       { icon = '🥈'; color = '#c084fc'; bg = 'rgba(192,132,252,0.12)'; border = 'rgba(192,132,252,0.3)'; }
-    else if (p.includes('cuarto'))                     { icon = '⚔️'; color = 'var(--accent)'; bg = 'rgba(96,165,250,0.12)'; border = 'rgba(96,165,250,0.3)'; }
+    else if (p.includes('cuarto'))                     { icon = '⚔️'; color = '#60a5fa'; bg = 'rgba(96,165,250,0.12)'; border = 'rgba(96,165,250,0.3)'; }
     else if (p.includes('bronce') || p.includes('3er')){ icon = '🥉'; color = '#cd7f32'; bg = 'rgba(205,127,50,0.12)'; border = 'rgba(205,127,50,0.3)'; }
     const label = groupName || 'Fase Final';
     return `<span style="background:${bg};color:${color};border:1px solid ${border};
@@ -399,11 +399,11 @@ function _calPhaseBadge(m) {
                          padding:2px 8px;white-space:nowrap;">${icon} ${label}</span>`;
   }
   if (phase === 'intergroup') {
-    return `<span style="background:rgba(167,139,250,0.1);color:var(--purple);border:1px solid rgba(167,139,250,0.25);
+    return `<span style="background:rgba(167,139,250,0.1);color:#a78bfa;border:1px solid rgba(167,139,250,0.25);
                          border-radius:20px;font-size:10px;font-weight:700;padding:2px 8px;">🔀 Intergrupo</span>`;
   }
   if (groupName && groupName !== '') {
-    return `<span style="background:rgba(100,116,139,0.12);color:var(--muted);border:1px solid rgba(100,116,139,0.2);
+    return `<span style="background:rgba(100,116,139,0.12);color:#94a3b8;border:1px solid rgba(100,116,139,0.2);
                          border-radius:20px;font-size:10px;font-weight:600;padding:2px 8px;">Grupo ${groupName}</span>`;
   }
   return '';
@@ -438,16 +438,16 @@ function _calMatchCard(m) {
     <div class="card mb-3" style="border-left: 4px solid ${Utils.sportColor(sport)};">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;">
         <div style="flex:1;min-width:0;">
-          <div style="font-size:12px;color:var(--muted);margin-bottom:8px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+          <div style="font-size:12px;color:#94a3b8;margin-bottom:8px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
             ${icon} ${sport} &bull; ${m.gender || ''} &bull; ${m.category || ''}
             ${phaseBadge}
           </div>
           <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
             <span style="font-weight:700;font-size:14px;">${Utils.truncate(s1, 20)}</span>
-            <span style="font-weight:900;font-size:20px;color:var(--accent);padding:2px 10px;background:rgba(96,165,250,0.1);border-radius:8px;">${m.team1_score ?? 0} - ${m.team2_score ?? 0}</span>
+            <span style="font-weight:900;font-size:20px;color:#60a5fa;padding:2px 10px;background:rgba(96,165,250,0.1);border-radius:8px;">${m.team1_score ?? 0} - ${m.team2_score ?? 0}</span>
             <span style="font-weight:700;font-size:14px;">${Utils.truncate(s2, 20)}</span>
           </div>
-          <div style="margin-top:6px;font-size:11px;color:var(--muted);">📅 ${date} &bull; 📍 ${m.location || 'Por definir'}</div>
+          <div style="margin-top:6px;font-size:11px;color:#64748b;">📅 ${date} &bull; 📍 ${m.location || 'Por definir'}</div>
         </div>
         <div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px;">
           ${statusBadge}
@@ -480,12 +480,12 @@ function _calRenderWeek(filtered) {
   const cols = dates.map(d => {
     let dayHeader;
     if (d === 'sin-fecha') {
-      dayHeader = `<div style="font-weight:700;font-size:13px;color:var(--muted);">Sin fecha</div>`;
+      dayHeader = `<div style="font-weight:700;font-size:13px;color:#94a3b8;">Sin fecha</div>`;
     } else {
       const dt = new Date(d + 'T12:00:00');
       dayHeader = `
-        <div style="font-weight:800;font-size:14px;color:var(--accent);">${DAY_NAMES[dt.getDay()]}</div>
-        <div style="font-size:12px;color:var(--muted);">${dt.getDate()}/${dt.getMonth() + 1}</div>`;
+        <div style="font-weight:800;font-size:14px;color:#60a5fa;">${DAY_NAMES[dt.getDay()]}</div>
+        <div style="font-size:12px;color:#64748b;">${dt.getDate()}/${dt.getMonth() + 1}</div>`;
     }
 
     const cards = byDate[d]
@@ -502,7 +502,7 @@ function _calRenderWeek(filtered) {
           : m.status === 'finished' ? 'results' : 'calendar';
 
         let statusDot = '';
-        if (m.status === 'live')     statusDot = `<span style="display:inline-block;width:7px;height:7px;background:var(--accent2);border-radius:50%;animation:pulse 1.2s infinite;margin-right:4px;vertical-align:middle;"></span>`;
+        if (m.status === 'live')     statusDot = `<span style="display:inline-block;width:7px;height:7px;background:#ef4444;border-radius:50%;animation:pulse 1.2s infinite;margin-right:4px;vertical-align:middle;"></span>`;
         if (m.status === 'finished') statusDot = `<span style="color:#16a34a;font-size:10px;font-weight:700;">✓ </span>`;
 
         return `
@@ -512,22 +512,22 @@ function _calRenderWeek(filtered) {
                    transition:background .15s;"
             onmouseenter="this.style.background='rgba(30,41,59,1)'"
             onmouseleave="this.style.background='rgba(30,41,59,0.8)'">
-            ${time ? `<div style="font-size:11px;color:var(--muted);margin-bottom:4px;">${statusDot}${time}</div>` : ''}
-            <div style="font-size:10px;color:var(--muted);margin-bottom:5px;">${icon} ${Utils.truncate(m.sport || '', 14)}</div>
+            ${time ? `<div style="font-size:11px;color:#64748b;margin-bottom:4px;">${statusDot}${time}</div>` : ''}
+            <div style="font-size:10px;color:#94a3b8;margin-bottom:5px;">${icon} ${Utils.truncate(m.sport || '', 14)}</div>
             <div style="font-weight:700;font-size:12px;line-height:1.3;">${Utils.truncate(s1, 20)}</div>
-            <div style="font-weight:900;font-size:17px;color:var(--accent);text-align:center;padding:4px 0;">${sc}</div>
+            <div style="font-weight:900;font-size:17px;color:#60a5fa;text-align:center;padding:4px 0;">${sc}</div>
             <div style="font-weight:700;font-size:12px;line-height:1.3;">${Utils.truncate(s2, 20)}</div>
-            ${m.location ? `<div style="font-size:10px;color:var(--muted);margin-top:5px;">📍 ${Utils.truncate(m.location, 22)}</div>` : ''}
+            ${m.location ? `<div style="font-size:10px;color:#334155;margin-top:5px;">📍 ${Utils.truncate(m.location, 22)}</div>` : ''}
           </div>`;
       }).join('');
 
     return `
       <div style="min-width:170px;flex:1;">
         <div style="text-align:center;padding:8px 4px;background:rgba(96,165,250,0.08);
-                    border-radius:8px;margin-bottom:10px;border-bottom:2px solid var(--accent);">
+                    border-radius:8px;margin-bottom:10px;border-bottom:2px solid #1e40af;">
           ${dayHeader}
         </div>
-        ${cards || '<div style="color:var(--muted);font-size:12px;text-align:center;padding:16px 8px;">–</div>'}
+        ${cards || '<div style="color:#334155;font-size:12px;text-align:center;padding:16px 8px;">–</div>'}
       </div>`;
   }).join('');
 

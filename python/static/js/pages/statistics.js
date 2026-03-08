@@ -96,20 +96,20 @@ Pages.Statistics = async function(container, opts) {
       // columns: [{ label, key, color?, size? }]
       return `
         <table style="width:100%;border-collapse:collapse;">
-          <thead><tr style="color:var(--muted);font-size:12px;text-align:left;">
+          <thead><tr style="color:#94a3b8;font-size:12px;text-align:left;">
             <th style="padding:6px 10px;">#</th>
             <th>Jugador</th><th>Colegio</th>
             ${columns.map(c => `<th style="text-align:center;">${c.label}</th>`).join('')}
           </tr></thead>
           <tbody>
             ${rows.map((p, i) => `
-              <tr style="border-bottom:1px solid var(--border);">
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
                 <td style="padding:8px 10px;color:#f59e0b;font-weight:700;">${i + 1}</td>
                 <td style="padding:8px 10px;font-weight:600;">${p.name}</td>
-                <td style="padding:8px 10px;color:var(--muted);">${Utils.truncate(p.school, 22)}</td>
+                <td style="padding:8px 10px;color:#94a3b8;">${Utils.truncate(p.school, 22)}</td>
                 ${columns.map(c => `
                   <td style="padding:8px 10px;text-align:center;font-weight:${c.bold ? '900' : '700'};
-                      font-size:${c.bold ? '18px' : '14px'};color:${c.color || 'var(--text)'};">
+                      font-size:${c.bold ? '18px' : '14px'};color:${c.color || '#e2e8f0'};">
                     ${p[c.key] ?? 0}
                   </td>`).join('')}
               </tr>`).join('')}
@@ -134,7 +134,7 @@ Pages.Statistics = async function(container, opts) {
 
       const term = list[0]?.score_term || 'Puntos';
       const cols = isBasket
-        ? [{ label: '3pts', key: 'three_pointers', color: 'var(--muted)' },
+        ? [{ label: '3pts', key: 'three_pointers', color: '#94a3b8' },
            { label: term,   key: 'score',          color,           bold: true }]
         : [{ label: term,   key: 'score',          color,           bold: true }];
 
@@ -165,7 +165,7 @@ Pages.Statistics = async function(container, opts) {
 
       el.innerHTML = `
         <table style="width:100%;border-collapse:collapse;">
-          <thead><tr style="color:var(--muted);font-size:12px;text-align:left;">
+          <thead><tr style="color:#94a3b8;font-size:12px;text-align:left;">
             <th style="padding:8px;">#</th>
             <th>Jugador</th><th>Colegio</th>
             <th style="text-align:center;">🟨</th>
@@ -174,12 +174,12 @@ Pages.Statistics = async function(container, opts) {
           </tr></thead>
           <tbody>
             ${list.map((p, i) => `
-              <tr style="border-bottom:1px solid var(--border);">
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
                 <td style="padding:8px 10px;color:#f59e0b;font-weight:700;">${i + 1}</td>
                 <td style="padding:8px 10px;font-weight:600;">${p.name}</td>
-                <td style="padding:8px 10px;color:var(--muted);">${Utils.truncate(p.school, 22)}</td>
+                <td style="padding:8px 10px;color:#94a3b8;">${Utils.truncate(p.school, 22)}</td>
                 <td style="padding:8px 10px;text-align:center;color:#fbbf24;font-weight:700;">${p.yellow_cards}</td>
-                <td style="padding:8px 10px;text-align:center;color:var(--accent2);font-weight:700;">${p.red_cards}</td>
+                <td style="padding:8px 10px;text-align:center;color:#ef4444;font-weight:700;">${p.red_cards}</td>
                 <td style="padding:8px 10px;text-align:center;font-weight:900;font-size:16px;">${p.total_cards}</td>
               </tr>`).join('')}
           </tbody>
@@ -197,7 +197,7 @@ Pages.Statistics = async function(container, opts) {
 
       el.innerHTML = `
         <table style="width:100%;border-collapse:collapse;">
-          <thead><tr style="color:var(--muted);font-size:12px;text-align:left;">
+          <thead><tr style="color:#94a3b8;font-size:12px;text-align:left;">
             <th style="padding:8px;">#</th>
             <th>Jugador</th><th>Colegio</th>
             <th style="text-align:center;">Personales</th>
@@ -206,12 +206,12 @@ Pages.Statistics = async function(container, opts) {
           </tr></thead>
           <tbody>
             ${list.map((p, i) => `
-              <tr style="border-bottom:1px solid var(--border);">
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
                 <td style="padding:8px 10px;color:#f59e0b;font-weight:700;">${i + 1}</td>
                 <td style="padding:8px 10px;font-weight:600;">${p.name}</td>
-                <td style="padding:8px 10px;color:var(--muted);">${Utils.truncate(p.school, 22)}</td>
+                <td style="padding:8px 10px;color:#94a3b8;">${Utils.truncate(p.school, 22)}</td>
                 <td style="padding:8px 10px;text-align:center;color:#fb923c;font-weight:700;">${p.personal_fouls || 0}</td>
-                <td style="padding:8px 10px;text-align:center;color:var(--accent2);font-weight:700;">${p.technical_fouls || 0}</td>
+                <td style="padding:8px 10px;text-align:center;color:#ef4444;font-weight:700;">${p.technical_fouls || 0}</td>
                 <td style="padding:8px 10px;text-align:center;font-weight:900;font-size:16px;">${p.total}</td>
               </tr>`).join('')}
           </tbody>
@@ -265,59 +265,59 @@ Pages.Statistics = async function(container, opts) {
 
       const diffTd = t => {
         const v = t.goal_difference || 0;
-        return `<td style="padding:6px;text-align:center;color:${v >= 0 ? 'var(--green)' : 'var(--accent2)'};">
+        return `<td style="padding:6px;text-align:center;color:${v >= 0 ? '#10b981' : '#ef4444'};">
           ${v > 0 ? '+' : ''}${v}</td>`;
       };
       const ptsTd = t =>
-        `<td style="padding:6px;text-align:center;font-weight:900;font-size:16px;color:var(--accent);">${t.points}</td>`;
+        `<td style="padding:6px;text-align:center;font-weight:900;font-size:16px;color:#60a5fa;">${t.points}</td>`;
 
       let h, rowFn;
       if (s.includes('fútbol') || s.includes('futbol') || s.includes('softbol')) {
         h = `<th style="padding:6px 10px;text-align:left;">Colegio</th>
-          <th>PJ</th><th style="color:var(--green)">PG</th><th>PE</th><th style="color:var(--accent2)">PP</th>
-          <th>GF</th><th>GC</th><th>DIF</th><th style="color:var(--accent);font-size:15px">PTS</th>`;
+          <th>PJ</th><th style="color:#10b981">PG</th><th>PE</th><th style="color:#ef4444">PP</th>
+          <th>GF</th><th>GC</th><th>DIF</th><th style="color:#60a5fa;font-size:15px">PTS</th>`;
         rowFn = t => `
           <td style="padding:8px 10px;font-weight:600;">${Utils.truncate(t.school, 22)}</td>
           <td style="padding:6px;text-align:center;">${t.matches_played}</td>
-          <td style="padding:6px;text-align:center;color:var(--green);font-weight:700;">${t.wins}</td>
-          <td style="padding:6px;text-align:center;color:var(--muted);">${t.draws}</td>
-          <td style="padding:6px;text-align:center;color:var(--accent2);">${t.losses}</td>
+          <td style="padding:6px;text-align:center;color:#10b981;font-weight:700;">${t.wins}</td>
+          <td style="padding:6px;text-align:center;color:#94a3b8;">${t.draws}</td>
+          <td style="padding:6px;text-align:center;color:#ef4444;">${t.losses}</td>
           <td style="padding:6px;text-align:center;">${t.goals_for}</td>
           <td style="padding:6px;text-align:center;">${t.goals_against}</td>
           ${diffTd(t)}${ptsTd(t)}`;
       } else if (s.includes('baloncesto')) {
         h = `<th style="padding:6px 10px;text-align:left;">Colegio</th>
-          <th>PJ</th><th style="color:var(--green)">PG</th><th style="color:var(--accent2)">PP</th>
-          <th>PF</th><th>PC</th><th>DIF</th><th style="color:var(--accent);font-size:15px">PTS</th>`;
+          <th>PJ</th><th style="color:#10b981">PG</th><th style="color:#ef4444">PP</th>
+          <th>PF</th><th>PC</th><th>DIF</th><th style="color:#60a5fa;font-size:15px">PTS</th>`;
         rowFn = t => `
           <td style="padding:8px 10px;font-weight:600;">${Utils.truncate(t.school, 22)}</td>
           <td style="padding:6px;text-align:center;">${t.matches_played}</td>
-          <td style="padding:6px;text-align:center;color:var(--green);font-weight:700;">${t.wins}</td>
-          <td style="padding:6px;text-align:center;color:var(--accent2);">${t.losses}</td>
+          <td style="padding:6px;text-align:center;color:#10b981;font-weight:700;">${t.wins}</td>
+          <td style="padding:6px;text-align:center;color:#ef4444;">${t.losses}</td>
           <td style="padding:6px;text-align:center;">${t.goals_for}</td>
           <td style="padding:6px;text-align:center;">${t.goals_against}</td>
           ${diffTd(t)}${ptsTd(t)}`;
       } else if (s.includes('voleibol')) {
         h = `<th style="padding:6px 10px;text-align:left;">Colegio</th>
-          <th>PJ</th><th style="color:var(--green)">PG</th><th style="color:var(--accent2)">PP</th>
-          <th>SF</th><th>SC</th><th>DS</th><th style="color:var(--accent);font-size:15px">PTS</th>`;
+          <th>PJ</th><th style="color:#10b981">PG</th><th style="color:#ef4444">PP</th>
+          <th>SF</th><th>SC</th><th>DS</th><th style="color:#60a5fa;font-size:15px">PTS</th>`;
         rowFn = t => `
           <td style="padding:8px 10px;font-weight:600;">${Utils.truncate(t.school, 22)}</td>
           <td style="padding:6px;text-align:center;">${t.matches_played}</td>
-          <td style="padding:6px;text-align:center;color:var(--green);font-weight:700;">${t.wins}</td>
-          <td style="padding:6px;text-align:center;color:var(--accent2);">${t.losses}</td>
+          <td style="padding:6px;text-align:center;color:#10b981;font-weight:700;">${t.wins}</td>
+          <td style="padding:6px;text-align:center;color:#ef4444;">${t.losses}</td>
           <td style="padding:6px;text-align:center;">${t.goals_for}</td>
           <td style="padding:6px;text-align:center;">${t.goals_against}</td>
           ${diffTd(t)}${ptsTd(t)}`;
       } else {
         h = `<th style="padding:6px 10px;text-align:left;">Colegio</th>
-          <th>PJ</th><th style="color:var(--green)">PG</th><th style="color:var(--accent2)">PP</th>
-          <th>PF</th><th>PC</th><th>DIF</th><th style="color:var(--accent);font-size:15px">PTS</th>`;
+          <th>PJ</th><th style="color:#10b981">PG</th><th style="color:#ef4444">PP</th>
+          <th>PF</th><th>PC</th><th>DIF</th><th style="color:#60a5fa;font-size:15px">PTS</th>`;
         rowFn = t => `
           <td style="padding:8px 10px;font-weight:600;">${Utils.truncate(t.school, 22)}</td>
           <td style="padding:6px;text-align:center;">${t.matches_played}</td>
-          <td style="padding:6px;text-align:center;color:var(--green);font-weight:700;">${t.wins}</td>
-          <td style="padding:6px;text-align:center;color:var(--accent2);">${t.losses}</td>
+          <td style="padding:6px;text-align:center;color:#10b981;font-weight:700;">${t.wins}</td>
+          <td style="padding:6px;text-align:center;color:#ef4444;">${t.losses}</td>
           <td style="padding:6px;text-align:center;">${t.goals_for}</td>
           <td style="padding:6px;text-align:center;">${t.goals_against}</td>
           ${diffTd(t)}${ptsTd(t)}`;
@@ -329,9 +329,9 @@ Pages.Statistics = async function(container, opts) {
             ${Utils.sportIcon(sport)} ${sport} — ${category} ${gender}
           </h3>
           <table style="width:100%;border-collapse:collapse;font-size:13px;">
-            <thead><tr style="color:var(--muted);font-size:11px;text-align:center;">${h}</tr></thead>
+            <thead><tr style="color:#94a3b8;font-size:11px;text-align:center;">${h}</tr></thead>
             <tbody>
-              ${sorted.map(t => `<tr style="border-bottom:1px solid var(--border);">${rowFn(t)}</tr>`).join('')}
+              ${sorted.map(t => `<tr style="border-bottom:1px solid rgba(255,255,255,0.05);">${rowFn(t)}</tr>`).join('')}
             </tbody>
           </table>
         </div>`;
@@ -384,9 +384,9 @@ Pages.Statistics = async function(container, opts) {
       const contentEl = document.getElementById('stat-content');
       if (tabsEl)    tabsEl.innerHTML = '';
       if (contentEl) contentEl.innerHTML = `
-        <div style="text-align:center;padding:52px 20px;color:var(--muted);">
+        <div style="text-align:center;padding:52px 20px;color:#64748b;">
           <div style="font-size:44px;margin-bottom:14px;">🏅</div>
-          <div style="font-size:16px;font-weight:600;color:var(--muted);margin-bottom:6px;">
+          <div style="font-size:16px;font-weight:600;color:#94a3b8;margin-bottom:6px;">
             Selecciona un deporte para ver las estadísticas
           </div>
           <div style="font-size:13px;">Usa el filtro de arriba para comenzar</div>
@@ -394,16 +394,16 @@ Pages.Statistics = async function(container, opts) {
     }
 
     // ── HTML base ─────────────────────────────────────────────────────────────
-    const ss = 'background-color:rgba(255,255,255,0.04);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:9px 30px 9px 12px;font-size:13px;cursor:pointer;outline:none;min-width:150px;transition:border-color 0.2s;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'12\' height=\'12\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%2394a3b8\' stroke-width=\'2.5\' stroke-linecap=\'round\'%3E%3Cpath d=\'M6 9l6 6 6-6\'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;';
+    const ss = 'background-color:rgba(255,255,255,0.04);color:#e2e8f0;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:9px 30px 9px 12px;font-size:13px;cursor:pointer;outline:none;min-width:150px;transition:border-color 0.2s;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'12\' height=\'12\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%2394a3b8\' stroke-width=\'2.5\' stroke-linecap=\'round\'%3E%3Cpath d=\'M6 9l6 6 6-6\'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;';
 
     container.innerHTML = `
       <div class="mb-6">
-        <h2 class="text-3xl font-black" style="color:var(--accent);">📈 Estadísticas</h2>
+        <h2 class="text-3xl font-black" style="color:#60a5fa;">📈 Estadísticas</h2>
       </div>
       ${Utils.wrapFilters(`
       <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:20px;
-                  padding:14px 16px;background:var(--surface);border-radius:12px;border:1px solid var(--border);">
-        <span style="color:var(--muted);font-size:12px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;">Filtrar</span>
+                  padding:14px 16px;background:rgba(255,255,255,0.03);border-radius:12px;border:1px solid rgba(255,255,255,0.06);">
+        <span style="color:#64748b;font-size:12px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;">Filtrar</span>
         <select id="flt-sport"    style="${ss}"></select>
         <select id="flt-category" style="${ss}"></select>
         <select id="flt-gender"   style="${ss}"></select>
@@ -412,7 +412,7 @@ Pages.Statistics = async function(container, opts) {
           ${allSchools.map(s => `<option value="${s}">${Utils.truncate(s,28)}</option>`).join('')}
         </select>
         <button id="flt-clear"
-          style="background:var(--surface);color:var(--muted);border:1px solid var(--border);border-radius:8px;
+          style="background:rgba(255,255,255,0.04);color:#64748b;border:1px solid rgba(255,255,255,0.08);border-radius:8px;
                  padding:7px 14px;font-size:13px;cursor:pointer;transition:all 0.2s;">
           ✕ Limpiar
         </button>

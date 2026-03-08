@@ -62,13 +62,13 @@ Pages.Results = async function(container, opts) {
            onclick="Pages._openResult('${m.id}')">
         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
           <div style="flex:1;min-width:0;">
-            <div style="font-size:12px;color:var(--muted);">${Utils.sportIcon(m.sport)} ${m.sport} &bull; ${m.gender || ''} &bull; ${m.category || ''}</div>
+            <div style="font-size:12px;color:#94a3b8;">${Utils.sportIcon(m.sport)} ${m.sport} &bull; ${m.gender || ''} &bull; ${m.category || ''}</div>
             <div style="display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap;">
               <span style="font-weight:700;font-size:14px;">${Utils.truncate(m.team1?.name||m.team1?.school?.name||'Equipo 1',18)}</span>
-              <span style="font-weight:900;font-size:22px;color:var(--green);">${m.team1_score} - ${m.team2_score}</span>
+              <span style="font-weight:900;font-size:22px;color:#10b981;">${m.team1_score} - ${m.team2_score}</span>
               <span style="font-weight:700;font-size:14px;">${Utils.truncate(m.team2?.name||m.team2?.school?.name||'Equipo 2',18)}</span>
             </div>
-            <div style="font-size:11px;color:var(--muted);margin-top:6px;">📅 ${Utils.formatDateTime(m.match_date)} &bull; 📍 ${m.location||''}</div>
+            <div style="font-size:11px;color:#64748b;margin-top:6px;">📅 ${Utils.formatDateTime(m.match_date)} &bull; 📍 ${m.location||''}</div>
           </div>
           <span class="badge-finished">Finalizado</span>
         </div>
@@ -86,7 +86,7 @@ Pages.Results = async function(container, opts) {
 
     container.innerHTML = `
       <div class="mb-6">
-        <h2 class="text-3xl font-black" style="color:var(--accent);">📊 Resultados</h2>
+        <h2 class="text-3xl font-black" style="color:#60a5fa;">📊 Resultados</h2>
         <p class="text-gray-400 mt-1" id="res-count">${matches.length} partidos finalizados</p>
       </div>
       ${Utils.wrapFilters(`
@@ -195,7 +195,7 @@ async function _showResultDetail(container, m, players) {
         <div style="display:flex;align-items:center;justify-content:center;gap:12px;">
           <input type="number" id="res-score1" value="${m.team1_score}" min="0"
                  class="input-field" style="width:70px;text-align:center;font-size:22px;font-weight:900;">
-          <span style="font-size:22px;font-weight:700;color:var(--muted);">-</span>
+          <span style="font-size:22px;font-weight:700;color:#64748b;">-</span>
           <input type="number" id="res-score2" value="${m.team2_score}" min="0"
                  class="input-field" style="width:70px;text-align:center;font-size:22px;font-weight:900;">
         </div>
@@ -219,8 +219,8 @@ async function _showResultDetail(container, m, players) {
       <div class="mb-4">
         <button class="btn-ghost" onclick="App.navigate('results')">← Volver</button>
       </div>
-      <div class="card mb-6" style="text-align:center;border:2px solid var(--green);">
-        <div style="font-size:13px;color:var(--muted);margin-bottom:12px;">${Utils.sportIcon(sport)} ${sport} &bull; ${m.gender||''} &bull; ${m.category||''}</div>
+      <div class="card mb-6" style="text-align:center;border:2px solid #10b981;">
+        <div style="font-size:13px;color:#94a3b8;margin-bottom:12px;">${Utils.sportIcon(sport)} ${sport} &bull; ${m.gender||''} &bull; ${m.category||''}</div>
         <div style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;">
           <div style="text-align:center;min-width:80px;">
             <div class="team-name-large">${s1}</div>
@@ -228,14 +228,14 @@ async function _showResultDetail(container, m, players) {
           </div>
           <div style="text-align:center;">
             <div class="score-display">${m.team1_score} - ${m.team2_score}</div>
-            <div style="color:var(--green);font-size:13px;margin-top:4px;">Partido Finalizado</div>
+            <div style="color:#10b981;font-size:13px;margin-top:4px;">Partido Finalizado</div>
           </div>
           <div style="text-align:center;min-width:80px;">
             <div class="team-name-large">${s2}</div>
             ${m.team2_score > m.team1_score ? '<div style="color:#fbbf24;font-size:12px;margin-top:4px;">🏆 Ganador</div>' : ''}
           </div>
         </div>
-        <div style="font-size:12px;color:var(--muted);margin-top:12px;">📅 ${Utils.formatDateTime(m.match_date)} &bull; 📍 ${m.location||''}</div>
+        <div style="font-size:12px;color:#64748b;margin-top:12px;">📅 ${Utils.formatDateTime(m.match_date)} &bull; 📍 ${m.location||''}</div>
         ${editBtn}
       </div>
       ${addEventSection}
@@ -309,7 +309,7 @@ async function _showResultDetail(container, m, players) {
           <button class="btn-ghost"
             style="text-align:left;display:flex;align-items:center;gap:10px;"
             onclick="window._resSaveEvent('${evType}',${updatesScore},${points},'${teamId}','${p.id}')">
-            <span style="font-weight:700;color:var(--accent);min-width:32px;">#${p.jersey_number ?? '?'}</span>
+            <span style="font-weight:700;color:#60a5fa;min-width:32px;">#${p.jersey_number ?? '?'}</span>
             <span>${p.full_name}</span>
           </button>
         `).join('')}
@@ -376,24 +376,24 @@ function _resEventLog(events, players, m, canDelete) {
   const unknownEvents = events.filter(e => !e.team_id || (e.team_id !== m.team1_id && e.team_id !== m.team2_id));
 
   const delBtn = (e) => canDelete
-    ? `<button style="flex-shrink:0;background:rgba(239,68,68,0.12);color:var(--accent2);
+    ? `<button style="flex-shrink:0;background:rgba(239,68,68,0.12);color:#f87171;
                        border:1px solid rgba(239,68,68,0.2);border-radius:6px;
                        padding:3px 7px;font-size:10px;cursor:pointer;"
         onclick="window._resDeleteEvent('${e.id}','${e.event_type}','${e.team_id || ''}')">✕</button>`
     : '';
 
   const renderTeamEvents = (teamEvents) => {
-    if (teamEvents.length === 0) return `<p style="color:var(--muted);font-size:13px;font-style:italic;">Sin eventos</p>`;
+    if (teamEvents.length === 0) return `<p style="color:#475569;font-size:13px;font-style:italic;">Sin eventos</p>`;
     return teamEvents.map(e => {
       const p = players.find(x => x.id === e.player_id);
-      const pName = p ? `<span style="color:var(--muted);font-size:12px;">#${p.jersey_number ?? '?'} ${p.full_name}</span>` : '';
+      const pName = p ? `<span style="color:#94a3b8;font-size:12px;">#${p.jersey_number ?? '?'} ${p.full_name}</span>` : '';
       const label = _RES_LABELS[e.event_type] || e.event_type;
       const isScore = _RES_SCORE_EVENTS.has(e.event_type);
       return `
         <div style="display:flex;align-items:center;gap:6px;padding:8px 0;
-                    border-bottom:1px solid var(--border);">
+                    border-bottom:1px solid rgba(255,255,255,0.05);">
           <div style="flex:1;min-width:0;">
-            <span style="font-weight:600;font-size:14px;color:${isScore ? 'var(--green)' : 'var(--text)'};">${label}</span>
+            <span style="font-weight:600;font-size:14px;color:${isScore ? '#10b981' : '#e2e8f0'};">${label}</span>
             ${pName ? `<br>${pName}` : ''}
           </div>
           ${delBtn(e)}
@@ -408,10 +408,10 @@ function _resEventLog(events, players, m, canDelete) {
     const isScore = _RES_SCORE_EVENTS.has(e.event_type);
     return `
       <div style="display:flex;gap:12px;align-items:center;padding:8px 0;
-                  border-bottom:1px solid var(--border);">
+                  border-bottom:1px solid rgba(255,255,255,0.05);">
         <div style="flex:1;">
-          <span style="font-weight:600;color:${isScore ? 'var(--green)' : 'var(--text)'};">${label}</span>
-          ${pName ? `<span style="color:var(--muted);font-size:13px;margin-left:8px;">${pName}</span>` : ''}
+          <span style="font-weight:600;color:${isScore ? '#10b981' : '#e2e8f0'};">${label}</span>
+          ${pName ? `<span style="color:#94a3b8;font-size:13px;margin-left:8px;">${pName}</span>` : ''}
         </div>
         ${delBtn(e)}
       </div>`;
@@ -423,8 +423,8 @@ function _resEventLog(events, players, m, canDelete) {
 
   return `
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0;">
-      <div style="padding-right:16px;padding-bottom:12px;border-right:1px solid var(--border);">
-        <div style="font-weight:700;font-size:13px;color:var(--accent);margin-bottom:10px;
+      <div style="padding-right:16px;padding-bottom:12px;border-right:1px solid rgba(255,255,255,0.07);">
+        <div style="font-weight:700;font-size:13px;color:#60a5fa;margin-bottom:10px;
                     padding-bottom:6px;border-bottom:1px solid rgba(96,165,250,0.2);">
           ${Utils.truncate(s1, 20)}
         </div>
@@ -439,7 +439,7 @@ function _resEventLog(events, players, m, canDelete) {
       </div>
     </div>
     ${unknownEvents.length > 0 ? `
-      <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);">
+      <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.07);">
         ${renderUnknown(unknownEvents)}
       </div>` : ''}
   `;

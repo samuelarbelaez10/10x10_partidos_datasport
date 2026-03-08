@@ -11,7 +11,7 @@ Pages.Groups = async function(container, _opts) {
     if (!App.isEditor()) {
       container.innerHTML = `
         <div class="mb-6">
-          <h2 class="text-3xl font-black" style="color:var(--purple);">📋 Asignación de Grupos</h2>
+          <h2 class="text-3xl font-black" style="color:#a78bfa;">📋 Asignación de Grupos</h2>
         </div>
         <div class="card" style="border:1px solid rgba(220,38,38,0.3);background:rgba(220,38,38,0.1);">
           <p style="color:#fca5a5;">⚠️ Solo los editores pueden asignar grupos.</p>
@@ -62,8 +62,8 @@ Pages.Groups = async function(container, _opts) {
       return `
         <div style="display:flex;justify-content:space-between;align-items:center;
                     padding:${pad};border-radius:8px;margin-bottom:6px;
-                    background:var(--surface);">
-          <span style="font-size:13px;font-weight:600;color:var(--text);overflow:hidden;
+                    background:rgba(255,255,255,0.04);">
+          <span style="font-size:13px;font-weight:600;color:#e2e8f0;overflow:hidden;
                        text-overflow:ellipsis;white-space:nowrap;max-width:${maxW};"
                 title="${t.school?.name || t.name}">
             ${nameStr}
@@ -71,21 +71,21 @@ Pages.Groups = async function(container, _opts) {
           <div style="display:flex;gap:4px;flex-shrink:0;align-items:center;">
             ${gn ? `<span style="font-size:11px;padding:2px 7px;border-radius:4px;font-weight:700;
                                background:${gn==='A'?'rgba(59,130,246,0.3)':'rgba(139,92,246,0.3)'};
-                               color:${gn==='A'?'var(--accent)':'#c4b5fd'};">${gn}</span>` : ''}
+                               color:${gn==='A'?'#93c5fd':'#c4b5fd'};">${gn}</span>` : ''}
             <button onclick="window._grpSet('${t.id}','A')"
               style="padding:3px 10px;border-radius:5px;border:none;cursor:pointer;
                      font-weight:700;font-size:11px;transition:all 0.15s;
-                     background:${gn==='A'?'var(--accent)':'rgba(59,130,246,0.15)'};
-                     color:${gn==='A'?'white':'var(--accent)'};">A</button>
+                     background:${gn==='A'?'#3b82f6':'rgba(59,130,246,0.15)'};
+                     color:${gn==='A'?'white':'#93c5fd'};">A</button>
             <button onclick="window._grpSet('${t.id}','B')"
               style="padding:3px 10px;border-radius:5px;border:none;cursor:pointer;
                      font-weight:700;font-size:11px;transition:all 0.15s;
-                     background:${gn==='B'?'var(--purple)':'rgba(139,92,246,0.15)'};
+                     background:${gn==='B'?'#8b5cf6':'rgba(139,92,246,0.15)'};
                      color:${gn==='B'?'white':'#c4b5fd'};">B</button>
             <button onclick="window._grpSet('${t.id}','')"
               title="Quitar grupo"
               style="padding:3px 8px;border-radius:5px;border:none;cursor:pointer;
-                     font-size:11px;background:var(--border);color:var(--muted);
+                     font-size:11px;background:rgba(255,255,255,0.08);color:#64748b;
                      ${gn ? '' : 'opacity:0.35;'}">✕</button>
           </div>
         </div>`;
@@ -127,14 +127,14 @@ Pages.Groups = async function(container, _opts) {
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
               <!-- Grupo A -->
               <div>
-                <div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:8px;
+                <div style="font-size:12px;font-weight:700;color:#93c5fd;margin-bottom:8px;
                             padding:5px 12px;background:rgba(59,130,246,0.1);border-radius:6px;
                             display:flex;justify-content:space-between;">
                   <span>Grupo A</span>
-                  <span style="color:var(--muted);">${groupA.length} equipos</span>
+                  <span style="color:#64748b;">${groupA.length} equipos</span>
                 </div>
                 ${groupA.map(t => teamRow(t)).join('') ||
-                  '<p style="font-size:12px;color:var(--muted);padding:8px 0;">Sin equipos asignados</p>'}
+                  '<p style="font-size:12px;color:#475569;padding:8px 0;">Sin equipos asignados</p>'}
               </div>
               <!-- Grupo B -->
               <div>
@@ -142,15 +142,15 @@ Pages.Groups = async function(container, _opts) {
                             padding:5px 12px;background:rgba(139,92,246,0.1);border-radius:6px;
                             display:flex;justify-content:space-between;">
                   <span>Grupo B</span>
-                  <span style="color:var(--muted);">${groupB.length} equipos</span>
+                  <span style="color:#64748b;">${groupB.length} equipos</span>
                 </div>
                 ${groupB.map(t => teamRow(t)).join('') ||
-                  '<p style="font-size:12px;color:var(--muted);padding:8px 0;">Sin equipos asignados</p>'}
+                  '<p style="font-size:12px;color:#475569;padding:8px 0;">Sin equipos asignados</p>'}
               </div>
             </div>
 
             ${unassigned.length > 0 ? `
-            <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border);">
+            <div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.07);">
               <div style="font-size:12px;color:#f59e0b;font-weight:600;margin-bottom:8px;">
                 ⚠️ Sin asignar (${unassigned.length}) — haz clic en A o B:
               </div>
@@ -162,10 +162,10 @@ Pages.Groups = async function(container, _opts) {
       return `
         <div style="display:flex;justify-content:space-between;align-items:center;
                     margin-bottom:14px;flex-wrap:wrap;gap:8px;">
-          <h3 style="font-size:18px;font-weight:800;color:var(--purple);margin:0;">
+          <h3 style="font-size:18px;font-weight:800;color:#a78bfa;margin:0;">
             🔀 Categorías con 2 grupos
           </h3>
-          <span style="font-size:13px;color:var(--muted);">${completeCats}/${totalCats} completas</span>
+          <span style="font-size:13px;color:#64748b;">${completeCats}/${totalCats} completas</span>
         </div>
         ${cards.join('')}`;
     };
@@ -194,14 +194,14 @@ Pages.Groups = async function(container, _opts) {
                  onclick="window._grpToggle('${sectionId}')">
               <div style="display:flex;align-items:center;gap:10px;min-width:0;">
                 <span id="${sectionId}-arrow"
-                      style="font-size:10px;color:var(--muted);flex-shrink:0;">
+                      style="font-size:10px;color:#64748b;flex-shrink:0;">
                   ${hasErrors ? '▼' : '▶'}
                 </span>
                 <span style="font-size:13px;font-weight:700;color:${color};
                              overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
                   ${Utils.sportIcon(gc.sport)} ${gc.sport} · ${gc.category} · ${gc.gender}
                 </span>
-                <span style="font-size:11px;color:var(--muted);flex-shrink:0;">${cats.length} eq.</span>
+                <span style="font-size:11px;color:#475569;flex-shrink:0;">${cats.length} eq.</span>
               </div>
               <span style="font-size:11px;padding:2px 10px;border-radius:10px;font-weight:600;
                            flex-shrink:0;margin-left:8px;
@@ -214,12 +214,12 @@ Pages.Groups = async function(container, _opts) {
             <div id="${sectionId}"
                  style="display:${hasErrors ? 'block' : 'none'};
                         padding:4px 16px 12px;
-                        border-top:1px solid var(--border);">
+                        border-top:1px solid rgba(255,255,255,0.05);">
               ${hasErrors ? `
               <p style="font-size:11px;color:#f59e0b;margin:8px 0 10px;">
                 ⚠️ Categoría de un solo grupo — los equipos marcados con A/B tienen asignación incorrecta. Usa ✕ para limpiar.
               </p>` : `
-              <p style="font-size:11px;color:var(--muted);margin:8px 0 10px;">
+              <p style="font-size:11px;color:#64748b;margin:8px 0 10px;">
                 Categoría de un solo grupo. Puedes editar manualmente si necesitas.
               </p>`}
               ${cats.map(t => teamRow(t, true)).join('')}
@@ -230,7 +230,7 @@ Pages.Groups = async function(container, _opts) {
       return `
         <div style="display:flex;justify-content:space-between;align-items:center;
                     margin:28px 0 10px;flex-wrap:wrap;gap:8px;">
-          <h3 style="font-size:18px;font-weight:800;color:var(--muted);margin:0;">
+          <h3 style="font-size:18px;font-weight:800;color:#94a3b8;margin:0;">
             📋 Categorías de un solo grupo
           </h3>
           ${totalErrors > 0
@@ -243,7 +243,7 @@ Pages.Groups = async function(container, _opts) {
                  ✅ Sin errores
                </span>`}
         </div>
-        <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">
+        <p style="font-size:12px;color:#64748b;margin-bottom:12px;">
           Estas categorías no tienen grupos A/B. Si ves ⚠️, haz clic en la fila para expandirla y usa ✕ para limpiar.
           También puedes expandir cualquier fila para editar manualmente.
         </p>
@@ -272,21 +272,21 @@ Pages.Groups = async function(container, _opts) {
         if (totalMulti > 0)
           parts.push(`<span style="color:${doneMulti===totalMulti?'#6ee7b7':'#fbbf24'};">${doneMulti}/${totalMulti} categorías A/B completas</span>`);
         if (totalErrors > 0)
-          parts.push(`<span style="color:var(--accent2);">⚠️ ${totalErrors} asignación(es) incorrecta(s)</span>`);
-        statusEl.innerHTML = parts.join('<span style="color:var(--muted);margin:0 12px;">·</span>');
+          parts.push(`<span style="color:#f87171;">⚠️ ${totalErrors} asignación(es) incorrecta(s)</span>`);
+        statusEl.innerHTML = parts.join('<span style="color:#475569;margin:0 12px;">·</span>');
       }
     };
 
     // ── HTML base ─────────────────────────────────────────────────────────────
     container.innerHTML = `
       <div class="mb-6">
-        <h2 class="text-3xl font-black" style="color:var(--purple);">📋 Asignación de Grupos</h2>
+        <h2 class="text-3xl font-black" style="color:#a78bfa;">📋 Asignación de Grupos</h2>
         <p class="text-gray-400 mt-1">
           Asigna grupos A/B y verifica que las categorías de un solo grupo no tengan errores.
         </p>
       </div>
 
-      <div class="card mb-5" style="border-top:4px solid var(--purple);padding:14px 20px;
+      <div class="card mb-5" style="border-top:4px solid #a78bfa;padding:14px 20px;
                                      display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
         <div id="grp-status" style="flex:1;font-size:14px;"></div>
         <button class="btn-primary" onclick="App.navigate('generateSchedule')">
