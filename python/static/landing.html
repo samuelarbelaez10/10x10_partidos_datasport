@@ -61,7 +61,7 @@
     @keyframes pulse  { 0%,100%{opacity:1;} 50%{opacity:.4;} }
     @keyframes fadeUp { from{opacity:0;transform:translateY(14px);} to{opacity:1;transform:translateY(0);} }
 
-    /* Respect user preference (§7 reduced-motion) */
+    /* Respect user preference (§7 reduced-motion) — keep ticker as core content, just slower */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         animation-duration:.001ms !important;
@@ -69,7 +69,7 @@
         transition-duration:.001ms !important;
         scroll-behavior:auto !important;
       }
-      .ticker-track { animation:none !important; }
+      .ticker-track { animation: ticker 80s linear infinite !important; }
       .hero-card { transform:none !important; }
     }
 
