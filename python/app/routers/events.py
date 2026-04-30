@@ -26,8 +26,7 @@ def get_event(event_id: str):
 def create_event(event: EventCreate):
     data = event.model_dump(exclude_none=True)
     try:
-        supabase.table("match_events").insert(data).execute()
-        res = supabase.table("match_events").select("*").eq("match_id", data["match_id"]).order("created_at", desc=True).limit(1).execute()
+        res = supabase.table("match_events").insert(data).execute()
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Error al crear evento: {str(e)}")
     if not res.data:

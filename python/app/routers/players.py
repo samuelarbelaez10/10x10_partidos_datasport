@@ -6,22 +6,25 @@ import io
 
 router = APIRouter(prefix="/api/players", tags=["players"])
 
-
+DEFAULT_TOURNAMENT_ID = "11111111-1111-1111-1111-111111111111"
 PLACEHOLDER_PHOTO = "https://ui-avatars.com/api/?background=1e40af&color=fff&size=60&name="
 
 def _add_defaults(player: dict) -> dict:
     """Agrega campos que no existen en la DB pero usa el frontend."""
+    name = (player.get("full_name") or "?").replace(" ", "+")
     return {
         **player,
-        "photo_url": player.get("photo_url") or f"{PLACEHOLDER_PHOTO}{player.get('full_name','?').replace(' ', '+')}",
+        "photo_url": player.get("photo_url") or f"{PLACEHOLDER_PHOTO}{name}",
     }
 
 
 @router.get("/", response_model=list[dict])
-def get_players(team_id: str = None):
+def get_players(team_id: str = None, tournament_id: str = None):
     query = supabase.table("players").select("*")
     if team_id:
         query = query.eq("team_id", team_id)
+    if tournament_id:
+        query = query.eq("tournament_id", tournament_id)
     res = query.execute()
     return [_add_defaults(p) for p in (res.data or [])]
 
@@ -35,8 +38,14 @@ def get_player(player_id: str):
 
 
 @router.post("/", status_code=201)
-def create_player(player: PlayerCreate):
+def create_player(player: PlayerCreate, tournament_id: str = None):
     data = player.model_dump(exclude_none=True)
+    # Heredar tournament_id del equipo si no viene explícito
+    if not tournament_id and data.get("team_id"):
+        team_res = supabase.table("teams").select("tournament_id").eq("id", data["team_id"]).single().execute()
+        if team_res.data:
+            tournament_id = team_res.data.get("tournament_id")
+    data["tournament_id"] = tournament_id or DEFAULT_TOURNAMENT_ID
     try:
         res = supabase.table("players").insert(data).execute()
     except Exception as e:

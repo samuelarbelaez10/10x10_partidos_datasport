@@ -37,16 +37,18 @@ def calculate_player_stats(players: list, teams: list, matches: list, events: li
         team_sport = team.get("sport", {}).get("name", "") if isinstance(team.get("sport"), dict) else ""
 
         if pid not in stats_by_player:
+            full_name = player.get("full_name") or "Desconocido"
+            avatar_name = (player.get("full_name") or "?").replace(" ", "+")
             stats_by_player[pid] = {
                 "player_id": pid,
-                "name": player.get("full_name", "Desconocido"),
+                "name": full_name,
                 "team_name": team_name,
                 "team_id": player.get("team_id", ""),
                 "school": school_name,
                 "category": category_name,
                 "gender": gender_name,
                 "team_sport": team_sport,
-                "photo": player.get("photo_url") or f"https://ui-avatars.com/api/?background=1e40af&color=fff&size=60&name={player.get('full_name','?').replace(' ','+')}",
+                "photo": player.get("photo_url") or f"https://ui-avatars.com/api/?background=1e40af&color=fff&size=60&name={avatar_name}",
                 "yellow_cards": 0,
                 "red_cards": 0,
                 "total_cards": 0,
@@ -167,15 +169,34 @@ def calculate_team_stats(teams: list, matches: list) -> list:
             "goals_for": 0,
             "goals_against": 0,
             "goal_difference": 0,
+            "points_for": 0,
+            "points_against": 0,
+            "points_difference": 0,
             "points": 0,
         }
 
+    # Deduplicar partidos por clave compuesta para evitar contar duplicados
+    seen_match_keys: set[str] = set()
+    unique_matches = []
     for match in matches:
+        mid = match.get("id", "")
+        t1 = match.get("team_a") or match.get("team1_id") or ""
+        t2 = match.get("team_b") or match.get("team2_id") or ""
+        md = (match.get("match_date") or "")[:16]
+        key = f"{t1}|{t2}|{md}"
+        if mid in seen_match_keys or key in seen_match_keys:
+            continue
+        if mid:
+            seen_match_keys.add(mid)
+        seen_match_keys.add(key)
+        unique_matches.append(match)
+
+    for match in unique_matches:
         if match.get("status") != "finished":
             continue
 
-        # Si hay fases, los partidos intergrupo no cuentan en la tabla de grupos
-        if has_phase and match.get("phase") == "intergroup":
+        # Los partidos de playoff no cuentan en la tabla de grupos
+        if has_phase and match.get("phase") == "playoff":
             continue
 
         t1_id = match.get("team_a") or match.get("team1_id")
@@ -190,10 +211,15 @@ def calculate_team_stats(teams: list, matches: list) -> list:
             # Voleibol: s1/s2 son SETS ganados (solo 2-0 ó 2-1 válidos)
             # 2-0 → ganador +3pts, perdedor +0pts
             # 2-1 → ganador +2pts, perdedor +1pt
+            p1 = match.get("team1_points") or 0
+            p2 = match.get("team2_points") or 0
+
             if t1_id in stats:
                 stats[t1_id]["matches_played"] += 1
                 stats[t1_id]["goals_for"]      += s1
                 stats[t1_id]["goals_against"]  += s2
+                stats[t1_id]["points_for"]     += p1
+                stats[t1_id]["points_against"] += p2
                 if s1 > s2:
                     stats[t1_id]["wins"]   += 1
                     stats[t1_id]["points"] += 3 if s2 == 0 else 2
@@ -205,6 +231,8 @@ def calculate_team_stats(teams: list, matches: list) -> list:
                 stats[t2_id]["matches_played"] += 1
                 stats[t2_id]["goals_for"]      += s2
                 stats[t2_id]["goals_against"]  += s1
+                stats[t2_id]["points_for"]     += p2
+                stats[t2_id]["points_against"] += p1
                 if s2 > s1:
                     stats[t2_id]["wins"]   += 1
                     stats[t2_id]["points"] += 3 if s1 == 0 else 2
@@ -265,6 +293,18 @@ def calculate_team_stats(teams: list, matches: list) -> list:
     result = list(stats.values())
     for s in result:
         s["goal_difference"] = s["goals_for"] - s["goals_against"]
+        s["points_difference"] = s["points_for"] - s["points_against"]
+        # Coeficientes solo para voleibol (sets ganados/perdidos, puntos a favor/en contra)
+        if s.get("sport") == "Voleibol":
+            sg, sp = s["goals_for"], s["goals_against"]
+            pf, pc = s["points_for"], s["points_against"]
+            s["set_ratio"] = sg / sp if sp > 0 else (999.0 if sg > 0 else 0.0)
+            s["points_ratio"] = pf / pc if pc > 0 else (999.0 if pf > 0 else 0.0)
+        else:
+            s["set_ratio"] = 0.0
+            s["points_ratio"] = 0.0
 
-    result.sort(key=lambda x: (-x["points"], -x["goal_difference"], -x["goals_for"]))
+    # Desempate: PTS → coef. sets → coef. puntos → dif. goles → goles a favor
+    # Para no-voleibol: set_ratio y points_ratio son 0, así que cae a goal_difference
+    result.sort(key=lambda x: (-x["points"], -x.get("set_ratio", 0), -x.get("points_ratio", 0), -x["goal_difference"], -x["goals_for"]))
     return result
