@@ -394,6 +394,49 @@
       letter-spacing:1.5px; font-weight:700; margin-top:8px;
     }
 
+    /* ── HOW IT WORKS (3 steps) ── */
+    .how-bg { background:#0a0a0a; }
+    .how-grid {
+      margin-top:30px;
+      display:grid; grid-template-columns:repeat(3,1fr); gap:0;
+      border:1px solid var(--border); border-radius:8px;
+      background:#000; overflow:hidden;
+    }
+    .how-step {
+      padding:36px 28px 32px; position:relative;
+      border-right:1px solid var(--border-soft);
+      transition:background .2s;
+    }
+    .how-step:last-child { border-right:none; }
+    .how-step:hover { background:rgba(37,99,235,.05); }
+    .how-step .num {
+      position:absolute; top:22px; right:24px;
+      font-family:'Roboto Condensed',sans-serif;
+      font-size:64px; font-weight:900; line-height:1;
+      color:rgba(96,165,250,.14); letter-spacing:-3px;
+      pointer-events:none; user-select:none;
+    }
+    .how-step .icon-box {
+      width:48px; height:48px; border-radius:10px;
+      background:linear-gradient(135deg,rgba(37,99,235,.18),rgba(96,165,250,.06));
+      border:1px solid rgba(96,165,250,.30);
+      display:flex; align-items:center; justify-content:center;
+      margin-bottom:20px; color:var(--brand-soft);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.05);
+    }
+    .how-step .icon-box svg { width:24px; height:24px; stroke-width:2; }
+    .how-step h3 {
+      font-size:19px; font-weight:900; margin-bottom:10px;
+      text-transform:uppercase; letter-spacing:-.3px; line-height:1.2;
+    }
+    .how-step p { font-size:14px; color:var(--text-2); line-height:1.6; max-width:90%; }
+    .how-step .meta {
+      margin-top:14px; font-size:11px; font-weight:700; letter-spacing:1.5px;
+      text-transform:uppercase; color:var(--brand-soft);
+      display:inline-flex; align-items:center; gap:6px;
+    }
+    .how-step .meta svg { width:12px; height:12px; }
+
     /* ── CTA STRIPE ── */
     .cta-stripe {
       background:linear-gradient(90deg,#1e40af 0%,#2563eb 50%,#1d4ed8 100%);
@@ -553,6 +596,17 @@
       .story { padding:24px 20px; }
       .story h3 { font-size:19px; }
       .story p { font-size:13px; }
+
+      /* HOW IT WORKS */
+      .how-grid { grid-template-columns:1fr; }
+      .how-step {
+        border-right:none; border-bottom:1px solid var(--border-soft);
+        padding:26px 22px 24px;
+      }
+      .how-step:last-child { border-bottom:none; }
+      .how-step .num { font-size:48px; top:18px; right:18px; letter-spacing:-2px; }
+      .how-step h3 { font-size:17px; }
+      .how-step p { font-size:13px; max-width:100%; }
 
       /* CTA stripe */
       .cta-stripe { padding:28px 16px; }
@@ -900,6 +954,70 @@
         <span class="label">Multi-torneo</span>
         <h3>Crea torneos ilimitados, aislados</h3>
         <p>Cada torneo tiene sus propios colegios, equipos y partidos. Sin mezclas, sin contaminación de data.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ── -->
+<section class="section how-bg" id="how">
+  <div class="section-inner">
+    <div class="section-head">
+      <div>
+        <h2 class="section-title">Cómo funciona</h2>
+        <p class="section-sub" style="margin-top:8px;">De tu lista de equipos a la final, en tres pasos.</p>
+      </div>
+    </div>
+    <div class="how-grid">
+      <article class="how-step">
+        <span class="num" aria-hidden="true">01</span>
+        <div class="icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <path d="M17 8l-5-5-5 5"/>
+            <path d="M12 3v12"/>
+          </svg>
+        </div>
+        <h3>Cargas tus equipos</h3>
+        <p>Subes una plantilla Excel con colegios, equipos y jugadores. La app crea todo en segundos sin formularios manuales.</p>
+        <span class="meta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>
+          </svg>
+          ~2 minutos
+        </span>
+      </article>
+      <article class="how-step">
+        <span class="num" aria-hidden="true">02</span>
+        <div class="icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="18" rx="2"/>
+            <path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/>
+          </svg>
+        </div>
+        <h3>Programas el torneo</h3>
+        <p>Defines categorías y fechas. El sistema arma grupos, calendario y fases finales automáticamente.</p>
+        <span class="meta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>
+          </svg>
+          Calendario en 1 click
+        </span>
+      </article>
+      <article class="how-step">
+        <span class="num" aria-hidden="true">03</span>
+        <div class="icon-box" style="color:#f87171;background:linear-gradient(135deg,rgba(220,38,38,.18),rgba(248,113,113,.06));border-color:rgba(248,113,113,.30);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="2"/>
+            <path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/>
+          </svg>
+        </div>
+        <h3>Vives el torneo</h3>
+        <p>Árbitros registran goles desde el celular. Padres y jugadores ven resultados en vivo escaneando un QR.</p>
+        <span class="meta" style="color:#f87171;">
+          <span style="width:6px;height:6px;border-radius:50%;background:#f87171;display:inline-block;animation:pulse 1.6s ease-in-out infinite;"></span>
+          En tiempo real
+        </span>
       </article>
     </div>
   </div>
