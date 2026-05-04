@@ -5,16 +5,88 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Data Games — La plataforma del deporte estudiantil</title>
   <meta name="description" content="Data Games · La plataforma que digitaliza el deporte estudiantil. Marcadores en vivo, estadísticas profesionales, acceso público.">
+  <meta name="theme-color" content="#000000">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://datagames.co/landing">
+
+  <!-- Open Graph (Facebook, WhatsApp, LinkedIn) -->
   <meta property="og:title" content="Data Games — La plataforma del deporte estudiantil">
   <meta property="og:description" content="Marcadores en vivo, estadísticas profesionales, acceso público. Sin papel, sin Excel, sin caos.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://datagames.co/landing">
   <meta property="og:image" content="https://datagames.co/static/og-datagames.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Data Games — El deporte estudiantil pasa a otra liga.">
+  <meta property="og:site_name" content="Data Games">
+  <meta property="og:locale" content="es_CO">
+
+  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Data Games — La plataforma del deporte estudiantil">
+  <meta name="twitter:description" content="Marcadores en vivo, estadísticas profesionales, acceso público vía QR.">
+  <meta name="twitter:image" content="https://datagames.co/static/og-datagames.png">
+  <meta name="twitter:image:alt" content="Data Games — El deporte estudiantil pasa a otra liga.">
+
   <link rel="icon" href="/static/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Structured data: Organization + WebSite (helps Google understand brand) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://datagames.co/#organization",
+        "name": "Data Games",
+        "alternateName": "Data Games · X10",
+        "url": "https://datagames.co",
+        "logo": "https://datagames.co/static/og-datagames.png",
+        "description": "Plataforma SaaS para gestión de torneos deportivos estudiantiles multideporte: marcadores en vivo, estadísticas profesionales, acceso público vía QR.",
+        "areaServed": {"@type": "Country", "name": "Colombia"},
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+57-316-531-2266",
+          "contactType": "sales",
+          "email": "sarbelaez@equitel.com.co",
+          "availableLanguage": ["Spanish"]
+        },
+        "sameAs": ["https://wa.me/573165312266"]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://datagames.co/#website",
+        "url": "https://datagames.co",
+        "name": "Data Games",
+        "publisher": {"@id": "https://datagames.co/#organization"},
+        "inLanguage": "es-CO"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Data Games",
+        "applicationCategory": "SportsApplication",
+        "operatingSystem": "Web",
+        "offers": {
+          "@type": "Offer",
+          "category": "SaaS",
+          "priceCurrency": "COP",
+          "availability": "https://schema.org/InStock"
+        },
+        "featureList": [
+          "Calendario automático de torneos",
+          "Marcador en vivo desde el celular",
+          "Acceso público vía QR sin registro",
+          "Estadísticas profesionales por jugador y equipo",
+          "Carga masiva por Excel",
+          "Soporte multi-torneo aislado"
+        ]
+      }
+    ]
+  }
+  </script>
   <style>
     /* Design tokens — semantic, not raw hex in components (§6 color-semantic) */
     :root {

@@ -87,6 +87,40 @@ if os.path.isdir(static_dir):
     def serve_terminos():
         return FileResponse(os.path.join(static_dir, "terminos.html"))
 
+    @app.get("/robots.txt")
+    def robots_txt():
+        from fastapi.responses import PlainTextResponse
+        body = (
+            "User-agent: *\n"
+            "Allow: /\n"
+            "Disallow: /api/\n"
+            "\n"
+            "Sitemap: https://datagames.co/sitemap.xml\n"
+        )
+        return PlainTextResponse(body, headers={"Cache-Control": "public, max-age=86400"})
+
+    @app.get("/sitemap.xml")
+    def sitemap_xml():
+        from fastapi.responses import Response
+        urls = [
+            ("https://datagames.co/landing",     "1.0", "monthly"),
+            ("https://datagames.co/aviso-legal", "0.3", "yearly"),
+            ("https://datagames.co/privacidad",  "0.3", "yearly"),
+            ("https://datagames.co/terminos",    "0.3", "yearly"),
+        ]
+        items = "\n".join(
+            f'  <url><loc>{loc}</loc><priority>{p}</priority><changefreq>{c}</changefreq></url>'
+            for loc, p, c in urls
+        )
+        body = (
+            '<?xml version="1.0" encoding="UTF-8"?>\n'
+            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+            f'{items}\n'
+            '</urlset>\n'
+        )
+        return Response(content=body, media_type="application/xml",
+                        headers={"Cache-Control": "public, max-age=86400"})
+
     # OG image generado dinámicamente para previews de WhatsApp/redes
     _og_cache: dict = {}
 
