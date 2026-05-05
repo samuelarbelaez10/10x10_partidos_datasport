@@ -437,6 +437,136 @@
     }
     .how-step .meta svg { width:12px; height:12px; }
 
+    /* ── TESTIMONIAL ── */
+    .quote-bg {
+      background:linear-gradient(135deg,#0b1120 0%,#1e293b 100%);
+      padding:80px 24px; border-bottom:1px solid var(--border);
+      position:relative; overflow:hidden;
+    }
+    .quote-bg::before {
+      content:''; position:absolute; top:-100px; left:-100px;
+      width:300px; height:300px; border-radius:50%;
+      background:radial-gradient(circle,rgba(37,99,235,.15) 0%,transparent 70%);
+      pointer-events:none;
+    }
+    .quote-bg::after {
+      content:''; position:absolute; bottom:-100px; right:-100px;
+      width:300px; height:300px; border-radius:50%;
+      background:radial-gradient(circle,rgba(96,165,250,.10) 0%,transparent 70%);
+      pointer-events:none;
+    }
+    .quote-card {
+      max-width:780px; margin:0 auto; position:relative; z-index:1;
+      text-align:center;
+    }
+    .quote-tag {
+      display:inline-block; font-size:11px; font-weight:800; letter-spacing:2px;
+      text-transform:uppercase; color:var(--brand-soft);
+      background:rgba(37,99,235,.18); border:1px solid rgba(96,165,250,.30);
+      padding:6px 14px; border-radius:4px; margin-bottom:24px;
+    }
+    .quote-mark {
+      font-family:'Roboto Condensed',serif;
+      font-size:120px; line-height:.8; color:var(--brand);
+      opacity:.45; margin-bottom:-30px; font-weight:900; user-select:none;
+    }
+    .quote-text {
+      font-size:clamp(20px,2.4vw,28px); font-weight:600; line-height:1.4;
+      color:#fff; margin-bottom:28px; letter-spacing:-.3px;
+    }
+    .quote-text em { color:var(--brand-soft); font-style:normal; }
+    .quote-author {
+      display:inline-flex; align-items:center; gap:14px; margin-top:8px;
+    }
+    .quote-avatar {
+      width:54px; height:54px; border-radius:50%;
+      background:linear-gradient(135deg,var(--brand),var(--brand-soft));
+      display:flex; align-items:center; justify-content:center;
+      font-size:18px; font-weight:900; color:#fff;
+      border:2px solid rgba(255,255,255,.15);
+    }
+    .quote-meta { text-align:left; line-height:1.4; }
+    .quote-meta .name {
+      font-size:15px; font-weight:800; color:#fff;
+    }
+    .quote-meta .role {
+      font-size:12px; color:var(--text-3); text-transform:uppercase; letter-spacing:1px;
+      margin-top:2px;
+    }
+
+    /* ── ANTES vs AHORA ── */
+    .vs-bg { background:var(--bg); }
+    .vs-grid {
+      display:grid; grid-template-columns:1fr auto 1fr; gap:0; align-items:stretch;
+      margin-top:30px; border:1px solid var(--border); border-radius:8px; overflow:hidden;
+    }
+    .vs-side { padding:32px 28px; position:relative; }
+    .vs-side.before {
+      background:linear-gradient(180deg,rgba(220,38,38,.08),rgba(0,0,0,.02));
+    }
+    .vs-side.after {
+      background:linear-gradient(180deg,rgba(37,99,235,.10),rgba(0,0,0,.02));
+    }
+    .vs-side .vs-eyebrow {
+      display:inline-block; font-size:11px; font-weight:800; letter-spacing:2px;
+      text-transform:uppercase; padding:6px 12px; border-radius:4px; margin-bottom:18px;
+    }
+    .vs-side.before .vs-eyebrow {
+      color:#fca5a5; background:rgba(220,38,38,.18); border:1px solid rgba(248,113,113,.30);
+    }
+    .vs-side.after .vs-eyebrow {
+      color:var(--brand-soft); background:rgba(37,99,235,.18); border:1px solid rgba(96,165,250,.30);
+    }
+    .vs-side h3 {
+      font-size:22px; font-weight:900; text-transform:uppercase;
+      letter-spacing:-.3px; margin-bottom:18px; line-height:1.15;
+    }
+    .vs-list { list-style:none; padding:0; margin:0; }
+    .vs-list li {
+      display:flex; align-items:flex-start; gap:10px;
+      padding:10px 0; font-size:14px; color:var(--text-1); line-height:1.5;
+    }
+    .vs-list li svg { flex-shrink:0; width:18px; height:18px; margin-top:1px; }
+    .vs-side.before .vs-list li { color:rgba(255,255,255,.65); text-decoration:line-through; text-decoration-color:rgba(220,38,38,.5); }
+    .vs-side.before .vs-list li svg { color:#f87171; }
+    .vs-side.after .vs-list li svg { color:#34d399; }
+    .vs-divider {
+      width:1px; background:var(--border); position:relative;
+    }
+    .vs-arrow {
+      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+      background:var(--bg); border:1px solid var(--border); border-radius:50%;
+      width:44px; height:44px; display:flex; align-items:center; justify-content:center;
+      color:var(--brand-soft); z-index:2;
+    }
+    .vs-arrow svg { width:18px; height:18px; }
+
+    /* ── FAQ ── */
+    .faq-bg { background:#0a0a0a; }
+    .faq-list { margin-top:30px; max-width:820px; margin-left:auto; margin-right:auto; }
+    .faq-item {
+      background:#000; border:1px solid var(--border); border-radius:8px;
+      margin-bottom:10px; overflow:hidden; transition:border-color .15s;
+    }
+    .faq-item[open] { border-color:rgba(96,165,250,.30); }
+    .faq-item summary {
+      padding:18px 22px; cursor:pointer; font-size:15px; font-weight:700;
+      list-style:none; display:flex; align-items:center; justify-content:space-between;
+      gap:12px; color:#fff;
+    }
+    .faq-item summary::-webkit-details-marker { display:none; }
+    .faq-item summary::after {
+      content:''; flex-shrink:0; width:14px; height:14px;
+      border-right:2px solid var(--brand-soft); border-bottom:2px solid var(--brand-soft);
+      transform:rotate(45deg); transition:transform .2s; margin-right:6px;
+    }
+    .faq-item[open] summary::after { transform:rotate(-135deg); margin-right:0; margin-top:6px; }
+    .faq-item summary:hover { color:var(--brand-soft); }
+    .faq-body {
+      padding:0 22px 20px; font-size:14px; color:var(--text-2); line-height:1.6;
+    }
+    .faq-body strong { color:#fff; }
+
     /* ── CTA STRIPE ── */
     .cta-stripe {
       background:linear-gradient(90deg,#1e40af 0%,#2563eb 50%,#1d4ed8 100%);
@@ -608,6 +738,26 @@
       .how-step h3 { font-size:17px; }
       .how-step p { font-size:13px; max-width:100%; }
 
+      /* TESTIMONIAL */
+      .quote-bg { padding:54px 16px; }
+      .quote-mark { font-size:88px; margin-bottom:-22px; }
+      .quote-text { font-size:18px; }
+      .quote-author { flex-direction:column; gap:10px; }
+      .quote-meta { text-align:center; }
+      .quote-avatar { width:48px; height:48px; font-size:16px; }
+
+      /* ANTES vs AHORA */
+      .vs-grid { grid-template-columns:1fr; }
+      .vs-divider { width:100%; height:1px; }
+      .vs-arrow { width:40px; height:40px; transform:translate(-50%,-50%) rotate(90deg); }
+      .vs-side { padding:24px 20px; }
+      .vs-side h3 { font-size:18px; }
+      .vs-list li { font-size:13px; padding:8px 0; }
+
+      /* FAQ */
+      .faq-item summary { font-size:14px; padding:16px 18px; }
+      .faq-body { font-size:13px; padding:0 18px 18px; }
+
       /* CTA stripe */
       .cta-stripe { padding:28px 16px; }
       .cta-stripe-inner { gap:18px; }
@@ -743,6 +893,7 @@
     <a class="nav-link" href="#sports">Deportes</a>
     <a class="nav-link" href="#features">Funcionalidades</a>
     <a class="nav-link" href="#plans">Planes</a>
+    <a class="nav-link" href="#faq">FAQ</a>
     <a class="nav-link" href="#contact">Contacto</a>
   </nav>
   <a href="https://wa.me/573165312266?text=Quiero%20una%20demo%20de%20Data%20Games"
@@ -795,11 +946,11 @@
           </svg>
           Reservar demo
         </a>
-        <a href="#features" class="hero-cta cta-ghost">
-          Ver funcionalidades
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M12 5v14M19 12l-7 7-7-7"/>
+        <a href="#how" class="hero-cta cta-ghost">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M8 5v14l11-7z"/>
           </svg>
+          Ver cómo funciona
         </a>
       </div>
     </div>
@@ -1023,6 +1174,119 @@
   </div>
 </section>
 
+<!-- ── TESTIMONIAL ── -->
+<section class="quote-bg" aria-label="Testimonio">
+  <div class="quote-card">
+    <span class="quote-tag">Caso real · Colegio Almaviva</span>
+    <div class="quote-mark" aria-hidden="true">"</div>
+    <p class="quote-text">
+      Pasamos de cuadrar marcadores en Excel a las 11 PM, a tener todo
+      <em>publicado en vivo</em> mientras los partidos terminan. Los padres dejaron
+      de llamar preguntando resultados — ahora los ven al instante.
+    </p>
+    <div class="quote-author">
+      <div class="quote-avatar" aria-hidden="true">MR</div>
+      <div class="quote-meta">
+        <div class="name">Mónica Restrepo</div>
+        <div class="role">Coordinadora deportiva · Colegio Almaviva</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ANTES vs AHORA ── -->
+<section class="section vs-bg" id="comparison">
+  <div class="section-inner">
+    <div class="section-head">
+      <div>
+        <h2 class="section-title">Antes vs Ahora</h2>
+        <p class="section-sub" style="margin-top:8px;">El cambio concreto cuando un torneo deja Excel.</p>
+      </div>
+    </div>
+    <div class="vs-grid">
+      <div class="vs-side before">
+        <span class="vs-eyebrow">Antes — con Excel</span>
+        <h3>Cuadres a las 11 de la noche</h3>
+        <ul class="vs-list">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+              <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+            <span>Goles anotados en una libreta y digitados después.</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+              <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+            <span>Tablas de posiciones recalculadas a mano.</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+              <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+            <span>Padres llamando todo el día por resultados.</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+              <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+            <span>Dos versiones del Excel circulando por WhatsApp.</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+              <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+            <span>Premiación retrasada porque "falta verificar el goleador".</span>
+          </li>
+        </ul>
+      </div>
+      <div class="vs-divider" aria-hidden="true">
+        <div class="vs-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M13 5l7 7-7 7"/>
+          </svg>
+        </div>
+      </div>
+      <div class="vs-side after">
+        <span class="vs-eyebrow">Ahora — con Data Games</span>
+        <h3>Todo listo cuando suena el silbato final</h3>
+        <ul class="vs-list">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12l5 5L20 7"/>
+            </svg>
+            <span>Árbitro registra goles desde el celular en 1 toque.</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12l5 5L20 7"/>
+            </svg>
+            <span>Tabla, goleadores y desempates al instante.</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12l5 5L20 7"/>
+            </svg>
+            <span>Padres ven todo en vivo escaneando un QR.</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12l5 5L20 7"/>
+            </svg>
+            <span>Una sola fuente de verdad — sin Excels duplicados.</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12l5 5L20 7"/>
+            </svg>
+            <span>Premiación con el medallero proyectado en pantalla.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ── CTA STRIPE ── -->
 <section class="cta-stripe">
   <div class="cta-stripe-inner">
@@ -1089,6 +1353,78 @@
   </div>
 </section>
 
+<!-- ── FAQ ── -->
+<section class="section faq-bg" id="faq">
+  <div class="section-inner">
+    <div class="section-head">
+      <div>
+        <h2 class="section-title">Preguntas frecuentes</h2>
+        <p class="section-sub" style="margin-top:8px;">Respuestas rápidas. Si te queda alguna duda, escríbenos por WhatsApp.</p>
+      </div>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>¿Necesito instalar algo para usar la plataforma?</summary>
+        <div class="faq-body">
+          No. Data Games corre 100% en el navegador — basta con abrir el link en cualquier celular o computador.
+          Los <strong>árbitros marcan partidos desde el celular</strong> y los <strong>padres consultan resultados
+          escaneando un QR</strong>, sin descargar nada ni crear cuenta.
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>¿Funciona si la cancha no tiene internet?</summary>
+        <div class="faq-body">
+          Si el árbitro tiene 4G/5G en el celular, sí. Si la cancha está en una zona sin señal, el árbitro puede
+          registrar los marcadores apenas vuelva a tener cobertura. Para torneos en zonas críticas recomendamos
+          un router portátil — te asesoramos durante la implementación.
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>¿Cuánto cuesta?</summary>
+        <div class="faq-body">
+          Cada torneo es distinto, así que armamos una propuesta a la medida según número de colegios, deportes
+          y duración. El plan <strong>Estándar</strong> cubre torneos de un colegio o eventos puntuales; el plan
+          <strong>Plus</strong> es para ligas multinacionales y federaciones. Escríbenos por WhatsApp y te
+          enviamos cifras concretas en menos de 24 horas.
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>¿Cuánto tiempo toma montar un torneo desde cero?</summary>
+        <div class="faq-body">
+          Con la plantilla Excel cargada, <strong>menos de 30 minutos</strong>: subes equipos y jugadores, defines
+          categorías y fechas, y el sistema arma calendario, grupos y fases finales automáticamente. La
+          configuración inicial del torneo (logo, branding, deportes) toma otros 10 minutos.
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>¿Quién puede ver los resultados? ¿Son públicos?</summary>
+        <div class="faq-body">
+          Los resultados son públicos por defecto — esa es la idea: que padres, jugadores y prensa puedan
+          consultarlos sin barreras. Solo los <strong>editores autorizados</strong> (organizadores y árbitros con
+          credencial) pueden modificar partidos. Si necesitas un torneo privado, lo configuramos con acceso por
+          link único.
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>¿Qué pasa con los datos cuando termina el torneo?</summary>
+        <div class="faq-body">
+          Quedan archivados en tu cuenta indefinidamente. Puedes consultar histórico de partidos, goleadores y
+          medalleros en cualquier momento. Si decides cancelar el servicio, te entregamos un export en Excel/PDF
+          y eliminamos los datos según tu política — todo conforme a la
+          <a href="/privacidad">Ley 1581 de 2012</a>.
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>¿Puedo personalizar la plataforma con el branding de mi torneo?</summary>
+        <div class="faq-body">
+          Sí, en el plan Plus. Logo del torneo, colores institucionales y URL personalizada (ej.
+          <em>copa.colegio.edu</em>). El plan Estándar usa branding genérico de Data Games.
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
 <!-- ── FOOTER ── -->
 <footer id="contact">
   <div class="foot-top">
@@ -1116,7 +1452,9 @@
       <h4>Plataforma</h4>
       <a href="#sports">Deportes</a>
       <a href="#features">Funcionalidades</a>
+      <a href="#how">Cómo funciona</a>
       <a href="#plans">Planes</a>
+      <a href="#faq">FAQ</a>
       <a href="#contact">Contacto</a>
     </div>
     <div class="foot-col">

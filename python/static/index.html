@@ -4,21 +4,43 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DATA GAMES - Big Games 2026</title>
+  <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700;800;900&family=Roboto+Condensed:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/espn-style.css?v=2">
   <style>
     :root {
       --color-primary: #1e40af;
       --color-secondary: #059669;
       --color-accent: #dc2626;
       --color-background: #050810;
+      --color-surface: #0C1020;
       --color-card: #101628;
       --color-text: #E8EDF5;
+      --color-muted: #5A6480;
+      --color-cyan: #00D4FF;
+      --color-orange: #FF4D00;
+      --color-green: #00FF88;
+      --color-purple: #8B5CF6;
       --gradient-header: linear-gradient(135deg, #060e22 0%, #101d50 40%, #1a3799 72%, #2256d8 100%);
       --border-subtle: 1px solid rgba(255,255,255,0.06);
       --shadow-card: 0 4px 24px rgba(0,0,0,0.5);
     }
+    :root.light {
+      --color-background: #FFFFFF;
+      --color-surface: #F5F5F5;
+      --color-card: #FFFFFF;
+      --color-text: #111111;
+      --color-muted: #555555;
+      --color-cyan: #0077AA;
+      --color-orange: #CC3D00;
+      --color-green: #008844;
+      --color-purple: #6D28D9;
+      --border-subtle: 1px solid rgba(0,0,0,0.12);
+      --shadow-card: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    * { transition: background-color 0.3s, color 0.3s, border-color 0.3s; }
     body {
       background: var(--color-background); color: var(--color-text);
       font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
@@ -262,17 +284,449 @@
       50%       { box-shadow: 0 0 0 6px rgba(16,185,129,0); }
     }
 
-    /* ─── RESPONSIVE / MOBILE ────────────────────────────────────── */
+    /* ── DASHBOARD STAT CARDS ── */
+    .ds-stat-card {
+      position: relative; overflow: hidden; text-align: center;
+      padding: 24px 16px; border-radius: 16px;
+      background: var(--color-card); border: var(--border-subtle);
+      box-shadow: var(--shadow-card);
+      animation: fadeUp 0.5s ease both;
+    }
+    .ds-stat-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    }
+    .ds-stat-card .ds-stat-icon {
+      position: absolute; right: 10px; bottom: 8px;
+      font-size: 48px; opacity: 0.04; pointer-events: none;
+    }
+    .ds-stat-card .ds-stat-num {
+      font-family: 'Bebas Neue', sans-serif; font-size: 56px;
+      line-height: 1; letter-spacing: 2px; margin-bottom: 4px;
+    }
+    .ds-stat-card .ds-stat-label {
+      font-size: 13px; color: var(--color-muted); font-weight: 500;
+    }
+
+    /* ── DASHBOARD MATCH ROWS ── */
+    .ds-match-row {
+      display: grid; grid-template-columns: 1fr auto 1fr;
+      align-items: center; gap: 8px; padding: 12px 16px;
+      border-radius: 12px; cursor: pointer;
+      background: rgba(255,255,255,0.02); margin-bottom: 6px;
+      border-left: 3px solid transparent;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    :root.light .ds-match-row { background: rgba(0,0,0,0.02); }
+    .ds-match-row:hover { background: rgba(255,255,255,0.06); }
+    :root.light .ds-match-row:hover { background: rgba(0,0,0,0.04); }
+    .ds-match-row.status-live { border-left-color: #dc2626; }
+    .ds-match-row.status-finished { border-left-color: var(--color-green); }
+    .ds-match-row.status-pending { border-left-color: var(--color-cyan); }
+    .ds-match-row .ds-team { font-size: 14px; font-weight: 600; color: var(--color-text); }
+    .ds-match-row .ds-team.left { text-align: right; }
+    .ds-match-row .ds-team.right { text-align: left; }
+    .ds-match-row .ds-score {
+      font-family: 'Bebas Neue', sans-serif; font-size: 28px;
+      color: var(--color-cyan); text-align: center; letter-spacing: 2px;
+      min-width: 60px;
+    }
+    .ds-match-row .ds-match-meta {
+      grid-column: 1 / -1; font-size: 11px; color: var(--color-muted);
+      display: flex; align-items: center; gap: 6px; margin-top: 2px;
+    }
+
+    /* ── DASHBOARD STATUS BADGES ── */
+    .ds-badge {
+      font-size: 10px; font-weight: 700; padding: 2px 8px;
+      border-radius: 8px; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .ds-badge-live { background: #dc2626; color: white; animation: pulse 1.5s infinite; }
+    .ds-badge-finished { background: rgba(0,255,136,0.15); color: var(--color-green); }
+    .ds-badge-pending { background: rgba(0,212,255,0.12); color: var(--color-cyan); }
+
+    /* ── TICKER ── */
+    .ds-ticker {
+      position: fixed; bottom: 0; left: 0; right: 0; height: 36px; z-index: 90;
+      background: var(--color-card); border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex; align-items: center; overflow: hidden;
+    }
+    :root.light .ds-ticker { border-top-color: rgba(0,0,0,0.08); }
+    .ds-ticker-label {
+      flex-shrink: 0; padding: 0 14px; font-size: 11px; font-weight: 700;
+      color: white; background: #dc2626; height: 100%;
+      display: flex; align-items: center; letter-spacing: 1px;
+    }
+    .ds-ticker-track {
+      flex: 1; overflow: hidden; white-space: nowrap;
+    }
+    .ds-ticker-content {
+      display: inline-block; padding-left: 100%;
+      animation: tickerScroll 60s linear infinite;
+      font-family: 'Space Mono', monospace; font-size: 13px;
+      color: var(--color-text);
+    }
+    .ds-ticker-content span { margin-right: 40px; }
+    @keyframes tickerScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+    /* ── THEME TOGGLE ── */
+    .theme-toggle {
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.8); border-radius: 8px; padding: 6px 10px;
+      cursor: pointer; font-size: 16px; line-height: 1;
+      transition: all 0.2s; display: flex; align-items: center;
+    }
+    :root.light .theme-toggle {
+      background: rgba(0,0,0,0.06); border-color: rgba(0,0,0,0.1);
+      color: rgba(0,0,0,0.7);
+    }
+    .theme-toggle:hover { transform: scale(1.1); }
+
+    /* ══════════════════════════════════════════════════════════════
+       LIGHT MODE — complete override
+       ══════════════════════════════════════════════════════════════ */
+
+    /* ── Base ── */
+    :root.light body { background: #FFFFFF !important; color: #111 !important; }
+    :root.light body::before { display: none !important; }
+
+    /* ── Header ── */
+    :root.light header {
+      background: #FFFFFF !important; border-bottom: 1px solid #DDD !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+    }
+    :root.light header h1 { color: #111 !important; }
+    :root.light header p { color: #555 !important; }
+    :root.light header .header-logo span { color: #111 !important; }
+    :root.light header svg line { stroke: #1e40af !important; }
+    :root.light #user-badge, :root.light #user-badge-mobile {
+      background: #F0F0F0 !important; color: #111 !important;
+      border-color: #D0D0D0 !important;
+    }
+    :root.light #hamburger-btn {
+      background: #F0F0F0 !important; border-color: #D0D0D0 !important;
+    }
+    :root.light #hamburger-btn svg { stroke: #111 !important; }
+    :root.light #mobile-top-controls .theme-toggle {
+      background: #F0F0F0 !important; border-color: #D0D0D0 !important;
+    }
+    :root.light #theme-toggle-global {
+      background: #F0F0F0 !important; border-color: #D0D0D0 !important;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1) !important;
+    }
+    :root.light #mobile-menu {
+      border-top-color: #DDD !important;
+    }
+
+    /* ── Cards ── */
+    :root.light .card {
+      background: #FFFFFF !important; border-color: #DDD !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+    }
+    :root.light .login-card {
+      background: #FFFFFF !important; border-color: #DDD !important;
+      animation: none !important;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.1) !important;
+    }
+    :root.light .role-card { background: #F5F5F5 !important; border-color: #DDD !important; }
+    :root.light .role-card:hover { background: #EEE !important; }
+
+    /* ── Buttons ── */
+    :root.light .btn-ghost {
+      background: #F0F0F0 !important; color: #333 !important;
+      border-color: #D0D0D0 !important;
+    }
+    :root.light .btn-ghost:hover {
+      background: #E0E0E0 !important; color: #111 !important;
+    }
+    :root.light .btn-primary {
+      box-shadow: 0 2px 8px rgba(37,99,235,0.3) !important;
+    }
+    :root.light .btn-secondary {
+      box-shadow: 0 2px 8px rgba(5,150,105,0.3) !important;
+    }
+    :root.light .btn-danger {
+      box-shadow: 0 2px 8px rgba(220,38,38,0.25) !important;
+    }
+
+    /* ── Nav tabs ── */
+    :root.light .nav-tab {
+      background: #F0F0F0 !important; color: #333 !important;
+      border-color: #D0D0D0 !important;
+    }
+    :root.light .nav-tab:hover {
+      background: #E0E0E0 !important; color: #111 !important;
+      border-color: #BBB !important;
+    }
+    :root.light .nav-tab.active {
+      background: #1e40af !important; color: white !important;
+      border-color: #1e40af !important; box-shadow: 0 2px 8px rgba(30,64,175,0.3) !important;
+    }
+
+    /* ── Filter button ── */
+    :root.light .mobile-filter-btn {
+      background: #F0F0F0 !important; color: #1e40af !important;
+      border-color: #C0C8E0 !important;
+    }
+    :root.light .mobile-filter-btn:hover {
+      background: #E4E8F4 !important; border-color: #9AAAD0 !important;
+    }
+    :root.light .mobile-filter-btn svg { stroke: #1e40af !important; opacity: 0.8 !important; }
+    :root.light .mobile-filter-btn .filter-count {
+      background: #1e40af !important; color: white !important;
+    }
+
+    /* ── Inputs / Selects ── */
+    :root.light .input-field,
+    :root.light #page-content select,
+    :root.light #page-content input[type="text"],
+    :root.light #page-content input[type="date"],
+    :root.light #page-content input[type="time"],
+    :root.light #page-content input[type="number"],
+    :root.light #page-content input[type="datetime-local"],
+    :root.light .modal-box select,
+    :root.light .modal-box input[type="text"],
+    :root.light .modal-box input[type="date"],
+    :root.light .modal-box input[type="time"],
+    :root.light .modal-box input[type="number"],
+    :root.light .modal-box input[type="datetime-local"] {
+      background-color: #F5F5F5 !important; border-color: #D0D0D0 !important;
+      color: #111 !important;
+    }
+    :root.light .input-field:hover,
+    :root.light #page-content select:hover,
+    :root.light #page-content input:hover,
+    :root.light .modal-box select:hover,
+    :root.light .modal-box input:hover {
+      background-color: #EFEFEF !important; border-color: #BBB !important;
+    }
+    :root.light .input-field:focus,
+    :root.light #page-content select:focus,
+    :root.light #page-content input:focus,
+    :root.light .modal-box select:focus,
+    :root.light .modal-box input:focus {
+      border-color: #1e40af !important;
+      box-shadow: 0 0 0 2px rgba(30,64,175,0.15) !important;
+      background-color: #FFF !important;
+    }
+    :root.light .input-field option,
+    :root.light #page-content select option,
+    :root.light .modal-box select option { background: #FFF !important; color: #111 !important; }
+    :root.light select.input-field,
+    :root.light #page-content select,
+    :root.light .modal-box select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23333333' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") !important;
+    }
+
+    /* ── Tables ── */
+    :root.light .table-row:hover { background: #F5F5F5 !important; }
+    :root.light table thead th { color: #555 !important; }
+    :root.light table tbody td { color: #111 !important; }
+    :root.light table { border-color: #E0E0E0 !important; }
+    :root.light tr { border-color: #EEE !important; }
+
+    /* ── Score / stat displays ── */
+    :root.light .score-display { color: #111 !important; }
+    :root.light .team-name-large { color: #1e40af !important; }
+    :root.light .stat-number { color: #0077AA !important; }
+
+    /* ── Spinner ── */
+    :root.light .spinner { border-color: #E0E0E0 !important; border-top-color: #1e40af !important; }
+
+    /* ── Modal ── */
+    :root.light .modal-overlay { background: rgba(0,0,0,0.35) !important; }
+    :root.light .modal-box {
+      background: #FFFFFF !important; border-color: #DDD !important;
+      color: #111 !important; box-shadow: 0 16px 48px rgba(0,0,0,0.15) !important;
+    }
+
+    /* ── Toast (keep colored backgrounds, white text) ── */
+    :root.light .toast { color: white !important; }
+    :root.light .toast-success { box-shadow: 0 4px 16px rgba(5,150,105,0.25) !important; }
+    :root.light .toast-error { box-shadow: 0 4px 16px rgba(220,38,38,0.25) !important; }
+
+    /* ── Badges (keep as-is, they're colored bg + white text) ── */
+
+    /* ── Dashboard stat cards ── */
+    :root.light .ds-stat-card {
+      background: #FFFFFF !important; border-color: #DDD !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+    }
+    :root.light .ds-stat-card .ds-stat-label { color: #555 !important; }
+    :root.light .ds-stat-card .ds-stat-icon { opacity: 0.06; }
+
+    /* ── Dashboard match rows ── */
+    :root.light .ds-match-row { background: #F8F8F8 !important; }
+    :root.light .ds-match-row:hover { background: #F0F0F0 !important; }
+    :root.light .ds-match-row .ds-team { color: #111 !important; }
+    :root.light .ds-match-row .ds-match-meta { color: #555 !important; }
+    :root.light .ds-match-row .ds-score { color: #0077AA !important; }
+
+    /* ── Dashboard section titles ── */
+    :root.light .section-title { color: #111 !important; }
+    :root.light .section-title::after { background: linear-gradient(90deg, #D0D0D0, transparent) !important; }
+
+    /* ── Ticker ── */
+    :root.light .ds-ticker {
+      background: #FFFFFF !important; border-top: 1px solid #DDD !important;
+    }
+    :root.light .ds-ticker-content { color: #111 !important; }
+
+    /* ── Text color overrides for inline styles ── */
+    :root.light [style*="color:#e2e8f0"],
+    :root.light [style*="color: #e2e8f0"] { color: #111 !important; }
+    :root.light [style*="color:#f1f5f9"],
+    :root.light [style*="color: #f1f5f9"] { color: #111 !important; }
+    :root.light #page-content [style*="color:white"],
+    :root.light #page-content [style*="color: white"] { color: #111 !important; }
+    :root.light header [style*="color:white"],
+    :root.light header [style*="color: white"] { color: #111 !important; }
+    :root.light [style*="color:#93c5fd"],
+    :root.light [style*="color: #93c5fd"] { color: #1e40af !important; }
+    :root.light [style*="color:#60a5fa"],
+    :root.light [style*="color: #60a5fa"] { color: #1e40af !important; }
+    :root.light [style*="color:#94a3b8"],
+    :root.light [style*="color: #94a3b8"] { color: #555 !important; }
+    :root.light [style*="color:#64748b"],
+    :root.light [style*="color: #64748b"] { color: #555 !important; }
+    :root.light [style*="color:#475569"],
+    :root.light [style*="color: #475569"] { color: #555 !important; }
+    :root.light [style*="color:rgba(255,255,255,0."] { color: #333 !important; }
+    :root.light [style*="color:rgba(147,197,253,"] { color: #555 !important; }
+
+    /* ── Background overrides for inline styles ── */
+    :root.light [style*="background:rgba(255,255,255,0.0"] { background: #F5F5F5 !important; }
+    :root.light [style*="background:rgba(255,255,255,0.1"] { background: #F0F0F0 !important; }
+    :root.light [style*="background:rgba(30,41,59,"] { background: #F5F5F5 !important; }
+    :root.light [style*="background:#0f172a"] { background: #FFFFFF !important; }
+    :root.light [style*="background:#1e293b"] { background: #F5F5F5 !important; }
+    :root.light [style*="background:linear-gradient(180deg,#0f1e36"] { background: #F8F8F8 !important; }
+    :root.light [style*="background:linear-gradient(135deg,#07153a"] { background: linear-gradient(135deg,#1e40af,#2563eb) !important; }
+
+    /* ── Border overrides for inline styles ── */
+    :root.light [style*="border-color:rgba(255,255,255,"] { border-color: #DDD !important; }
+    :root.light [style*="border:1px solid rgba(255,255,255,"] { border-color: #DDD !important; }
+    :root.light [style*="border-top:1px solid rgba(255,255,255,"] { border-top-color: #DDD !important; }
+    :root.light [style*="border-bottom:1px solid rgba(255,255,255,"] { border-bottom-color: #DDD !important; }
+    :root.light [style*="border:1px solid #334155"] { border-color: #DDD !important; }
+    :root.light [style*="border:1px solid #1e293b"] { border-color: #DDD !important; }
+    :root.light [style*="border:2px solid #1e293b"] { border-color: #DDD !important; }
+    :root.light [style*="border:2px solid #0f172a"] { border-color: #FFF !important; }
+    :root.light [style*="color:#334155"],
+    :root.light [style*="color: #334155"] { color: #999 !important; }
+
+    /* ── Gradient line dividers ── */
+    :root.light [style*="background:linear-gradient(90deg,transparent,rgba(59,130,246,"] {
+      background: linear-gradient(90deg,transparent,#D0D0D0,transparent) !important;
+    }
+    :root.light [style*="background:linear-gradient(90deg,rgba(255,255,255,0.06)"] {
+      background: linear-gradient(90deg,#DDD,transparent) !important;
+    }
+
+    /* ── Login / Tournament screens ── */
+    :root.light #login-screen { background: #FFFFFF !important; }
+    :root.light #tournament-screen { background: #FFFFFF !important; }
+    :root.light #login-screen [style*="opacity:0.0"] { display: none !important; }
+    :root.light #tournament-screen [style*="opacity:0.0"] { display: none !important; }
+    :root.light .logo-svg-animate { filter: none !important; }
+
+    /* ── Scrollbar ── */
+    :root.light ::-webkit-scrollbar-track { background: #F5F5F5 !important; }
+    :root.light ::-webkit-scrollbar-thumb { background: #CCC !important; }
+    :root.light ::-webkit-scrollbar-thumb:hover { background: #AAA !important; }
+
+    /* ── Fix dark-on-dark text in dark mode ── */
+    [style*="color:#334155"] { color: #64748b !important; }
+    [style*="color: #334155"] { color: #64748b !important; }
+    :root.light [style*="color:#334155"],
+    :root.light [style*="color: #334155"] { color: #666 !important; }
+
+    /* ── Light mode: tournament-theme card/header override ── */
+    :root.light body { background: #FFFFFF !important; }
+    :root.light .nav-tab.active {
+      background: #1e40af !important; color: white !important;
+      border-color: #1e40af !important;
+    }
+
+    /* ── Tailwind text helpers ── */
+    :root.light .text-gray-400 { color: #555 !important; }
+    :root.light .text-gray-500 { color: #555 !important; }
+    :root.light .text-red-400 { color: #dc2626 !important; }
+    :root.light .text-sm { color: inherit; }
+
+    /* ── Prevent btn-primary/secondary/danger text from going black ── */
+    :root.light .btn-primary, :root.light .btn-secondary, :root.light .btn-danger { color: white !important; }
+    :root.light .badge-live, :root.light .badge-scheduled, :root.light .badge-finished { color: white !important; }
+    :root.light .ds-badge-live { color: white !important; }
+    :root.light .ds-ticker-label { color: white !important; }
+
+    /* ── Additional light mode text overrides ── */
+    :root.light [style*="color:#fbbf24"] { color: #b45309 !important; }
+    :root.light [style*="color: #fbbf24"] { color: #b45309 !important; }
+    :root.light [style*="color:#a78bfa"] { color: #6D28D9 !important; }
+    :root.light [style*="color: #a78bfa"] { color: #6D28D9 !important; }
+    :root.light [style*="color:#f87171"] { color: #dc2626 !important; }
+    :root.light [style*="color: #f87171"] { color: #dc2626 !important; }
+    :root.light [style*="color:#7dd3fc"] { color: #0369a1 !important; }
+    :root.light [style*="color: #7dd3fc"] { color: #0369a1 !important; }
+    :root.light [style*="color:#cbd5e1"] { color: #333 !important; }
+    :root.light [style*="color: #cbd5e1"] { color: #333 !important; }
+    :root.light [style*="color:#f1f5f9"] { color: #111 !important; }
+    :root.light [style*="color:#10b981"] { color: #047857 !important; }
+    :root.light [style*="color: #10b981"] { color: #047857 !important; }
+    :root.light [style*="color:#34d399"] { color: #047857 !important; }
+    :root.light [style*="color: #34d399"] { color: #047857 !important; }
+    :root.light [style*="color:#ef4444"] { color: #dc2626 !important; }
+    :root.light [style*="color: #ef4444"] { color: #dc2626 !important; }
+    :root.light [style*="color:#818cf8"] { color: #4f46e5 !important; }
+    :root.light [style*="color: #818cf8"] { color: #4f46e5 !important; }
+    :root.light [style*="color:#c084fc"] { color: #7c3aed !important; }
+    :root.light [style*="color: #c084fc"] { color: #7c3aed !important; }
+    :root.light [style*="color:#38bdf8"] { color: #0284c7 !important; }
+    :root.light [style*="color: #38bdf8"] { color: #0284c7 !important; }
+
+    /* ── Light mode: general dark backgrounds to light ── */
+    :root.light [style*="background:#0f172a"] { background: #F5F5F5 !important; }
+    :root.light [style*="background: #0f172a"] { background: #F5F5F5 !important; }
+    :root.light [style*="background:#1e293b"] { background: #EFEFEF !important; }
+    :root.light [style*="background: #1e293b"] { background: #EFEFEF !important; }
+    :root.light [style*="background:#0C1020"] { background: #F5F5F5 !important; }
+    :root.light [style*="background:#101628"] { background: #FFFFFF !important; }
+    :root.light [style*="background:#050810"] { background: #FFFFFF !important; }
+
+    /* ── Light mode: tournament theme overrides ── */
+    :root.light #tournament-theme + * header,
+    :root.light header {
+      background: #FFFFFF !important;
+    }
+    :root.light .card {
+      background: #FFFFFF !important;
+    }
+
+    /* ── Light mode: font-weight:700/900 white text ── */
+    :root.light #page-content [style*="font-weight:700"][style*="color:white"],
+    :root.light #page-content [style*="font-weight:900"][style*="color:white"] { color: #111 !important; }
+    :root.light #page-content [style*="font-weight:700"][style*="color:#e2e8f0"],
+    :root.light #page-content [style*="font-weight:900"][style*="color:#e2e8f0"] { color: #111 !important; }
+
+    /* ═══════════════════════════════════════════════════════════════
+       RESPONSIVE / MOBILE
+       ═══════════════════════════════════════════════════════════════ */
     @media (max-width: 768px) {
-      /* Hamburger menu */
+      /* ── Header & Nav ── */
+      #mobile-top-controls { display: flex !important; }
       #hamburger-btn { display: flex !important; align-items: center; justify-content: center; }
       #header-controls-desktop { display: none !important; }
       #main-nav { display: none !important; }
+      header { padding: 8px 10px 6px !important; }
+      header h1 { font-size: 17px !important; letter-spacing: 1.5px !important; }
+      .header-logo { width: 30px !important; }
+      .header-logo svg { width: 24px !important; height: 19px !important; }
+      .header-logo span { font-size: 6px !important; letter-spacing: 2px !important; }
+      #header-tournament-logo { height: 34px !important; max-height: 34px !important; width: auto !important; max-width: 100px !important; }
 
-      /* Mobile nav tabs */
-      #mobile-nav { display: flex; gap: 6px; flex-wrap: wrap; }
+      #mobile-nav { display: flex; gap: 5px; flex-wrap: wrap; }
       #mobile-nav .nav-tab {
-        font-size: 11px !important; padding: 6px 10px !important;
+        font-size: 11px !important; padding: 5px 9px !important;
         flex: 0 0 auto;
       }
       #mobile-nav .nav-tab.active {
@@ -280,54 +734,91 @@
         font-weight: 700 !important;
       }
 
-      /* Header */
-      header { padding: 10px 12px 8px !important; }
+      /* ── Main content ── */
+      #page-content { padding: 12px !important; padding-bottom: 50px !important; }
 
-      /* Main content */
-      #page-content { padding: 14px !important; }
+      /* ── Cards ── */
+      .card { padding: 12px !important; border-radius: 12px !important; }
+      .card:hover { transform: none !important; }
 
-      /* Cards */
-      .card { padding: 12px !important; border-radius: 14px !important; }
-
-      /* Modals */
-      .modal-box { padding: 18px !important; max-width: 95vw !important; border-radius: 16px !important; }
-      .modal-box > div[style*="min-width"] { min-width: unset !important; }
-
-      /* Toast */
-      .toast { left: 16px; right: 16px; bottom: 16px; text-align: center; }
-
-      /* Grids: force single or dual column */
+      /* ── ALL grids: force responsive ── */
       [style*="grid-template-columns:repeat(4"] { grid-template-columns: repeat(2, 1fr) !important; }
+      [style*="grid-template-columns:repeat(auto-fill,minmax(320px"] { grid-template-columns: 1fr !important; }
+      [style*="grid-template-columns:repeat(auto-fill,minmax(280px"] { grid-template-columns: 1fr !important; }
+      [style*="grid-template-columns:repeat(auto-fill,minmax(270px"] { grid-template-columns: 1fr !important; }
+      [style*="grid-template-columns:repeat(auto-fill,minmax(260px"] { grid-template-columns: 1fr !important; }
+      [style*="grid-template-columns:repeat(auto-fill,minmax(240px"] { grid-template-columns: 1fr !important; }
+      [style*="grid-template-columns:repeat(auto-fit,minmax(320px"] { grid-template-columns: 1fr !important; }
+      [style*="grid-template-columns:repeat(auto-fit,minmax(280px"] { grid-template-columns: 1fr !important; }
+      [style*="grid-template-columns:repeat(auto-fit,minmax(260px"] { grid-template-columns: 1fr !important; }
+      [style*="grid-template-columns:repeat(auto-fit,minmax(200px"] { grid-template-columns: 1fr !important; }
       [style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
-      [style*="grid-template-columns:1fr auto 1fr"] { grid-template-columns: 1fr !important; }
 
-      /* Score display */
-      .score-display { font-size: 36px !important; }
-      .team-name-large { font-size: 14px !important; }
-
-      /* Stat numbers */
-      .stat-number { font-size: 28px !important; }
-
-      /* ── Mobile filter button: full width ── */
-      .mobile-filter-btn {
-        width: 100% !important; justify-content: center !important;
-        padding: 11px 20px !important; font-size: 13px !important;
-        border-radius: 12px !important;
+      /* Score 3-column grid: keep but tighter */
+      [style*="grid-template-columns:1fr auto 1fr"] {
+        grid-template-columns: 1fr auto 1fr !important;
+        gap: 4px !important;
       }
 
-      /* ── Mobile filter content: compact grid ── */
+      /* ── Dashboard stat cards ── */
+      .ds-stats { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
+      .ds-stat-card { padding: 16px 10px !important; }
+      .ds-stat-card .ds-stat-num { font-size: 40px !important; }
+      .ds-stat-card .ds-stat-label { font-size: 11px !important; }
+      .ds-stat-card .ds-stat-icon { font-size: 36px !important; }
+
+      /* ── Dashboard match rows ── */
+      .ds-match-row { padding: 10px 12px !important; gap: 4px !important; }
+      .ds-match-row .ds-team { font-size: 12px !important; }
+      .ds-match-row .ds-score { font-size: 22px !important; min-width: 50px !important; }
+      .ds-match-row .ds-match-meta { font-size: 10px !important; }
+
+      /* ── Section titles ── */
+      .section-title { font-size: 18px !important; letter-spacing: 1px !important; }
+      h2.text-3xl { font-size: 20px !important; }
+      h3.text-xl { font-size: 16px !important; }
+
+      /* ── Score displays ── */
+      .score-display { font-size: 36px !important; }
+      .team-name-large { font-size: 13px !important; }
+      .stat-number { font-size: 28px !important; }
+
+      /* ── Tables: scrollable ── */
+      table { font-size: 11px !important; }
+      thead th { padding: 6px 3px !important; font-size: 9px !important; white-space: nowrap; }
+      tbody td { padding: 6px 3px !important; }
+      [style*="overflow-x:auto"] { -webkit-overflow-scrolling: touch; }
+      div:has(> table) { overflow-x: auto !important; max-width: 100% !important; }
+
+      /* ── Modals ── */
+      .modal-box {
+        padding: 16px !important; max-width: 95vw !important;
+        border-radius: 14px !important; max-height: 85vh !important;
+      }
+      .modal-box > div[style*="min-width"] { min-width: unset !important; }
+
+      /* ── Toast ── */
+      .toast { left: 12px; right: 12px; bottom: 46px; text-align: center; font-size: 13px; }
+
+      /* ── Filter button ── */
+      .mobile-filter-btn {
+        width: 100% !important; justify-content: center !important;
+        padding: 10px 16px !important; font-size: 13px !important;
+        border-radius: 10px !important;
+      }
+
+      /* ── Filter content ── */
       .mobile-filter-content .card,
       .mobile-filter-content > div {
         display: grid !important;
         grid-template-columns: 1fr 1fr !important;
-        gap: 10px !important;
-        padding: 14px !important;
-        margin-bottom: 14px;
+        gap: 8px !important;
+        padding: 12px !important;
+        margin-bottom: 10px;
       }
       .mobile-filter-content .card > div,
       .mobile-filter-content > div > div {
-        min-width: 0 !important;
-        flex: unset !important;
+        min-width: 0 !important; flex: unset !important;
       }
       .mobile-filter-content .card > button,
       .mobile-filter-content > div > button,
@@ -336,58 +827,287 @@
         grid-column: 1 / -1;
       }
 
-      /* Smaller filter inputs on mobile */
-      .input-field {
-        padding: 7px 10px !important;
-        font-size: 13px !important;
-      }
-      .text-gray-400.text-sm { font-size: 11px !important; }
-
-      /* Inline filters (live scoring style) */
+      /* ── Inputs ── */
+      .input-field { padding: 8px 10px !important; font-size: 13px !important; }
       select.input-field[style*="min-width"],
       select[style*="min-width:150px"],
+      select[style*="min-width:130px"],
+      select[style*="min-width:120px"],
       select[style*="min-width:100px"],
-      select[style*="min-width:80px"],
-      select[style*="min-width:90px"] {
-        min-width: 0 !important;
-        width: 100% !important;
-        font-size: 12px !important;
-        padding: 6px 8px !important;
+      select[style*="min-width:90px"],
+      select[style*="min-width:80px"] {
+        min-width: 0 !important; width: 100% !important;
+        font-size: 12px !important; padding: 7px 8px !important;
       }
 
-      /* Tables: smaller */
-      table { font-size: 12px !important; }
-      thead th { padding: 8px 4px !important; font-size: 10px !important; }
-      tbody td { padding: 8px 4px !important; }
+      /* ── Inline flex that should wrap ── */
+      [style*="display:flex"][style*="gap"] { flex-wrap: wrap !important; }
 
-      /* Login */
-      .login-card { padding: 28px 20px 24px !important; }
+      /* ── Player/Team cards: smaller minmax ── */
+      [style*="grid-template-columns:repeat(auto-fill,minmax(190px"] { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) !important; }
+      [style*="grid-template-columns:repeat(auto-fill,minmax(180px"] { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) !important; }
+      [style*="grid-template-columns:repeat(auto-fill,minmax(160px"] { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)) !important; }
 
-      /* Tournament card */
-      #tournament-list > div > div:first-child { padding: 20px 16px 16px !important; }
-      #tournament-list > div > div:last-child { padding: 12px 16px !important; flex-direction: column !important; }
+      /* ── Playoffs bracket cards ── */
+      [style*="width:180px"] { width: 140px !important; }
 
-      /* Titles */
-      h2.text-3xl { font-size: 22px !important; }
+      /* ── Inline grids with 4 columns ── */
+      [style*="grid-template-columns:repeat(4,1fr)"] { grid-template-columns: repeat(2, 1fr) !important; }
+
+      /* ── Login / Tournament ── */
+      .login-card { padding: 24px 16px 20px !important; }
+      #tournament-list > div > div:first-child { padding: 16px 12px !important; }
+      #tournament-list > div > div:last-child { padding: 10px 12px !important; flex-direction: column !important; }
+
+      /* ── Ticker ── */
+      .ds-ticker { height: 32px !important; }
+      .ds-ticker-label { font-size: 10px !important; padding: 0 10px !important; }
+      .ds-ticker-content { font-size: 11px !important; }
+
+      /* ── Text helpers ── */
+      .text-gray-400.text-sm { font-size: 11px !important; }
+      p[style*="font-size:13px"] { font-size: 12px !important; }
+
+      /* ── Olympic ranking @ 768px ── */
+      [style*="width:190px"] { width: 150px !important; }
+      [style*="height:210px"] { height: 160px !important; }
+      [style*="height:165px"] { height: 125px !important; }
+      [style*="height:130px"][style*="border-radius:12px"] { height: 100px !important; }
+      [style*="min-width:500px"] { min-width: unset !important; }
+
+      /* ── Misc: prevent overflow ── */
+      * { max-width: 100%; }
+      img, svg, video { max-width: 100% !important; height: auto !important; }
+      pre, code { overflow-x: auto !important; white-space: pre-wrap !important; word-break: break-word !important; }
     }
 
     @media (max-width: 480px) {
-      [style*="grid-template-columns:repeat(2"] { grid-template-columns: 1fr !important; }
-      #mobile-nav .nav-tab { font-size: 10px !important; padding: 5px 8px !important; }
-      header h1 { font-size: 18px !important; }
-      h2.text-3xl { font-size: 20px !important; }
-      /* Hide logo on very small screens */
+      /* ── Ultra-small screens ── */
+      #page-content { padding: 10px !important; }
+      header h1 { font-size: 16px !important; letter-spacing: 1px !important; }
       .header-logo { display: none !important; }
 
-      /* Filters: single column on very small screens */
+      #mobile-nav .nav-tab { font-size: 10px !important; padding: 4px 7px !important; }
+
+      /* ── Dashboard: 2 col stats ── */
+      .ds-stats { gap: 8px !important; }
+      .ds-stat-card .ds-stat-num { font-size: 32px !important; }
+      .ds-match-row .ds-team { font-size: 11px !important; }
+      .ds-match-row .ds-score { font-size: 20px !important; }
+
+      /* ── All large grids: single column ── */
+      [style*="grid-template-columns:repeat(2"] { grid-template-columns: 1fr !important; }
+      .ds-stats { grid-template-columns: repeat(2, 1fr) !important; }
+
+      /* ── Filter content: single column ── */
       .mobile-filter-content .card,
       .mobile-filter-content > div {
         grid-template-columns: 1fr !important;
       }
+
+      /* ── Section titles ── */
+      .section-title { font-size: 16px !important; gap: 10px !important; }
+      h2.text-3xl { font-size: 18px !important; }
+
+      /* ── Playoffs bracket ── */
+      [style*="width:180px"] { width: 120px !important; }
+      [style*="width:140px"] { width: 110px !important; }
+
+      /* ── Score displays ── */
+      .score-display { font-size: 28px !important; }
+      .stat-number { font-size: 24px !important; }
+
+      /* ── Player cards even smaller ── */
+      [style*="grid-template-columns:repeat(auto-fill,minmax(140px"] { grid-template-columns: repeat(2, 1fr) !important; }
+
+      /* ── Olympic ranking podium ── */
+      [style*="width:190px"] { width: 100% !important; max-width: 110px !important; }
+      [style*="width:190px"] [style*="font-size:40px"] { font-size: 24px !important; margin-bottom: 4px !important; }
+      [style*="width:190px"] [style*="font-size:14px"][style*="font-weight:700"] { font-size: 11px !important; }
+      [style*="width:190px"] [style*="font-size:32px"] { font-size: 20px !important; }
+      [style*="width:190px"] [style*="font-size:18px"][style*="font-weight:800"] { font-size: 13px !important; gap: 4px !important; }
+      [style*="width:190px"] [style*="font-size:11px"] { font-size: 9px !important; }
+      [style*="height:210px"] { height: 130px !important; padding: 8px 4px !important; }
+      [style*="height:165px"] { height: 100px !important; padding: 8px 4px !important; }
+      [style*="height:130px"][style*="border-radius:12px"] { height: 80px !important; padding: 8px 4px !important; }
+      [style*="width:64px"][style*="height:64px"] { width: 40px !important; height: 40px !important; }
+      [style*="align-items:flex-end"][style*="gap:12px"] { gap: 6px !important; margin-bottom: 16px !important; }
+
+      /* ── Olympic ranking table ── */
+      [style*="min-width:500px"] { min-width: unset !important; }
+      table [style*="font-size:16px"] { font-size: 13px !important; }
+      table [style*="font-size:20px"] { font-size: 15px !important; }
+      table td[style*="padding:12px"] { padding: 8px 4px !important; }
+      table th[style*="padding:10px"] { padding: 6px 3px !important; font-size: 11px !important; }
+      table td[style*="padding:10px"] { padding: 6px 4px !important; }
+      table td[style*="padding:4px 12px 12px 60px"] { padding: 4px 8px 8px 32px !important; }
+    }
+
+    /* ─── A11Y FOUNDATIONS (ui-ux-pro-max §1, §6, §7) ─── */
+    /* §1 Keyboard a11y: visible focus ring */
+    *:focus-visible {
+      outline: 2px solid #60a5fa;
+      outline-offset: 2px;
+      border-radius: 3px;
+    }
+    /* Override default :focus on inputs to use :focus-visible behavior */
+    .input-field:focus-visible {
+      outline: none;
+      border-color: rgba(96,165,250,.7);
+      box-shadow: 0 0 0 3px rgba(96,165,250,.25);
+    }
+    /* §6 Tabular numerals — prevents layout shift when numbers change */
+    .score-display, .stat-number,
+    .badge-live, .badge-scheduled, .badge-finished,
+    .ds-match-score, .ds-team-pts, .ds-team-w, .ds-team-l, .ds-team-d {
+      font-variant-numeric: tabular-nums;
+    }
+    /* §7 Respect prefers-reduced-motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .001ms !important;
+        scroll-behavior: auto !important;
+      }
+      /* Loading spinner: keep at slower speed (essential UX feedback) */
+      .spinner { animation-duration: 1.4s !important; }
+      /* Live badge pulse: keep slower for vestibular safety */
+      .badge-live { animation-duration: 3s !important; }
+      /* Disable global * transition declared at line 43 */
+      * { transition: none !important; }
     }
   </style>
 </head>
 <body>
+
+<!-- ── Splash screen 10x10 (aparece al entrar) ── -->
+<div id="splash-screen" style="display:none;position:fixed;inset:0;z-index:9999;
+     background:#000;flex-direction:column;align-items:center;justify-content:center;
+     gap:5vh;padding:4vh 20px 7vh;text-align:center;box-sizing:border-box;overflow:hidden;">
+
+  <!-- Hero hidden wrapper to keep section structure simple -->
+  <section style="position:relative;width:100%;display:flex;flex-direction:column;
+                  align-items:center;justify-content:center;gap:5vh;text-align:center;">
+
+    <!-- Fondo glow -->
+    <div style="position:absolute;inset:0;pointer-events:none;
+                background:radial-gradient(ellipse 80% 50% at 50% 40%, rgba(180,0,0,0.18) 0%, transparent 70%);
+                animation:splashGlow 4s ease-in-out infinite alternate;"></div>
+
+    <!-- Contenedor centrado -->
+    <div style="position:relative;width:100%;max-width:480px;display:flex;flex-direction:column;align-items:center;gap:clamp(14px,3vh,28px);">
+
+      <!-- Logo 10x10 -->
+      <div id="sp-logo" style="opacity:0;transform:scale(0.6) translateY(-10px);
+                               transition:opacity 0.8s cubic-bezier(.34,1.56,.64,1),transform 0.8s cubic-bezier(.34,1.56,.64,1);">
+        <img src="https://i.imgur.com/WRq6KAP.png"
+             style="width:clamp(200px,55vw,320px);height:auto;display:block;">
+      </div>
+
+      <!-- Línea roja animada -->
+      <div id="sp-line" style="height:2px;width:0;max-width:160px;border-radius:2px;
+                               background:linear-gradient(90deg,transparent,#cc0000,transparent);
+                               transition:width 0.8s ease;"></div>
+
+      <!-- Tagline -->
+      <div id="sp-tag" style="opacity:0;transform:translateY(14px);
+                              transition:opacity 0.6s ease,transform 0.6s ease;">
+        <p style="color:rgba(255,255,255,0.45);font-size:clamp(10px,1.2vw,13px);
+                  font-weight:400;margin:0;letter-spacing:1.5px;text-transform:uppercase;">
+          Servicio estratégico de
+        </p>
+        <p style="color:#fff;font-size:clamp(18px,2.2vw,26px);font-weight:800;
+                  margin:4px 0 0;letter-spacing:0.5px;text-transform:uppercase;">
+          Inteligencia Artificial
+        </p>
+      </div>
+
+      <!-- Valor -->
+      <div id="sp-value" style="opacity:0;transform:scale(0.8);
+                                transition:opacity 0.5s ease,transform 0.65s cubic-bezier(.34,1.56,.64,1);">
+        <p style="color:#cc0000;font-size:clamp(28px,4vw,48px);font-weight:900;
+                  margin:0;letter-spacing:-1px;line-height:1;">
+          10&times; más ventas
+        </p>
+        <p style="color:rgba(255,255,255,0.55);font-size:clamp(13px,1.4vw,18px);
+                  font-weight:500;margin:6px 0 0;">
+          al <strong style="color:#fff;">10%</strong> del costo
+        </p>
+      </div>
+
+      <!-- Mensaje -->
+      <div id="sp-msg" style="opacity:0;transform:translateY(18px);
+                              transition:opacity 0.7s ease,transform 0.7s ease;">
+        <p style="color:#fff;font-size:clamp(15px,1.6vw,22px);font-weight:700;
+                  line-height:1.45;margin:0;">
+          Si hicimos esto por tu hijo,<br>
+          <span style="color:#cc0000;">imagínate lo que podemos<br>hacer por tu empresa.</span>
+        </p>
+      </div>
+
+      <!-- Botones -->
+      <div id="sp-btns" style="opacity:0;transform:translateY(14px);
+                               transition:opacity 0.6s ease,transform 0.6s ease;
+                               display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <a href="https://wa.me/573165312266" target="_blank"
+           style="display:flex;align-items:center;gap:8px;background:#25D366;color:#fff;
+                  font-weight:700;font-size:14px;padding:11px 22px;border-radius:30px;
+                  text-decoration:none;box-shadow:0 4px 16px rgba(37,211,102,0.4);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+            <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.532 5.859L.057 23.804a.75.75 0 0 0 .92.92l5.945-1.475A11.952 11.952 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.715 9.715 0 0 1-4.964-1.362l-.356-.211-3.688.914.93-3.595-.232-.37A9.715 9.715 0 0 1 2.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/>
+          </svg>
+          WhatsApp
+        </a>
+        <a href="mailto:sarbelaez@equitel.com.co" target="_blank"
+           style="display:flex;align-items:center;gap:8px;background:#EA4335;color:#fff;
+                  font-weight:700;font-size:14px;padding:11px 22px;border-radius:30px;
+                  text-decoration:none;box-shadow:0 4px 16px rgba(234,67,53,0.4);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+            <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+          </svg>
+          Gmail
+        </a>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Barra de progreso -->
+  <div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:rgba(255,255,255,0.07);">
+    <div id="splash-progress" style="height:100%;background:#cc0000;width:100%;
+         transition:width 20s linear;"></div>
+  </div>
+
+  <!-- Skip -->
+  <button onclick="App._splashSkip()" style="position:absolute;bottom:18px;right:20px;
+          background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.25);color:rgba(255,255,255,0.7);
+          font-size:14px;padding:10px 22px;border-radius:24px;cursor:pointer;letter-spacing:1px;font-weight:600;">
+    SALTAR
+  </button>
+</div>
+
+
+<style>
+@keyframes splashFadeIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes splashGlow {
+  from { opacity: 0.6; transform: scale(1); }
+  to   { opacity: 1;   transform: scale(1.25); }
+}
+@keyframes bounce {
+  0%, 100% { transform: translate(-50%, 0); }
+  50%      { transform: translate(-50%, 8px); }
+}
+</style>
+
+<!-- Global theme toggle — always visible -->
+<button id="theme-toggle-global" onclick="App.toggleTheme()" class="theme-toggle"
+  style="position:fixed;top:16px;right:16px;z-index:999;font-size:18px;padding:8px 12px;
+         border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.3);">🌙</button>
 
 <!-- Login Overlay -->
 <div id="login-screen" class="min-h-screen flex items-center justify-center"
@@ -405,28 +1125,36 @@
   <div class="card login-card text-center max-w-md w-full mx-4"
        style="position:relative;padding:40px 36px 36px;">
 
-    <!-- Logo DATA GAMES -->
-    <div style="display:flex;flex-direction:column;align-items:center;margin-bottom:32px;">
-      <span style="font-size:14px;font-weight:800;letter-spacing:9px;text-transform:uppercase;
-                   background:linear-gradient(135deg,#bfdbfe,#93c5fd);
-                   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-                   background-clip:text;margin-bottom:5px;">DATA</span>
-      <svg class="logo-svg-animate" width="108" height="86" viewBox="0 0 80 64" fill="none"
-           xmlns="http://www.w3.org/2000/svg" style="margin:4px 0;">
-        <defs>
-          <linearGradient id="aGrad" x1="40" y1="4" x2="40" y2="60" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#bfdbfe"/>
-            <stop offset="55%" stop-color="#60a5fa"/>
-            <stop offset="100%" stop-color="#2563eb"/>
-          </linearGradient>
-        </defs>
-        <line x1="40" y1="4" x2="6"  y2="60" stroke="url(#aGrad)" stroke-width="7.5" stroke-linecap="round"/>
-        <line x1="40" y1="4" x2="74" y2="60" stroke="url(#aGrad)" stroke-width="7.5" stroke-linecap="round"/>
-      </svg>
-      <span style="font-size:14px;font-weight:800;letter-spacing:9px;text-transform:uppercase;
-                   background:linear-gradient(135deg,#60a5fa,#2563eb);
-                   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-                   background-clip:text;margin-top:5px;">GAMES</span>
+    <!-- Logos: DATA GAMES + Deporte Sin Limites -->
+    <div style="display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:32px;">
+      <!-- DATA GAMES -->
+      <div style="display:flex;flex-direction:column;align-items:center;">
+        <span style="font-size:14px;font-weight:800;letter-spacing:9px;text-transform:uppercase;
+                     background:linear-gradient(135deg,#bfdbfe,#93c5fd);
+                     -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+                     background-clip:text;margin-bottom:5px;">DATA</span>
+        <svg class="logo-svg-animate" width="108" height="86" viewBox="0 0 80 64" fill="none"
+             xmlns="http://www.w3.org/2000/svg" style="margin:4px 0;">
+          <defs>
+            <linearGradient id="aGrad" x1="40" y1="4" x2="40" y2="60" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#bfdbfe"/>
+              <stop offset="55%" stop-color="#60a5fa"/>
+              <stop offset="100%" stop-color="#2563eb"/>
+            </linearGradient>
+          </defs>
+          <line x1="40" y1="4" x2="6"  y2="60" stroke="url(#aGrad)" stroke-width="7.5" stroke-linecap="round"/>
+          <line x1="40" y1="4" x2="74" y2="60" stroke="url(#aGrad)" stroke-width="7.5" stroke-linecap="round"/>
+        </svg>
+        <span style="font-size:14px;font-weight:800;letter-spacing:9px;text-transform:uppercase;
+                     background:linear-gradient(135deg,#60a5fa,#2563eb);
+                     -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+                     background-clip:text;margin-top:5px;">GAMES</span>
+      </div>
+      <!-- Separador -->
+      <div style="width:1px;height:90px;background:rgba(255,255,255,0.12);flex-shrink:0;"></div>
+      <!-- Deporte Sin Limites -->
+      <img src="https://i.imgur.com/hlh245J.png"
+           style="width:min(120px,30vw);height:auto;display:block;opacity:0.9;">
     </div>
 
     <!-- Divisor sutil -->
@@ -473,6 +1201,13 @@
     <button onclick="App.login('viewer')" class="btn-ghost"
             style="width:100%;padding:11px;font-size:13px;color:rgba(255,255,255,0.6);">
       📖 Entrar como Lector (sin cuenta)
+    </button>
+
+    <!-- Aviso de Privacidad -->
+    <button onclick="App.openPrivacyNotice()"
+            style="margin-top:14px;background:none;border:none;color:rgba(255,255,255,0.4);
+                   font-size:11px;cursor:pointer;text-decoration:underline;">
+      🔒 Aviso de Privacidad (Ley 1581)
     </button>
   </div>
 </div>
@@ -569,6 +1304,9 @@
             <span style="font-size:7.5px;font-weight:800;letter-spacing:3px;color:rgba(255,255,255,0.92);
                          text-transform:uppercase;line-height:1;">GAMES</span>
           </div>
+          <!-- Logo del torneo (se muestra dinámicamente) -->
+          <img id="header-tournament-logo" src="" alt=""
+               style="display:none;height:40px;width:auto;object-fit:contain;flex-shrink:0;">
           <div>
             <h1 class="font-display" style="color:white;font-size:24px;margin:0;
                        letter-spacing:3px;line-height:1;">DATA GAMES</h1>
@@ -579,6 +1317,7 @@
         </div>
         <!-- Desktop controls (hidden on mobile) -->
         <div id="header-controls-desktop" style="display:flex;align-items:center;gap:8px;">
+          <button id="theme-toggle" onclick="App.toggleTheme()" class="theme-toggle" title="Cambiar tema">🌙</button>
           <button id="search-btn" onclick="App.openSearch()" class="btn-ghost"
             style="font-size:12px;padding:6px 13px;border-color:rgba(255,255,255,0.2);"
             title="Busqueda global (Ctrl+K)">🔍 Buscar</button>
@@ -593,12 +1332,18 @@
           <button onclick="App.switchTournament()" class="btn-ghost"
                   style="font-size:12px;padding:6px 12px;color:rgba(147,197,253,0.8);border-color:rgba(147,197,253,0.2);"
                   title="Cambiar torneo">🏆 Torneo</button>
+          <button onclick="App.openPrivacyNotice()" class="btn-ghost"
+                  title="Aviso de Privacidad (Ley 1581)"
+                  style="font-size:12px;padding:6px 10px;color:rgba(255,255,255,0.55);border-color:rgba(255,255,255,0.15);">🔒 Privacidad</button>
           <button onclick="App.logout()" class="btn-ghost"
                   style="font-size:12px;padding:6px 12px;color:rgba(255,255,255,0.7);">Salir</button>
         </div>
-        <!-- Hamburger button (visible on mobile only) -->
-        <button id="hamburger-btn" onclick="App.toggleMobileMenu()"
-                style="display:none;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);
+        <!-- Mobile top-bar controls (theme toggle + hamburger) -->
+        <div id="mobile-top-controls" style="display:none;align-items:center;gap:6px;flex-shrink:0;">
+          <button id="theme-toggle-header" onclick="App.toggleTheme()" class="theme-toggle"
+            style="font-size:15px;padding:7px 9px;">🌙</button>
+          <button id="hamburger-btn" onclick="App.toggleMobileMenu()"
+                style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);
                        border-radius:10px;padding:8px 10px;cursor:pointer;flex-shrink:0;">
           <svg id="hamburger-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round">
             <line x1="3" y1="6" x2="21" y2="6"/>
@@ -610,6 +1355,7 @@
             <line x1="6" y1="18" x2="18" y2="6"/>
           </svg>
         </button>
+        </div>
       </div>
       <!-- Desktop nav (always visible on desktop) -->
       <nav id="main-nav" style="display:flex;gap:6px;flex-wrap:wrap;"></nav>
@@ -630,6 +1376,9 @@
             style="display:none;font-size:11px;padding:5px 10px;border-color:rgba(255,255,255,0.2);">📱</button>
           <button onclick="App.switchTournament();App.closeMobileMenu()" class="btn-ghost"
                   style="font-size:11px;padding:5px 10px;color:rgba(147,197,253,0.8);border-color:rgba(147,197,253,0.2);">🏆</button>
+          <button onclick="App.openPrivacyNotice();App.closeMobileMenu()" class="btn-ghost"
+                  title="Aviso de Privacidad (Ley 1581)"
+                  style="font-size:11px;padding:5px 10px;color:rgba(255,255,255,0.55);border-color:rgba(255,255,255,0.15);">🔒</button>
           <button onclick="App.logout()" class="btn-ghost"
                   style="font-size:11px;padding:5px 10px;color:rgba(255,255,255,0.7);">Salir</button>
         </div>
@@ -638,7 +1387,15 @@
   </header>
 
   <!-- Page Container -->
-  <main id="page-content" style="flex:1;padding:40px;max-width:1400px;margin:0 auto;width:100%;box-sizing:border-box;"></main>
+  <main id="page-content" style="flex:1;padding:40px 40px 56px;max-width:1400px;margin:0 auto;width:100%;box-sizing:border-box;"></main>
+
+  <!-- Live Ticker -->
+  <div id="live-ticker" class="ds-ticker" style="display:none;">
+    <div class="ds-ticker-label">EN VIVO</div>
+    <div class="ds-ticker-track">
+      <div id="ticker-content" class="ds-ticker-content"></div>
+    </div>
+  </div>
 </div>
 
 <!-- Toast container -->
@@ -647,25 +1404,27 @@
 <!-- Modal container -->
 <div id="modal-container"></div>
 
-<script src="/static/js/api.js"></script>
-<script src="/static/js/utils.js"></script>
-<script src="/static/js/pages/dashboard.js"></script>
-<script src="/static/js/pages/calendar.js"></script>
-<script src="/static/js/pages/live_scoring.js"></script>
-<script src="/static/js/pages/results.js"></script>
-<script src="/static/js/pages/statistics.js"></script>
-<script src="/static/js/pages/standings.js"></script>
-<script src="/static/js/pages/teams.js"></script>
-<script src="/static/js/pages/schools.js"></script>
-<script src="/static/js/pages/players.js"></script>
-<script src="/static/js/pages/register.js"></script>
-<script src="/static/js/pages/schedule.js"></script>
-<script src="/static/js/pages/groups.js"></script>
-<script src="/static/js/pages/playoffs.js"></script>
-<script src="/static/js/pages/venues.js"></script>
-<script src="/static/js/pages/individual_sports.js"></script>
-<script src="/static/js/pages/olympic_ranking.js"></script>
-<script src="/static/js/pages/news.js"></script>
-<script src="/static/js/app.js"></script>
+<script src="/static/js/api.js?v=12"></script>
+<script src="/static/js/utils.js?v=9"></script>
+<script src="/static/js/pages/dashboard.js?v=11"></script>
+<script src="/static/js/pages/calendar.js?v=11"></script>
+<script src="/static/js/pages/live_scoring.js?v=11"></script>
+<script src="/static/js/pages/results.js?v=13"></script>
+<script src="/static/js/pages/statistics.js?v=10"></script>
+<script src="/static/js/pages/standings.js?v=15"></script>
+<script src="/static/js/pages/teams.js?v=9"></script>
+<script src="/static/js/pages/schools.js?v=9"></script>
+<script src="/static/js/pages/players.js?v=9"></script>
+<script src="/static/js/pages/register.js?v=9"></script>
+<script src="/static/js/pages/schedule.js?v=9"></script>
+<script src="/static/js/pages/groups.js?v=9"></script>
+<script src="/static/js/pages/playoffs.js?v=10"></script>
+<script src="/static/js/pages/venues.js?v=9"></script>
+<script src="/static/js/pages/individual_sports.js?v=11"></script>
+<script src="/static/js/pages/individual_results.js?v=7"></script>
+<script src="/static/js/pages/bulk_import.js?v=1"></script>
+<script src="/static/js/pages/olympic_ranking.js?v=9"></script>
+<script src="/static/js/pages/news.js?v=9"></script>
+<script src="/static/js/app.js?v=16"></script>
 </body>
 </html>
