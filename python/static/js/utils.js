@@ -3,17 +3,25 @@
  */
 
 const Utils = {
+  // Deportes individuales — solo aparecen en la página de medallas
+  _INDIVIDUAL_SPORTS: ['gimnasia','tenis','golf','ajedrez','padel','pádel','natacion','natación','hipica','hípica'],
+  isIndividualSport(name) {
+    return this._INDIVIDUAL_SPORTS.includes((name || '').toLowerCase());
+  },
+
   // Formatear fecha a formato legible
+  TZ: 'America/Bogota',
+
   formatDate(isoStr) {
     if (!isoStr) return 'Sin fecha';
     const d = new Date(isoStr);
-    return d.toLocaleDateString('es-CO', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+    return d.toLocaleDateString('es-CO', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', timeZone: this.TZ });
   },
 
   formatTime(isoStr) {
     if (!isoStr) return '';
     const d = new Date(isoStr);
-    return d.toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' });
+    return d.toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit', timeZone: this.TZ });
   },
 
   formatDateTime(isoStr) {
@@ -70,17 +78,122 @@ const Utils = {
     return '<div class="spinner"></div>';
   },
 
+  // ─── Skeleton loaders (perceived performance > spinner) ───────────────────
+  // Uso: Utils.skeleton('cards', 6) o Utils.skeleton('rows', 8) o 'list', 'matches'
+  skeleton(kind = 'cards', count = 4) {
+    const sk = (cls) => `<div class="skel ${cls}"></div>`;
+    const repeat = (n, fn) => Array.from({ length: n }, (_, i) => fn(i)).join('');
+    const tpl = {
+      cards: () => `<div class="skel-grid">${repeat(count, () => `
+        <div class="skel-card">
+          ${sk('skel-line w-60')}
+          ${sk('skel-line w-90 mt-2')}
+          ${sk('skel-line w-40 mt-3')}
+        </div>`)}</div>`,
+      rows: () => `<div class="skel-rows">${repeat(count, () => `
+        <div class="skel-row">${sk('skel-line w-30')}${sk('skel-line w-50')}${sk('skel-line w-15')}</div>`)}</div>`,
+      list: () => `<div class="skel-list">${repeat(count, () => `
+        <div class="skel-list-item">${sk('skel-circle')}<div class="flex-1">${sk('skel-line w-50')}${sk('skel-line w-30 mt-1')}</div></div>`)}</div>`,
+      matches: () => `<div class="skel-matches">${repeat(count, () => `
+        <div class="skel-match">
+          ${sk('skel-line w-25')}
+          <div class="skel-match-row">${sk('skel-line w-40')}${sk('skel-block-sm')}</div>
+          <div class="skel-match-row">${sk('skel-line w-40')}${sk('skel-block-sm')}</div>
+        </div>`)}</div>`,
+      table: () => `<div class="skel-table">
+        <div class="skel-table-head">${repeat(5, () => sk('skel-line w-15'))}</div>
+        ${repeat(count, () => `<div class="skel-table-row">${repeat(5, () => sk('skel-line w-15'))}</div>`)}
+      </div>`,
+    };
+    return (tpl[kind] || tpl.cards)();
+  },
+
   // Vacío state
   emptyState(msg = 'No hay datos disponibles') {
     return `<div class="text-center text-gray-400 py-12" style="font-size:18px;">📭 ${msg}</div>`;
+  },
+
+  // ─── Confirm dialog (Promise<bool>, reemplaza confirm() nativo) ───────────
+  // Uso: if (await Utils.confirm('¿Eliminar partido?')) { ... }
+  confirm(message, { okLabel = 'Confirmar', cancelLabel = 'Cancelar', danger = false } = {}) {
+    return new Promise((resolve) => {
+      const overlay = document.createElement('div');
+      overlay.className = 'modal-overlay';
+      const okBtn = danger ? 'btn-danger' : 'btn-primary';
+      overlay.innerHTML = `
+        <div class="modal-box" role="alertdialog" aria-modal="true" aria-label="Confirmación" style="max-width:420px;">
+          <p style="font-size:15px;line-height:1.5;color:#e2e8f0;margin-bottom:24px;">${message}</p>
+          <div style="display:flex;gap:10px;justify-content:flex-end;">
+            <button class="btn-ghost" data-ds-confirm="cancel">${cancelLabel}</button>
+            <button class="${okBtn}" data-ds-confirm="ok" autofocus>${okLabel}</button>
+          </div>
+        </div>`;
+      const close = (val) => {
+        overlay.remove();
+        document.removeEventListener('keydown', onKey);
+        resolve(val);
+      };
+      const onKey = (e) => {
+        if (e.key === 'Escape') close(false);
+        if (e.key === 'Enter' && document.activeElement?.dataset?.dsConfirm !== 'cancel') close(true);
+      };
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) return close(false);
+        const v = e.target.closest('[data-ds-confirm]')?.dataset?.dsConfirm;
+        if (v === 'ok') close(true);
+        else if (v === 'cancel') close(false);
+      });
+      document.addEventListener('keydown', onKey);
+      document.getElementById('modal-container').appendChild(overlay);
+      // Focus the OK button (autofocus may be ignored for dynamically inserted)
+      setTimeout(() => overlay.querySelector('[data-ds-confirm="ok"]')?.focus(), 30);
+    });
+  },
+
+  // ─── WhatsApp share (compartir resultado de partido / página) ─────────────
+  // Uso: Utils.share('Partido en vivo: Almaviva 2-1 Solaris', 'https://datagames.co/match/123')
+  share(text, url = window.location.href) {
+    const msg = `${text}\n${url}`;
+    // Native Web Share API si está disponible (mobile)
+    if (navigator.share) {
+      navigator.share({ text, url }).catch(() => {/* user cancelled */});
+      return;
+    }
+    // Fallback: WhatsApp wa.me
+    const waUrl = `https://wa.me/?text=${encodeURIComponent(msg)}`;
+    window.open(waUrl, '_blank', 'noopener,noreferrer');
+  },
+
+  // Construye URL canónica de un partido para compartir
+  matchShareUrl(matchId) {
+    return `${window.location.origin}/?match=${encodeURIComponent(matchId)}`;
+  },
+
+  // ─── Online/Offline detection (se inicializa en App.init) ─────────────────
+  online: navigator.onLine,
+  _onlineHooks: [],
+  onConnectivityChange(fn) { this._onlineHooks.push(fn); },
+  _initConnectivity() {
+    const update = () => {
+      const wasOnline = this.online;
+      this.online = navigator.onLine;
+      const bar = document.getElementById('offline-bar');
+      if (bar) bar.classList.toggle('show', !this.online);
+      if (wasOnline && !this.online) this.toast('Sin conexión — intentando reconectar', 'error');
+      if (!wasOnline && this.online) this.toast('Conexión restablecida', 'success');
+      this._onlineHooks.forEach(fn => { try { fn(this.online); } catch (_) {} });
+    };
+    window.addEventListener('online', update);
+    window.addEventListener('offline', update);
+    update();
   },
 
   // Icono deporte
   sportIcon(sport) {
     const icons = {
       'Fútbol': '⚽', 'Fútbol 7': '⚽', 'Baloncesto': '🏀', 'Voleibol': '🏐',
-      'Natación': '🏊', 'Tenis': '🎾', 'Pádel': '🏓',
-      'Softbol': '🥎', 'Softball': '🎾', 'Ajedrez': '♟️', 'Gimnasia': '🤸',
+      'Natación': '🏊', 'Tenis': '🎾', 'Pádel': '🎾',
+      'Softbol': '⚾', 'Softball': '⚾', 'Ajedrez': '♟️', 'Gimnasia': '🤸',
       'Golf': '⛳', 'Equitación': '🏇', 'Hípica': '🏇',
     };
     return icons[sport] || '🏅';

@@ -943,6 +943,86 @@
       table td[style*="padding:4px 12px 12px 60px"] { padding: 4px 8px 8px 32px !important; }
     }
 
+    /* ─── SKELETON LOADERS (perceived perf > spinner) ─── */
+    @keyframes shimmer {
+      0% { background-position:-400px 0; }
+      100% { background-position:400px 0; }
+    }
+    .skel {
+      background:linear-gradient(90deg,
+        rgba(255,255,255,.04) 0%,
+        rgba(255,255,255,.10) 40%,
+        rgba(255,255,255,.04) 80%);
+      background-size:800px 100%;
+      animation:shimmer 1.4s linear infinite;
+      border-radius:6px;
+    }
+    .skel-line { height:12px; margin:6px 0; }
+    .skel-block-sm { height:24px; width:48px; }
+    .skel-circle { width:40px; height:40px; border-radius:50%; flex-shrink:0; }
+    .skel.w-15 { width:15%; }
+    .skel.w-25 { width:25%; }
+    .skel.w-30 { width:30%; }
+    .skel.w-40 { width:40%; }
+    .skel.w-50 { width:50%; }
+    .skel.w-60 { width:60%; }
+    .skel.w-90 { width:90%; }
+    .skel.mt-1 { margin-top:8px; }
+    .skel.mt-2 { margin-top:12px; }
+    .skel.mt-3 { margin-top:18px; }
+    .skel-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; }
+    .skel-card {
+      background:var(--color-card); border-radius:14px; padding:18px;
+      border:var(--border-subtle);
+    }
+    .skel-rows { display:flex; flex-direction:column; gap:10px; }
+    .skel-row {
+      background:var(--color-card); border-radius:10px;
+      padding:14px 18px; border:var(--border-subtle);
+      display:flex; align-items:center; gap:14px;
+    }
+    .skel-row .skel-line { margin:0; flex:0 0 auto; }
+    .skel-list { display:flex; flex-direction:column; gap:8px; }
+    .skel-list-item {
+      background:var(--color-card); border-radius:10px;
+      padding:12px 14px; border:var(--border-subtle);
+      display:flex; align-items:center; gap:12px;
+    }
+    .skel-matches { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:12px; }
+    .skel-match {
+      background:var(--color-card); border-radius:12px;
+      padding:14px 16px; border:var(--border-subtle);
+    }
+    .skel-match-row {
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; margin-top:10px;
+    }
+    .skel-match-row .skel-line { margin:0; }
+    .skel-table { display:flex; flex-direction:column; gap:6px; }
+    .skel-table-head, .skel-table-row {
+      display:flex; gap:12px; padding:10px 14px;
+      background:var(--color-card); border-radius:8px; border:var(--border-subtle);
+    }
+    .skel-table-head .skel-line, .skel-table-row .skel-line { flex:1; margin:0; }
+    .flex-1 { flex:1; }
+
+    /* ─── OFFLINE BAR (visible cuando navigator.onLine === false) ─── */
+    #offline-bar {
+      position:fixed; top:0; left:0; right:0; z-index:9000;
+      background:linear-gradient(135deg,#b91c1c,#dc2626);
+      color:#fff; font-size:13px; font-weight:700; padding:10px 16px;
+      text-align:center; letter-spacing:.3px;
+      transform:translateY(-100%); transition:transform .25s ease;
+      box-shadow:0 2px 12px rgba(220,38,38,.4);
+      display:flex; align-items:center; justify-content:center; gap:8px;
+    }
+    #offline-bar.show { transform:translateY(0); }
+    #offline-bar svg { width:16px; height:16px; }
+    #offline-bar .dot {
+      width:8px; height:8px; border-radius:50%; background:#fff;
+      animation:pulse 1.4s ease-in-out infinite;
+    }
+
     /* ─── A11Y FOUNDATIONS (ui-ux-pro-max §1, §6, §7) ─── */
     /* §1 Keyboard a11y: visible focus ring */
     *:focus-visible {
@@ -1398,6 +1478,12 @@
   </div>
 </div>
 
+<!-- Offline indicator (shown when navigator.onLine === false) -->
+<div id="offline-bar" role="status" aria-live="polite">
+  <span class="dot" aria-hidden="true"></span>
+  <span>Sin conexión — verificando red…</span>
+</div>
+
 <!-- Toast container -->
 <div id="toast-container"></div>
 
@@ -1405,8 +1491,8 @@
 <div id="modal-container"></div>
 
 <script src="/static/js/api.js?v=12"></script>
-<script src="/static/js/utils.js?v=9"></script>
-<script src="/static/js/pages/dashboard.js?v=11"></script>
+<script src="/static/js/utils.js?v=10"></script>
+<script src="/static/js/pages/dashboard.js?v=12"></script>
 <script src="/static/js/pages/calendar.js?v=11"></script>
 <script src="/static/js/pages/live_scoring.js?v=11"></script>
 <script src="/static/js/pages/results.js?v=13"></script>
@@ -1425,6 +1511,6 @@
 <script src="/static/js/pages/bulk_import.js?v=1"></script>
 <script src="/static/js/pages/olympic_ranking.js?v=9"></script>
 <script src="/static/js/pages/news.js?v=9"></script>
-<script src="/static/js/app.js?v=16"></script>
+<script src="/static/js/app.js?v=17"></script>
 </body>
 </html>
